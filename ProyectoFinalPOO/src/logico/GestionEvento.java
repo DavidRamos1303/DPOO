@@ -57,12 +57,23 @@ public class GestionEvento {
 	public void setMisEventos(ArrayList<Evento> misEventos) {
 		this.misEventos = misEventos;
 	}
-
 	public ArrayList<Recurso> getMisRecursos() {
 		return misRecursos;
 	}
-
 	public void setMisRecursos(ArrayList<Recurso> misRecursos) {
 		this.misRecursos = misRecursos;
 	}
+	
+	public void insertarPersonas(Persona obj) {
+		
+	}
+	
+	public void eliminarPersona(Persona obj) {
+		
+	}
+	
+	public Persona buscarPersonasCedula(String cedula) {
+		
+	}
+		
 }

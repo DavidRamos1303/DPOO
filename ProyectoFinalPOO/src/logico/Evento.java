@@ -9,8 +9,8 @@ public class Evento {
 	private String titulo;
 	private String tipo;
 	private Date fecha;
+	private Boolean estado;
 	private ArrayList<Comision> comisiones;
-	private ArrayList<TrabajoCientifico> trabajosCientificos;
 	private ArrayList<Recurso> recursos;
 	
 	public Evento(String id, String titulo, String tipo, Date fecha) {
@@ -19,8 +19,8 @@ public class Evento {
 		this.titulo = titulo;
 		this.tipo = tipo;
 		this.fecha = fecha;
+		this.estado = true;
 		comisiones = new ArrayList<>();
-		trabajosCientificos = new ArrayList<>();
 		recursos = new ArrayList<>();
 	}
 	
@@ -54,16 +54,16 @@ public class Evento {
 	public void setComisiones(ArrayList<Comision> comisiones) {
 		this.comisiones = comisiones;
 	}
-	public ArrayList<TrabajoCientifico> getTrabajosCientificos() {
-		return trabajosCientificos;
-	}
-	public void setTrabajosCientificos(ArrayList<TrabajoCientifico> trabajosCientificos) {
-		this.trabajosCientificos = trabajosCientificos;
-	}
 	public ArrayList<Recurso> getRecursos() {
 		return recursos;
 	}
 	public void setRecursos(ArrayList<Recurso> recursos) {
 		this.recursos = recursos;
+	}
+	public Boolean getEstado() {
+		return estado;
+	}
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
 	}
 }
