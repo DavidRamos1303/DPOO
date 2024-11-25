@@ -2,25 +2,26 @@ package logico;
 
 public abstract class Persona {
 	
-	protected String id;
+	protected String cedula;
 	protected String nombre;
 	protected String apellidos;
 	protected String email;
 	protected String telefono;
 	
-	public Persona(String id, String nombre, String apellidos, String email, String telefono) {
+	public Persona(String cedula, String nombre, String apellidos, String email, String telefono) {
 		super();
-		this.id = id;
+		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.telefono = telefono;
 	}
-	public String getId() {
-		return id;
+
+	public String getCedula() {
+		return cedula;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 	public String getNombre() {
 		return nombre;
@@ -46,7 +47,4 @@ public abstract class Persona {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
-	
-
 }

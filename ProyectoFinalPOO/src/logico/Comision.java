@@ -9,15 +9,16 @@ public class Comision {
 	private String area;
 	private ArrayList<Jurado> jurado;
 	private ArrayList<TrabajoCientifico> trabajos;
-	public Comision(String codComision, String nombre, String area, ArrayList<Jurado> jurado,
-			ArrayList<TrabajoCientifico> trabajos) {
+	
+	public Comision(String codComision, String nombre, String area) {
 		super();
 		this.codComision = codComision;
 		this.nombre = nombre;
 		this.area = area;
-		this.jurado = jurado;
-		this.trabajos = trabajos;
+		jurado = new ArrayList<>();
+		trabajos = new ArrayList<>();
 	}
+	
 	public String getCodComision() {
 		return codComision;
 	}

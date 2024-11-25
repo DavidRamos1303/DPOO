@@ -8,11 +8,18 @@ public class GestionEvento {
 	private ArrayList<TrabajoCientifico> misTrabajosCientificos;
 	private ArrayList<Comision> misComisiones;
 	private ArrayList<Evento> misEventos;
+	private ArrayList<Recurso> misRecursos;
 	
 	public static GestionEvento gestion = null;
 	
+	public static int codTrabajos = 1;
+	public static int codComision = 1;
+	public static int codEvento = 1;
+	public static int codRecursos = 1;
+	
 	private GestionEvento() {
 		super();
+		misRecursos = new ArrayList<>();
 		misPersonas = new ArrayList<>();
 		misTrabajosCientificos = new ArrayList<>();
 		misComisiones = new ArrayList<>();
@@ -50,7 +57,12 @@ public class GestionEvento {
 	public void setMisEventos(ArrayList<Evento> misEventos) {
 		this.misEventos = misEventos;
 	}
-	
-	
 
+	public ArrayList<Recurso> getMisRecursos() {
+		return misRecursos;
+	}
+
+	public void setMisRecursos(ArrayList<Recurso> misRecursos) {
+		this.misRecursos = misRecursos;
+	}
 }

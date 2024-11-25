@@ -6,7 +6,6 @@ public class Jurado extends Persona {
 
 	public Jurado(String id, String nombre, String apellidos, String email, String telefono, String area) {
 		super(id, nombre, apellidos, email, telefono);
-		// TODO Auto-generated constructor stub
 		this.area = area;
 	}
 
@@ -17,7 +16,4 @@ public class Jurado extends Persona {
 	public void setArea(String area) {
 		this.area = area;
 	}
-	
-	
-
 }
