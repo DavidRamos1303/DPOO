@@ -12,6 +12,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.Color;
 
 public class PrincipalGestion extends JFrame {
 
@@ -38,6 +39,7 @@ public class PrincipalGestion extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalGestion() {
+		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dim = getToolkit().getScreenSize();
@@ -46,6 +48,7 @@ public class PrincipalGestion extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.WHITE);
 		setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Registrar");
@@ -87,11 +90,13 @@ public class PrincipalGestion extends JFrame {
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Planificar evento");
 		mnNewMenu_1.add(mntmNewMenuItem_4);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(51, 102, 255));
 		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
