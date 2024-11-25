@@ -13,6 +13,16 @@ public class Evento {
 	private ArrayList<TrabajoCientifico> trabajosCientificos;
 	private ArrayList<Recurso> recursos;
 	
+	public Evento(String id, String titulo, String tipo, Date fecha) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.tipo = tipo;
+		this.fecha = fecha;
+		comisiones = new ArrayList<>();
+		trabajosCientificos = new ArrayList<>();
+		recursos = new ArrayList<>();
+	}
 	
 	public String getId() {
 		return id;
