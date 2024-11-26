@@ -13,6 +13,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import javax.swing.JTextField;
+import java.awt.Font;
 
 public class PrincipalGestion extends JFrame {
 
@@ -96,8 +100,8 @@ public class PrincipalGestion extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(51, 102, 255));
+		panel.setBackground(new Color(0, 102, 255));
 		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
 	}
-
 }
