@@ -65,15 +65,86 @@ public class GestionEvento {
 	}
 	
 	public void insertarPersonas(Persona obj) {
-		
+		misPersonas.add(obj);
 	}
 	
 	public void eliminarPersona(Persona obj) {
-		
+		misPersonas.remove(obj);
 	}
 	
 	public Persona buscarPersonasCedula(String cedula) {
-		
+		for (Persona persona : misPersonas) {
+			if(persona.getCedula().equals(cedula)) {
+				return persona;
+			}
+		}return null;
 	}
-		
+	
+	public void insertarTrabajo(TrabajoCientifico obj) {
+		misTrabajosCientificos.add(obj);
+		codTrabajos++;
+	}
+	
+	public void eliminarTrabajo(TrabajoCientifico obj) {
+		misTrabajosCientificos.remove(obj);
+	}
+	
+	public TrabajoCientifico buscarTrabajoID(String cod) {
+		for (TrabajoCientifico trabajo : misTrabajosCientificos) {
+			if(trabajo.getId().equals(cod)) {
+				return trabajo;
+			}
+		}return null;
+	}
+	
+	public void insertarComision(Comision obj) {
+		misComisiones.add(obj);
+		codComision++;
+	}
+	
+	public void eliminarComision(Comision obj) {
+		misComisiones.remove(obj);
+	}
+	
+	public Comision buscarComisionID(String cod) {
+		for (Comision comision : misComisiones) {
+			if(comision.getCodComision().equals(cod)) {
+				return comision;
+			}
+		}return null;
+	}
+	
+	public void insertarEvento(Evento obj) {
+		misEventos.add(obj);
+		codEvento++;
+	}
+	
+	public void eliminarEvento(Evento obj) {
+		misEventos.remove(obj);
+	}
+	
+	public Evento buscarEventoID(String cod) {
+		for (Evento evento : misEventos) {
+			if(evento.getId().equals(cod)) {
+				return evento;
+			}
+		}return null;
+	}
+	
+	public void insertarRecurso(Recurso obj) {
+		misRecursos.add(obj);
+		codRecursos++;
+	}
+	
+	public void eliminarRecurso(Recurso obj) {
+		misRecursos.remove(obj);
+	}
+	
+	public Recurso buscarRecursoID(String cod) {
+		for (Recurso recurso : misRecursos) {
+			if(recurso.getId().equals(cod)) {
+				return recurso;
+			}
+		}return null;
+	}
 }
