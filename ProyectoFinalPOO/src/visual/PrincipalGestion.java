@@ -97,7 +97,6 @@ public class PrincipalGestion extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(51, 102, 255));
-		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 
