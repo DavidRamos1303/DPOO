@@ -6,6 +6,7 @@ public class TrabajoCientifico {
 	private String nombre;
 	private String area;
 	private Participante autor;	
+	private boolean seleccionado;
 	
 	public TrabajoCientifico(String id, String nombre, String area, Participante autor) {
 		super();
@@ -13,6 +14,7 @@ public class TrabajoCientifico {
 		this.nombre = nombre;
 		this.area = area;
 		this.autor = autor;
+		this.seleccionado = false;
 	}
 	
 	public String getId() {
@@ -38,6 +40,14 @@ public class TrabajoCientifico {
 	}
 	public void setAutor(Participante autor) {
 		this.autor = autor;
+	}
+
+	public boolean isSeleccionado() {
+		return seleccionado;
+	}
+
+	public void setSeleccionado(boolean seleccionado) {
+		this.seleccionado = seleccionado;
 	}
 	
 	

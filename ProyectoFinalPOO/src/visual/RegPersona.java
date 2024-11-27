@@ -38,7 +38,7 @@ public class RegPersona extends JDialog {
 		setTitle("Registrar Persona");
 		setBackground(new Color(255, 255, 0));
 		getContentPane().setBackground(new Color(255, 255, 0));
-		setBounds(100, 100, 675, 469);
+		setBounds(100, 100, 671, 465);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
