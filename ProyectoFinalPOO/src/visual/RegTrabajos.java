@@ -22,11 +22,16 @@ public class RegTrabajos extends JDialog {
     public RegTrabajos(GestionEvento gestion) {
         this.gestion = gestion;
         setTitle("Registrar Trabajo Científico");
+        
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
+        
         setBounds(100, 100, 685, 500);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
+        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0, 102, 255));

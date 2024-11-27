@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.Color;
 import logico.*;
 
@@ -23,10 +25,15 @@ public class RegRecursos extends JDialog {
         this.gestion = gestion;
         setFont(new Font("Dialog", Font.BOLD, 12));
         setTitle("Registrar Recursos");
+        
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
+        
         setBounds(100, 100, 685, 500);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setLayout(new BorderLayout(0, 0));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
+        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0, 102, 255));

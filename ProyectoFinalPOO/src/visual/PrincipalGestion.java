@@ -17,6 +17,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import logico.GestionEvento;
 
 public class PrincipalGestion extends JFrame {
@@ -46,6 +49,9 @@ public class PrincipalGestion extends JFrame {
 	 */
 	public PrincipalGestion() {
 		gestion = new GestionEvento(); // Inicializar la instancia de GestionEvento
+		
+		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
 		
 		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");

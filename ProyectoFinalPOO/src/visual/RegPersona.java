@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -36,6 +38,10 @@ public class RegPersona extends JDialog {
 	 */
 	public RegPersona() {
 		setTitle("Registrar Persona");
+		
+		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
+		
 		setBackground(new Color(255, 255, 0));
 		getContentPane().setBackground(new Color(255, 255, 0));
 		setBounds(100, 100, 671, 465);
@@ -43,6 +49,7 @@ public class RegPersona extends JDialog {
 		contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		setLocationRelativeTo(null);
 		{
 			JPanel panel = new JPanel();
 			panel.setBackground(new Color(0, 102, 255));
