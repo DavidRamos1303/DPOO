@@ -17,11 +17,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
 import java.awt.Font;
+import logico.GestionEvento;
 
 public class PrincipalGestion extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension dim;
+	private GestionEvento gestion;
 
 	/**
 	 * Launch the application.
@@ -43,6 +45,8 @@ public class PrincipalGestion extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalGestion() {
+		gestion = new GestionEvento(); // Inicializar la instancia de GestionEvento
+		
 		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,12 +66,24 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
+		mntmNewMenuItem_1.addActionListener(e ->{
+			RegTrabajos dialog = new RegTrabajos(gestion);
+			dialog.setLocationRelativeTo(this);
+			dialog.setModal(true);
+			dialog.setVisible(true);
+		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Comisi\u00F3n");
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
+		mntmNewMenuItem_3.addActionListener(e -> {
+            RegRecursos dialog = new RegRecursos(gestion);
+            dialog.setLocationRelativeTo(this);
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        });
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
 		JMenu mnNewMenu_2 = new JMenu("Listar");

@@ -17,7 +17,7 @@ public class GestionEvento {
 	public static int codEvento = 1;
 	public static int codRecursos = 1;
 	
-	private GestionEvento() {
+	public GestionEvento() {
 		super();
 		misRecursos = new ArrayList<>();
 		misPersonas = new ArrayList<>();
