@@ -19,19 +19,28 @@ public class RegTrabajos extends JDialog {
     private JTextField txtTelefonoAutor;
     private GestionEvento gestion;
 
+    public static void main(String[] args) {
+        try {
+            RegTrabajos dialog = new RegTrabajos();
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public RegTrabajos() {
+        this(null);
+    }
+
     public RegTrabajos(GestionEvento gestion) {
-        this.gestion = gestion;
+        this.gestion = gestion != null ? gestion : new GestionEvento();
         setTitle("Registrar Trabajo Científico");
-        
-        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
-        setIconImage(icon);
-        
         setBounds(100, 100, 685, 500);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
-        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0, 102, 255));
@@ -89,7 +98,7 @@ public class RegTrabajos extends JDialog {
         panelAutor.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
                            "Datos del Autor", TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
         panelAutor.setBackground(new Color(0, 102, 255));
-        panelAutor.setBounds(12, 183, 643, 200); // Aumentado el alto para el nuevo campo
+        panelAutor.setBounds(12, 183, 643, 200);
         panel.add(panelAutor);
         panelAutor.setLayout(null);
 
