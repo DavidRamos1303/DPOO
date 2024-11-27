@@ -17,9 +17,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
-
 import logico.GestionEvento;
 
 public class PrincipalGestion extends JFrame {
@@ -49,9 +46,6 @@ public class PrincipalGestion extends JFrame {
 	 */
 	public PrincipalGestion() {
 		gestion = new GestionEvento(); // Inicializar la instancia de GestionEvento
-		
-		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
-        setIconImage(icon);
 		
 		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");
@@ -102,6 +96,12 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Trabajos Cient\u00EDficos");
+		mntmNewMenuItem_7.addActionListener(e -> {
+			ListTrabajosCientificos dialog = new ListTrabajosCientificos(gestion);
+            dialog.setLocationRelativeTo(this);
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        });
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Eventos");
