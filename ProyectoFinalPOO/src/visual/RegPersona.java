@@ -15,6 +15,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 public class RegPersona extends JDialog {
 
@@ -42,23 +43,24 @@ public class RegPersona extends JDialog {
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
 		
-		setBackground(new Color(255, 255, 0));
-		getContentPane().setBackground(new Color(255, 255, 0));
+		setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+		getContentPane().setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		setBounds(100, 100, 671, 465);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
+		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+		contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient")));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		setLocationRelativeTo(null);
 		{
 			JPanel panel = new JPanel();
-			panel.setBackground(new Color(0, 102, 255));
+			panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(null);
 			{
 				JPanel panel_1 = new JPanel();
-				panel_1.setBorder(new TitledBorder(null, "Datos generales:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
-				panel_1.setBackground(new Color(0, 102, 255));
+				panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos generales:", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+				panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 				panel_1.setBounds(10, 0, 633, 139);
 				panel.add(panel_1);
 				panel_1.setLayout(null);
@@ -66,7 +68,7 @@ public class RegPersona extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(new Color(255, 255, 0));
+			buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
