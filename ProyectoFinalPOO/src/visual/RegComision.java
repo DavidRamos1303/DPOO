@@ -14,6 +14,7 @@ import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import logico.Comision;
 import logico.GestionEvento;
 import logico.Jurado;
 import logico.Participante;
@@ -21,6 +22,7 @@ import logico.Persona;
 import logico.TrabajoCientifico;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
@@ -28,6 +30,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class RegComision extends JDialog {
 
@@ -44,8 +48,10 @@ public class RegComision extends JDialog {
 	private Object rowJuradoNoSelect[];
 	private Object rowTrabajoSelect[];
 	private Object rowTrabajoNoSelect[];
-	private JTextField textField;
+	private JTextField txtCodigo;
 	private String codComision;
+	private JTextField txtNombre;
+	private JComboBox cbxArea;
 
 	/**
 	 * Launch the application.
@@ -100,25 +106,27 @@ public class RegComision extends JDialog {
 			lblNewLabel_1.setBounds(10, 80, 48, 14);
 			panel_1.add(lblNewLabel_1);
 			
-			JTextPane textPane_1 = new JTextPane();
-			textPane_1.setBounds(67, 74, 161, 20);
-			panel_1.add(textPane_1);
-			
 			JLabel lblNewLabel_2 = new JLabel("\u00C1rea:");
 			lblNewLabel_2.setForeground(new Color(255, 255, 255));
 			lblNewLabel_2.setBounds(240, 31, 32, 14);
 			panel_1.add(lblNewLabel_2);
 			
-			JTextPane textPane_2 = new JTextPane();
-			textPane_2.setBounds(282, 31, 161, 20);
-			panel_1.add(textPane_2);
+			txtCodigo = new JTextField();
+			txtCodigo.setEditable(false);
+			txtCodigo.setText("C-"+GestionEvento.getInstance().codComision);
+			txtCodigo.setBounds(67, 28, 86, 20);
+			panel_1.add(txtCodigo);
+			txtCodigo.setColumns(10);
 			
-			textField = new JTextField();
-			textField.setEditable(false);
-			textField.setText("C-"+GestionEvento.getInstance().codComision);
-			textField.setBounds(67, 28, 86, 20);
-			panel_1.add(textField);
-			textField.setColumns(10);
+			txtNombre = new JTextField();
+			txtNombre.setBounds(67, 77, 161, 20);
+			panel_1.add(txtNombre);
+			txtNombre.setColumns(10);
+			
+			cbxArea = new JComboBox();
+			cbxArea.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Tecnolog\u00EDa e Inform\u00E1tica", "Ciencias de la Salud", "Ciencias Sociales", "Investigaci\u00F3n y Desarrollo"}));
+			cbxArea.setBounds(282, 28, 179, 20);
+			panel_1.add(cbxArea);
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new TitledBorder(null, "Jurados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
@@ -229,6 +237,48 @@ public class RegComision extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(modeloSelectJurado.getRowCount() > 0 && modeloSelecTrabajo.getRowCount() > 0 && !txtNombre.getText().isEmpty() 
+							&& cbxArea.getSelectedIndex() != 0) {
+							Comision comision = new Comision(txtCodigo.getText(), txtNombre.getText(),cbxArea.getSelectedItem().toString());
+							
+							for (Persona jurado : GestionEvento.getInstance().getMisPersonas()) {
+								if(jurado instanceof Jurado) {
+									if(((Jurado) jurado).isSeleccionado()) {
+										comision.getJurado().add((Jurado) jurado);
+										((Jurado) jurado).setSeleccionado(false);
+									}
+								}
+							}
+							
+							for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
+								if(trabajo.isSeleccionado()){
+									comision.getTrabajos().add(trabajo);
+									trabajo.setSeleccionado(false);
+								}	
+							}
+							
+							GestionEvento.getInstance().insertarComision(comision);
+							JOptionPane.showMessageDialog(null, "Comisión registrada con éxito");
+							clean();
+						}else if(txtNombre.getText().isEmpty() && cbxArea.getSelectedIndex() == 0) {
+							JOptionPane.showMessageDialog(null, "Debe completar todos los datos generales.");
+						}else if(modeloSelectJurado.getRowCount() == 0) {
+							JOptionPane.showMessageDialog(null, "Debe ingresar al menos un jurado.");
+						}else if(modeloSelecTrabajo.getRowCount() == 0) {
+							JOptionPane.showMessageDialog(null, "Debe ingresar al menos un trabajo científico.");
+						}
+						
+						
+					}
+
+					private void clean() {
+						txtNombre.setText("");
+						cbxArea.setSelectedIndex(0);
+						txtCodigo.setText("C-"+GestionEvento.getInstance().codComision);
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -240,9 +290,9 @@ public class RegComision extends JDialog {
 			}
 		}
 		loadJurados();
-		//loadSelectJurados();
+		loadSelectJurados();
 		loadNoSelectTrabajos();
-		//loadSelectTrabajos();
+		loadSelectTrabajos();
 	}
 	
 	private void loadJurados() {
@@ -297,17 +347,4 @@ public class RegComision extends JDialog {
 	    }
 	}
 	
-	private void asignarTrabajo(TrabajoCientifico trabajo) {
-	    trabajo.setSeleccionado(true);
-	    GestionEvento.getInstance().asignarTrabajoAComision(trabajo, codComision);
-	    loadNoSelectTrabajos();
-	    loadSelectTrabajos();
-	}
-
-	private void desasignarTrabajo(TrabajoCientifico trabajo) {
-	    trabajo.setSeleccionado(false);
-	    GestionEvento.getInstance().removerTrabajoDeComision(trabajo, codComision);
-	    loadNoSelectTrabajos();
-	    loadSelectTrabajos();
-	}
 }

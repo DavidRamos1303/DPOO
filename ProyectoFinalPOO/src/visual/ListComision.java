@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,6 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import logico.Comision;
+import logico.GestionEvento;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -20,6 +26,8 @@ import javax.swing.border.BevelBorder;
 public class ListComision extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private DefaultTableModel modelo;
+	private Object row[];
 	private JTable table;
 	
 
@@ -65,9 +73,14 @@ public class ListComision extends JDialog {
 			
 			JScrollPane scrollPane = new JScrollPane();
 			panel_1.add(scrollPane, BorderLayout.CENTER);
-			
+			{
 			table = new JTable();
+			modelo = new DefaultTableModel();
+			String [] identificadores = {"Código", "Nombre", "Area"};
+			modelo.setColumnIdentifiers(identificadores);
+			table.setModel(modelo);
 			scrollPane.setViewportView(table);
+			}
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -89,6 +102,18 @@ public class ListComision extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+		loadComisiones();
+	}
+	private void loadComisiones() {
+		modelo.setRowCount(0);
+		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
+		row = new Object[table.getColumnCount()];
+		for (Comision comision : aux) {
+			row[0] = comision.getCodComision();
+			row[1] = comision.getNombre();
+			row[2] = comision.getArea();
+			modelo.addRow(row);
 		}
 	}
 }
