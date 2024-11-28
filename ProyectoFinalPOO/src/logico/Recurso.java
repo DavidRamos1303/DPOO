@@ -7,12 +7,12 @@ public class Recurso {
 	protected String tipo;
 	protected Boolean disponibilidad;
 	
-	public Recurso(String id, String nombre, String tipo, Boolean disponibilidad) {
+	public Recurso(String id, String nombre, String tipo) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
-		this.disponibilidad = disponibilidad;
+		this.disponibilidad = true;
 	}
 
 	public String getId() {

@@ -4,8 +4,8 @@ public class RecursoLocal extends Recurso {
 
 	private String ciudad;
 	
-	public RecursoLocal(String id, String nombre, String tipo, Boolean disponibilidad, String ciudad) {
-		super(id, nombre, tipo, disponibilidad);
+	public RecursoLocal(String id, String nombre, String tipo, String ciudad) {
+		super(id, nombre, tipo);
 		this.ciudad = ciudad;
 	}
 
