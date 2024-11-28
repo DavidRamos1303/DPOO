@@ -17,7 +17,6 @@ public class RegTrabajos extends JDialog {
     private JTextField txtApellidosAutor;
     private JTextField txtEmailAutor;
     private JTextField txtTelefonoAutor;
-    private GestionEvento gestion;
 
     public static void main(String[] args) {
         try {
@@ -30,17 +29,13 @@ public class RegTrabajos extends JDialog {
     }
 
     public RegTrabajos() {
-        this(null);
-    }
-
-    public RegTrabajos(GestionEvento gestion) {
-        this.gestion = gestion != null ? gestion : new GestionEvento();
         setTitle("Registrar Trabajo Científico");
         
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
         
         setBounds(100, 100, 685, 500);
+        setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -48,14 +43,19 @@ public class RegTrabajos extends JDialog {
 
         JPanel panel = new JPanel();
         panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient")));
+        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient")));
         contentPanel.add(panel);
         panel.setLayout(null);
 
         // Panel Datos del Trabajo
         JPanel panel_1 = new JPanel();
         panel_1.setForeground(Color.WHITE);
-        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos del Trabajo", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+            "Datos del Trabajo", TitledBorder.LEADING, TitledBorder.TOP, null, 
+            UIManager.getColor("FormattedTextField.foreground")));
         panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         panel_1.setBounds(12, 13, 643, 157);
         panel.add(panel_1);
@@ -69,6 +69,8 @@ public class RegTrabajos extends JDialog {
         panel_1.add(lblId);
 
         txtId = new JTextField();
+        txtId.setEditable(false);
+        txtId.setText("T-"+GestionEvento.getInstance().codTrabajos);
         txtId.setBounds(34, 29, 116, 22);
         panel_1.add(txtId);
 
@@ -86,7 +88,7 @@ public class RegTrabajos extends JDialog {
         // Área
         JLabel lblArea = new JLabel("Área:");
         lblArea.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblArea.setForeground(UIManager.getColor("InternalFrame.activeTitleForeground"));
+        lblArea.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblArea.setBounds(12, 116, 56, 16);
         panel_1.add(lblArea);
 
@@ -97,7 +99,9 @@ public class RegTrabajos extends JDialog {
         // Panel Datos del Autor
         panelAutor = new JPanel();
         panelAutor.setForeground(Color.WHITE);
-        panelAutor.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos del Autor", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+        panelAutor.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+            "Datos del Autor", TitledBorder.LEADING, TitledBorder.TOP, null, 
+            UIManager.getColor("FormattedTextField.foreground")));
         panelAutor.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         panelAutor.setBounds(12, 183, 643, 200);
         panel.add(panelAutor);
@@ -187,10 +191,22 @@ public class RegTrabajos extends JDialog {
         buttonPane.add(cancelButton);
     }
 
+    private void clean() {
+        GestionEvento.getInstance().codTrabajos++;
+        txtId.setText("T-" + GestionEvento.getInstance().codTrabajos);
+        txtNombre.setText("");
+        txtArea.setText("");
+        txtIdAutor.setText("");
+        txtCedulaAutor.setText("");
+        txtNombreAutor.setText("");
+        txtApellidosAutor.setText("");
+        txtEmailAutor.setText("");
+        txtTelefonoAutor.setText("");
+    }
+
     private void registrarTrabajo() {
         // Validar campos del trabajo
-        if (txtId.getText().trim().isEmpty() || 
-            txtNombre.getText().trim().isEmpty() || 
+        if (txtNombre.getText().trim().isEmpty() || 
             txtArea.getText().trim().isEmpty()) {
             
             JOptionPane.showMessageDialog(this, 
@@ -235,24 +251,24 @@ public class RegTrabajos extends JDialog {
 
         // Agregar el autor a la lista de personas si no existe
         boolean autorExiste = false;
-        for (Persona p : gestion.getMisPersonas()) {
+        for (Persona p : GestionEvento.getInstance().getMisPersonas()) {
             if (p.getCedula().equals(autor.getCedula())) {
                 autorExiste = true;
                 break;
             }
         }
         if (!autorExiste) {
-            gestion.getMisPersonas().add(autor);
+            GestionEvento.getInstance().getMisPersonas().add(autor);
         }
 
         // Agregar el trabajo
-        gestion.getMisTrabajosCientificos().add(nuevoTrabajo);
+        GestionEvento.getInstance().getMisTrabajosCientificos().add(nuevoTrabajo);
 
         JOptionPane.showMessageDialog(this,
             "Trabajo científico registrado exitosamente",
             "Registro",
             JOptionPane.INFORMATION_MESSAGE);
         
-        dispose();
+        clean();
     }
 }
