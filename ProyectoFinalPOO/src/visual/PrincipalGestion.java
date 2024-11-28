@@ -18,6 +18,8 @@ import javax.swing.UIManager;
 import javax.swing.JTextField;
 import java.awt.Font;
 import logico.GestionEvento;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PrincipalGestion extends JFrame {
 
@@ -74,6 +76,13 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Comisi\u00F3n");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegComision regcomision = new RegComision();
+				regcomision.setModal(true);
+				regcomision.setVisible(true);
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
