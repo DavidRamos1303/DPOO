@@ -47,7 +47,7 @@ public class PrincipalGestion extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalGestion() {
-		gestion = new GestionEvento(); // Inicializar la instancia de GestionEvento
+		gestion = new GestionEvento();
 		
 		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");
