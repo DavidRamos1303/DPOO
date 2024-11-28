@@ -29,7 +29,6 @@ public class PrincipalGestion extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension dim;
-	private GestionEvento gestion;
 
 	/**
 	 * Launch the application.
@@ -51,8 +50,6 @@ public class PrincipalGestion extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalGestion() {
-		gestion = new GestionEvento();
-		
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
 		
@@ -76,7 +73,7 @@ public class PrincipalGestion extends JFrame {
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
 		mntmNewMenuItem_1.addActionListener(e ->{
-			RegTrabajos dialog = new RegTrabajos(gestion);
+			RegTrabajos dialog = new RegTrabajos();
 			dialog.setModal(true);
 			dialog.setVisible(true);
 		});
@@ -94,7 +91,7 @@ public class PrincipalGestion extends JFrame {
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
 		mntmNewMenuItem_3.addActionListener(e -> {
-            RegRecursos dialog = new RegRecursos(gestion);
+            RegRecursos dialog = new RegRecursos();
             dialog.setModal(true);
             dialog.setVisible(true);
         });
@@ -111,7 +108,7 @@ public class PrincipalGestion extends JFrame {
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Trabajos Cient\u00EDficos");
 		mntmNewMenuItem_7.addActionListener(e -> {
-			ListTrabajosCientificos dialog = new ListTrabajosCientificos(gestion);
+			ListTrabajosCientificos dialog = new ListTrabajosCientificos();
             dialog.setLocationRelativeTo(this);
             dialog.setModal(true);
             dialog.setVisible(true);
