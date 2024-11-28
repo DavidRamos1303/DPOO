@@ -36,6 +36,10 @@ public class RegTrabajos extends JDialog {
     public RegTrabajos(GestionEvento gestion) {
         this.gestion = gestion != null ? gestion : new GestionEvento();
         setTitle("Registrar Trabajo Científico");
+        
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
+        
         setBounds(100, 100, 685, 500);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

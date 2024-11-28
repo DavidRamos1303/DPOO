@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.Color;
 import logico.*;
 
@@ -33,6 +35,10 @@ public class RegRecursos extends JDialog {
 
     public RegRecursos(GestionEvento gestion) {
         this.gestion = gestion != null ? gestion : new GestionEvento();
+        
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
+        
         setFont(new Font("Dialog", Font.BOLD, 12));
         setTitle("Registrar Recursos");
         setBounds(100, 100, 685, 500);

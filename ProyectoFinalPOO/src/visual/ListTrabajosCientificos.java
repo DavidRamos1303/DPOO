@@ -28,6 +28,8 @@ public class ListTrabajosCientificos extends JDialog {
 
     public ListTrabajosCientificos(GestionEvento gestion) {
         this.gestion = gestion != null ? gestion : new GestionEvento();
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
         setTitle("Listar Trabajos Científicos");
         setBounds(100, 100, 800, 500);
         getContentPane().setLayout(new BorderLayout());
