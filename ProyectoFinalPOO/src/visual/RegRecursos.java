@@ -16,7 +16,6 @@ public class RegRecursos extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTextField txt_Id;
     private JTextField txt_Nombre;
-    private GestionEvento gestion;
     private JTextField txt_tipo;
     private JPanel panel_otro;
     private JPanel panel_campus;
@@ -35,11 +34,6 @@ public class RegRecursos extends JDialog {
     }
 
     public RegRecursos() {
-        this(null);
-    }
-
-    public RegRecursos(GestionEvento gestion) {
-        this.gestion = gestion != null ? gestion : new GestionEvento();
         
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
@@ -50,6 +44,7 @@ public class RegRecursos extends JDialog {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
+        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
@@ -134,7 +129,7 @@ public class RegRecursos extends JDialog {
         panel_campus.setLayout(null);
         
         cmbCampus = new JComboBox();
-        cmbCampus.setModel(new DefaultComboBoxModel(new String[] {"", "Campus Santiago", "Campus Santo Domingo"}));
+        cmbCampus.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Campus Santiago", "Campus Santo Domingo"}));
         cmbCampus.setBounds(27, 20, 164, 22);
         panel_campus.add(cmbCampus);
         
@@ -216,7 +211,6 @@ public class RegRecursos extends JDialog {
     }
 
     private void clean() {
-        GestionEvento.getInstance().codRecursos++;
         txt_Id.setText("R-" + GestionEvento.getInstance().codRecursos);
         txt_Nombre.setText("");
         txt_tipo.setText("");
