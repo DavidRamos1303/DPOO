@@ -68,7 +68,6 @@ public class PrincipalGestion extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
 		mntmNewMenuItem_1.addActionListener(e ->{
 			RegTrabajos dialog = new RegTrabajos(gestion);
-			dialog.setLocationRelativeTo(this);
 			dialog.setModal(true);
 			dialog.setVisible(true);
 		});
@@ -80,7 +79,6 @@ public class PrincipalGestion extends JFrame {
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
 		mntmNewMenuItem_3.addActionListener(e -> {
             RegRecursos dialog = new RegRecursos(gestion);
-            dialog.setLocationRelativeTo(this);
             dialog.setModal(true);
             dialog.setVisible(true);
         });
