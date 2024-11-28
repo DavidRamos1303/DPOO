@@ -50,7 +50,7 @@ public class PrincipalGestion extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalGestion() {
-		gestion = new GestionEvento(); // Inicializar la instancia de GestionEvento
+		gestion = new GestionEvento();
 		
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);

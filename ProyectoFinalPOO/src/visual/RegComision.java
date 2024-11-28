@@ -40,7 +40,10 @@ public class RegComision extends JDialog {
 	private DefaultTableModel modeloSelectJurado;
 	private DefaultTableModel modeloNoSelectTrabajo;
 	private DefaultTableModel modeloSelecTrabajo;
-	private Object row[];
+	private Object rowJuradoSelect[];
+	private Object rowJuradoNoSelect[];
+	private Object rowTrabajoSelect[];
+	private Object rowTrabajoNoSelect[];
 	private JTextField textField;
 	private String codComision;
 
@@ -192,41 +195,14 @@ public class RegComision extends JDialog {
 			            for(int i = 0; i < table.getColumnCount(); i++) {
 			                rowData[i] = modeloNoSelectTrabajo.getValueAt(selectedRow, i);
 			            }
-			            
-			            
+
 			            modeloSelecTrabajo.addRow(rowData);
-			            
 			            modeloNoSelectTrabajo.removeRow(selectedRow);
-			            
-			            
 			        }
 			    }
 			});
 			btnNewButton_2.setBounds(182, 190, 89, 23);
 			panel_3.add(btnNewButton_2);
-			
-			JButton btnNewButton_3 = new JButton("Quitar");
-			btnNewButton_3.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			        int selectedRow = table_1.getSelectedRow();
-			        if(selectedRow >= 0) {
-			           
-			            Object[] rowData = new Object[table_1.getColumnCount()];
-			            for(int i = 0; i < table_1.getColumnCount(); i++) {
-			                rowData[i] = modeloSelecTrabajo.getValueAt(selectedRow, i);
-			            }
-			            
-			            
-			            modeloNoSelectTrabajo.addRow(rowData);
-			            
-			            modeloSelecTrabajo.removeRow(selectedRow);
-			            
-			            
-			        }
-			    }
-			});
-			btnNewButton_3.setBounds(182, 190, 89, 23);
-			panel_3.add(btnNewButton_3);
 			
 			JPanel panel_7 = new JPanel();
 			panel_7.setBounds(278, 25, 162, 299);
@@ -241,6 +217,10 @@ public class RegComision extends JDialog {
 			modeloSelecTrabajo.setColumnIdentifiers(identificadoresTrabajos); 
 			table_3.setModel(modeloSelecTrabajo); 
 			scrollPane_3.setViewportView(table_3);
+			
+			JButton btnNewButton_3 = new JButton("Quitar");
+			btnNewButton_3.setBounds(182, 224, 89, 23);
+			panel_3.add(btnNewButton_3);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -260,21 +240,21 @@ public class RegComision extends JDialog {
 			}
 		}
 		loadJurados();
-		loadSelectJurados();
+		//loadSelectJurados();
 		loadNoSelectTrabajos();
-		loadSelectTrabajos();
+		//loadSelectTrabajos();
 	}
 	
 	private void loadJurados() {
 		modeloNoSelectJurado.setRowCount(0);
 		ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas();
-		row = new Object[table.getColumnCount()];
+		rowJuradoSelect = new Object[table.getColumnCount()];
 		for(Persona persona : aux) {
 			if(persona instanceof Jurado) {
-				row[0] = persona.getNombre();
-				row[1] = persona.getCedula();
-				row[0] = ((Jurado) persona).getArea();
-				modeloNoSelectJurado.addRow(row);
+				rowJuradoSelect[0] = persona.getNombre();
+				rowJuradoSelect[1] = persona.getCedula();
+				rowJuradoSelect[0] = ((Jurado) persona).getArea();
+				modeloNoSelectJurado.addRow(rowJuradoSelect);
 			}
 		}
 	}
@@ -282,49 +262,37 @@ public class RegComision extends JDialog {
 	private void loadSelectJurados() { 
 		modeloSelectJurado.setRowCount(0);  
 		ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas(); 
-		row = new Object[table_1.getColumnCount()]; 
+		rowJuradoNoSelect = new Object[table_1.getColumnCount()]; 
 		for (Persona persona : aux) { 
 			if (persona instanceof Jurado && ((Jurado) persona).isSeleccionado()) { 
-			row[0] = persona.getNombre(); 
-			row[1] = persona.getCedula(); 
-			row[2] = ((Jurado) persona).getArea(); modeloSelectJurado.addRow(row); 
+				rowJuradoNoSelect[0] = persona.getNombre(); 
+				rowJuradoNoSelect[1] = persona.getCedula(); 
+				rowJuradoNoSelect[2] = ((Jurado) persona).getArea(); modeloSelectJurado.addRow(rowJuradoNoSelect); 
 			} 
 		} 
 	}
 	
 	private void loadNoSelectTrabajos() {
 	    modeloNoSelectTrabajo.setRowCount(0);
-	    
-	    for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
-	        if (!trabajo.isSeleccionado()) {  
-	            Participante autor = trabajo.getAutor();
-	            Object[] row = {
-	                trabajo.getId(),
-	                trabajo.getNombre(),
-	                trabajo.getArea(),
-	                autor.getNombre() + " " + autor.getApellidos(),
-	                autor.getEmail()
-	            };
-	            modeloNoSelectTrabajo.addRow(row);
-	        }
+	    ArrayList<TrabajoCientifico> aux = GestionEvento.getInstance().getMisTrabajosCientificos();
+	    rowTrabajoNoSelect = new Object[table_2.getColumnCount()];
+	    for (TrabajoCientifico trabajo : aux) {
+	    	rowTrabajoNoSelect[0] = trabajo.getNombre();
+	    	rowTrabajoNoSelect[1] = trabajo.getAutor();
+	        modeloNoSelectTrabajo.addRow(rowTrabajoNoSelect);
 	    }
 	}
 
 
 	private void loadSelectTrabajos() {
 	    modeloSelecTrabajo.setRowCount(0);
-	    
-	    for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
-	        if (trabajo.isSeleccionado()) {  
-	            Participante autor = trabajo.getAutor();
-	            Object[] row = {
-	                trabajo.getId(),
-	                trabajo.getNombre(),
-	                trabajo.getArea(),
-	                autor.getNombre() + " " + autor.getApellidos(),
-	                autor.getEmail()
-	            };
-	            modeloSelecTrabajo.addRow(row);
+	    ArrayList<TrabajoCientifico> aux = GestionEvento.getInstance().getMisTrabajosCientificos();
+	    rowTrabajoSelect = new Object[table_3.getColumnCount()];
+	    for (TrabajoCientifico trabajo : aux) {
+	        if (trabajo.isSeleccionado()) {
+	        	rowTrabajoSelect[0] = trabajo.getNombre();
+	        	rowTrabajoSelect[1] = trabajo.getAutor();
+	            modeloSelecTrabajo.addRow(rowTrabajoSelect);
 	        }
 	    }
 	}
