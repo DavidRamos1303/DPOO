@@ -147,4 +147,38 @@ public class GestionEvento {
 			}
 		}return null;
 	}
+	
+	
+
+	public ArrayList<TrabajoCientifico> getTrabajosPorComision(String codComision) {
+		
+	    ArrayList<TrabajoCientifico> trabajosEnComision = new ArrayList<>();
+	    for (Comision comision : misComisiones) {
+	        if (comision.getCodComision().equals(codComision)) {
+	            trabajosEnComision.addAll(comision.getTrabajos());
+	            break;
+	        }
+	    }
+	    return trabajosEnComision;
+	}
+
+	public void asignarTrabajoAComision(TrabajoCientifico trabajo, String codComision) {
+	    for (Comision comision : misComisiones) {
+	        if (comision.getCodComision().equals(codComision)) {
+	            comision.getTrabajos().add(trabajo);
+	            break;
+	        }
+	    }
+	}
+
+	public void removerTrabajoDeComision(TrabajoCientifico trabajo, String codComision) {
+	    for (Comision comision : misComisiones) {
+	        if (comision.getCodComision().equals(codComision)) {
+	            comision.getTrabajos().remove(trabajo);
+	            break;
+	        }
+	    }
+	}
 }
+
+
