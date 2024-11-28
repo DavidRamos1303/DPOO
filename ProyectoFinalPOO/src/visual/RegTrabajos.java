@@ -239,7 +239,6 @@ public class RegTrabajos extends JDialog {
             txtEmailAutor.getText().trim(),
             txtTelefonoAutor.getText().trim()
         );
-        autor.setId(txtIdAutor.getText().trim());
 
         // Crear el trabajo científico
         TrabajoCientifico nuevoTrabajo = new TrabajoCientifico(

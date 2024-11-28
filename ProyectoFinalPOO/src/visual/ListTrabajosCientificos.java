@@ -56,7 +56,7 @@ public class ListTrabajosCientificos extends JDialog {
         panelTable.add(scrollPane, BorderLayout.CENTER);
 
         model = new DefaultTableModel();
-        String[] headers = {"ID", "Nombre", "Área", "Autor", "Email Autor"};
+        String[] headers = {"ID", "Nombre", "Área", "Autor", "Cédula Autor"};
         model.setColumnIdentifiers(headers);
 
         table = new JTable();
@@ -87,8 +87,7 @@ public class ListTrabajosCientificos extends JDialog {
     }
 
     private void loadTrabajos() {
-        model.setRowCount(0); // Limpiar la tabla
-        
+        model.setRowCount(0); 
         for (TrabajoCientifico trabajo : gestion.getMisTrabajosCientificos()) {
             Participante autor = trabajo.getAutor();
             Object[] row = {
@@ -96,7 +95,7 @@ public class ListTrabajosCientificos extends JDialog {
                 trabajo.getNombre(),
                 trabajo.getArea(),
                 autor.getNombre() + " " + autor.getApellidos(),
-                autor.getEmail()
+                autor.getCedula()
             };
             model.addRow(row);
         }
