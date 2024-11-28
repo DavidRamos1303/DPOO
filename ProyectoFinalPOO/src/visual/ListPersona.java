@@ -48,20 +48,20 @@ public class ListPersona extends JDialog {
 		
 		setBounds(100, 100, 669, 450);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(255, 255, 0));
+		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		setLocationRelativeTo(null);
 		{
 			JPanel panel = new JPanel();
-			panel.setBackground(new Color(0, 102, 255));
+			panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(null);
 			{
 				JPanel panel_1 = new JPanel();
-				panel_1.setBackground(new Color(0, 102, 255));
-				panel_1.setBorder(new TitledBorder(null, "Participantes", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
+				panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+				panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Participantes", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
 				panel_1.setBounds(10, 11, 296, 350);
 				panel.add(panel_1);
 				panel_1.setLayout(new BorderLayout(0, 0));
@@ -74,8 +74,8 @@ public class ListPersona extends JDialog {
 			}
 			{
 				JPanel panel_1 = new JPanel();
-				panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Jurados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
-				panel_1.setBackground(new Color(0, 102, 255));
+				panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Jurados", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+				panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 				panel_1.setBounds(341, 11, 296, 350);
 				panel.add(panel_1);
 				panel_1.setLayout(new BorderLayout(0, 0));
@@ -89,7 +89,7 @@ public class ListPersona extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(new Color(255, 255, 0));
+			buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{

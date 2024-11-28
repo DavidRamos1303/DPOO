@@ -23,6 +23,7 @@ import java.awt.Toolkit;
 import logico.GestionEvento;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class PrincipalGestion extends JFrame {
 
@@ -129,13 +130,13 @@ public class PrincipalGestion extends JFrame {
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Planificar evento");
 		mnNewMenu_1.add(mntmNewMenuItem_4);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 0));
+		contentPane.setBackground(UIManager.getColor("FormattedTextField.inactiveForeground"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 102, 255));
+		panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 	}

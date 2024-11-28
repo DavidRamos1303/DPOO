@@ -72,19 +72,19 @@ public class RegComision extends JDialog {
 		setBounds(100, 100, 967, 576);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(255, 255, 0));
+		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		setLocationRelativeTo(null);
 		{
 			JPanel panel = new JPanel();
-			panel.setBackground(new Color(0, 102, 255));
+			panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(null);
 			
 			JPanel panel_1 = new JPanel();
-			panel_1.setBackground(new Color(0, 102, 255));
+			panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			panel_1.setBorder(new TitledBorder(null, "Datos:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
 			panel_1.setBounds(10, 11, 922, 117);
 			panel.add(panel_1);
@@ -122,7 +122,7 @@ public class RegComision extends JDialog {
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new TitledBorder(null, "Jurados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
-			panel_2.setBackground(new Color(0, 102, 255));
+			panel_2.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			panel_2.setBounds(10, 139, 450, 333);
 			panel.add(panel_2);
 			panel_2.setLayout(null);
@@ -165,7 +165,7 @@ public class RegComision extends JDialog {
 			
 			JPanel panel_3 = new JPanel();
 			panel_3.setBorder(new TitledBorder(null, "Trabajos Cient\u00EDficos:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
-			panel_3.setBackground(new Color(0, 102, 255));
+			panel_3.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			panel_3.setBounds(482, 139, 450, 333);
 			panel.add(panel_3);
 			panel_3.setLayout(null);
@@ -224,7 +224,7 @@ public class RegComision extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(new Color(255, 255, 0));
+			buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
