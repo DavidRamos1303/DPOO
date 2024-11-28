@@ -47,37 +47,34 @@ public class RegRecursos extends JDialog {
         contentPanel.setLayout(new BorderLayout(0, 0));
 
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(0, 102, 255));
-        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), 
-                       new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
+        panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient")));
         contentPanel.add(panel);
         panel.setLayout(null);
         
         JPanel panel_1 = new JPanel();
         panel_1.setForeground(new Color(255, 255, 255));
-        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
-                         "Datos Generales", TitledBorder.LEADING, TitledBorder.TOP, null, 
-                         new Color(255, 255, 255)));
-        panel_1.setBackground(new Color(0, 102, 255));
+        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos Generales", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+        panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         panel_1.setBounds(12, 0, 643, 157);
         panel.add(panel_1);
         panel_1.setLayout(null);
         
         JLabel lblNewLabel = new JLabel("ID:");
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblNewLabel.setForeground(new Color(255, 255, 255));
+        lblNewLabel.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblNewLabel.setBounds(12, 32, 26, 16);
         panel_1.add(lblNewLabel);
         
         JLabel lblNewLabel_1 = new JLabel("Nombre:");
         lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblNewLabel_1.setForeground(new Color(255, 255, 255));
+        lblNewLabel_1.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblNewLabel_1.setBounds(12, 74, 56, 16);
         panel_1.add(lblNewLabel_1);
         
         JLabel lblNewLabel_2 = new JLabel("Tipo:");
         lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblNewLabel_2.setForeground(new Color(255, 255, 255));
+        lblNewLabel_2.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblNewLabel_2.setBounds(12, 116, 56, 16);
         panel_1.add(lblNewLabel_2);
         
@@ -97,7 +94,7 @@ public class RegRecursos extends JDialog {
         textField_2.setColumns(10);
         
         JLabel lblNewLabel_3 = new JLabel("Disponibilidad");
-        lblNewLabel_3.setForeground(new Color(255, 255, 255));
+        lblNewLabel_3.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblNewLabel_3.setBounds(330, 32, 99, 16);
         panel_1.add(lblNewLabel_3);
@@ -105,28 +102,30 @@ public class RegRecursos extends JDialog {
         rdbtnDisponible = new JRadioButton("");
         rdbtnDisponible.setSelected(true);
         rdbtnDisponible.setBounds(435, 32, 20, 20);
-        rdbtnDisponible.setBackground(new Color(0, 102, 255));
+        rdbtnDisponible.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         panel_1.add(rdbtnDisponible);
 
         rdbtnLocal = new JRadioButton("Recurso Local");
         rdbtnLocal.setFont(new Font("Tahoma", Font.BOLD, 13));
-        rdbtnLocal.setForeground(Color.WHITE);
-        rdbtnLocal.setBackground(new Color(0, 102, 255));
+        rdbtnLocal.setForeground(UIManager.getColor("FormattedTextField.foreground"));
+        rdbtnLocal.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         rdbtnLocal.setBounds(330, 70, 120, 20);
         panel_1.add(rdbtnLocal);
         
         JPanel buttonPane = new JPanel();
-        buttonPane.setBackground(new Color(255, 255, 0));
+        buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
         
         JButton okButton = new JButton("Registrar");
+        okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         okButton.addActionListener(e -> registrarRecurso());
         okButton.setActionCommand("OK");
         buttonPane.add(okButton);
         getRootPane().setDefaultButton(okButton);
         
         JButton cancelButton = new JButton("Cancelar");
+        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         cancelButton.addActionListener(e -> dispose());
         cancelButton.setActionCommand("Cancel");
         buttonPane.add(cancelButton);

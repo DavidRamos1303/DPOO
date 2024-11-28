@@ -38,22 +38,21 @@ public class ListTrabajosCientificos extends JDialog {
         contentPanel.setLayout(new BorderLayout(0, 0));
 
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(0, 102, 255));
-        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), 
-                       new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
+        panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient")));
         contentPanel.add(panel);
         panel.setLayout(null);
 
         JPanel panelTable = new JPanel();
         panelTable.setForeground(Color.WHITE);
-        panelTable.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
-                           "Trabajos Científicos", TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
-        panelTable.setBackground(new Color(0, 102, 255));
-        panelTable.setBounds(12, 0, 750, 408);
+        panelTable.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Trabajos Cient\u00EDficos", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+        panelTable.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        panelTable.setBounds(12, 13, 748, 382);
         panel.add(panelTable);
         panelTable.setLayout(new BorderLayout(0, 0));
 
         JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         panelTable.add(scrollPane, BorderLayout.CENTER);
 
         model = new DefaultTableModel();
@@ -65,12 +64,23 @@ public class ListTrabajosCientificos extends JDialog {
         scrollPane.setViewportView(table);
 
         JPanel buttonPane = new JPanel();
-        buttonPane.setBackground(new Color(255, 255, 0));
+        buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton cancelButton = new JButton("Cancelar");
+        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         cancelButton.addActionListener(e -> dispose());
+        
+        JButton btnNewButton_1 = new JButton("Modificar");
+        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnNewButton_1.setEnabled(false);
+        buttonPane.add(btnNewButton_1);
+        
+        JButton btnNewButton = new JButton("Eliminar");
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnNewButton.setEnabled(false);
+        buttonPane.add(btnNewButton);
         buttonPane.add(cancelButton);
 
         loadTrabajos();
