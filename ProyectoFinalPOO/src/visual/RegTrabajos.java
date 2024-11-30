@@ -236,7 +236,6 @@ public class RegTrabajos extends JDialog {
             txtCedulaAutor.getText().trim(),
             txtNombreAutor.getText().trim(),
             txtApellidosAutor.getText().trim(),
-            txtEmailAutor.getText().trim(),
             txtTelefonoAutor.getText().trim()
         );
 

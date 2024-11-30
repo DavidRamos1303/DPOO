@@ -119,6 +119,13 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Recursos");
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListRecursos listarRecursos = new ListRecursos();
+				listarRecursos.setModal(true);
+				listarRecursos.setVisible(true);
+			}
+		});
 		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Trabajos Cient\u00EDficos");

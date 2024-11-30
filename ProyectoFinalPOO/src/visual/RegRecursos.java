@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Component;
+
 import logico.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,55 @@ public class RegRecursos extends JDialog {
     private JRadioButton rdLocal;
     private JRadioButton rdOtro;
     private JComboBox cmbCampus;
+    private Recurso recursoAModificar = null;
+    
+    public RegRecursos(Recurso recurso) {
+        this(); 
+        
+        try {
+            this.recursoAModificar = recurso;
+            setTitle("Modificar Recurso");
+            
+            txt_Id.setText(recurso.getId());
+            txt_Nombre.setText(recurso.getNombre());
+            
+            if(recurso instanceof RecursoLocal) {
+                rdLocal.setSelected(true);
+                rdOtro.setSelected(false);
+                panel_campus.setVisible(true);
+                panel_otro.setVisible(false);
+                cmbCampus.setSelectedItem(((RecursoLocal) recurso).getCiudad());
+            } else {
+                rdLocal.setSelected(false);
+                rdOtro.setSelected(true);
+                panel_campus.setVisible(false);
+                panel_otro.setVisible(true);
+                txt_tipo.setText(recurso.getTipo());
+            }
+            
+            for (Component comp : getContentPane().getComponents()) {
+                if (comp instanceof JPanel) {
+                    JPanel panel = (JPanel) comp;
+                    for (Component btn : panel.getComponents()) {
+                        if (btn instanceof JButton) {
+                            JButton button = (JButton) btn;
+                            if (button.getText().equals("Registrar")) {
+                                button.setText("Modificar");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                "Error al cargar los datos del recurso",
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public static void main(String[] args) {
         try {
