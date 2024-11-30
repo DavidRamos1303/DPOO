@@ -22,6 +22,7 @@ public class Evento {
 		this.estado = true;
 		comisiones = new ArrayList<>();
 		recursos = new ArrayList<>();
+		this.estado = true;
 	}
 	
 	public String getId() {
