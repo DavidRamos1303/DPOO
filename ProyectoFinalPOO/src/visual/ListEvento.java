@@ -15,13 +15,31 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import logico.Evento;
+import logico.GestionEvento;
+
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
+import javax.swing.ScrollPaneConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class ListEvento extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private static DefaultTableModel modelo;
+	private static Object[] row;
+	private int index = -1;
+	private Evento selected = null;
 	private JTable table;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JButton btnVerReporte;
 
 	/**
 	 * Launch the application.
@@ -41,12 +59,13 @@ public class ListEvento extends JDialog {
 	 */
 	public ListEvento() {
 		setTitle("Litar Eventos");
-		setBounds(100, 100, 578, 396);
+		setBounds(100, 100, 696, 467);
 		
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
 		
 		getContentPane().setLayout(new BorderLayout());
+		setLocationRelativeTo(null);
 		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -59,9 +78,31 @@ public class ListEvento extends JDialog {
 			panel.setLayout(new BorderLayout(0, 0));
 			{
 				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{
 					table = new JTable();
+					table.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							index = table.getSelectedRow();
+							if(index > 0) {
+								String cod = table.getValueAt(index, 0).toString();
+								selected = GestionEvento.getInstance().buscarEventoID(cod);
+								if(selected != null && selected.getEstado()) {
+									btnModificar.setEnabled(true);
+									btnEliminar.setEnabled(true);
+								}else if(selected != null && !(selected.getEstado())) {
+									btnVerReporte.setEnabled(true);
+								}
+							}
+						}
+					});
+					scrollPane.setViewportView(table);
+					modelo = new DefaultTableModel();
+					String[] identificadores = {"Código", "Titulo", "Tipo", "Fecha", "Estado"};
+					modelo.setColumnIdentifiers(identificadores);
+					table.setModel(modelo);
 					scrollPane.setViewportView(table);
 				}
 			}
@@ -72,17 +113,35 @@ public class ListEvento extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnEliminar = new JButton("Eliminar");
+				btnEliminar = new JButton("Cancelar");
+				btnEliminar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						
+						btnModificar.setEnabled(false);
+						btnEliminar.setEnabled(false);
+						btnVerReporte.setEnabled(false);
+					}
+				});
+				{
+					btnModificar = new JButton("Modificar");
+					btnModificar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							
+							
+							btnModificar.setEnabled(false);
+							btnEliminar.setEnabled(false);
+							btnVerReporte.setEnabled(false);
+						}
+					});
+					btnModificar.setEnabled(false);
+					btnModificar.setActionCommand("OK");
+					buttonPane.add(btnModificar);
+					getRootPane().setDefaultButton(btnModificar);
+				}
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
-			}
-			{
-				JButton okButton = new JButton("Modificar");
-				okButton.setEnabled(false);
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
@@ -91,10 +150,44 @@ public class ListEvento extends JDialog {
 						dispose();
 					}
 				});
+				{
+					btnVerReporte = new JButton("Ver Reporte");
+					btnVerReporte.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							
+							
+							btnModificar.setEnabled(false);
+							btnEliminar.setEnabled(false);
+							btnVerReporte.setEnabled(false);
+						}
+					});
+					btnVerReporte.setEnabled(false);
+					btnVerReporte.setActionCommand("OK");
+					buttonPane.add(btnVerReporte);
+				}
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
+		loadEvento();
 	}
 
+	private void loadEvento() {
+		modelo.setRowCount(0);
+		ArrayList<Evento> aux = GestionEvento.getInstance().getMisEventos();
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		row = new Object[table.getColumnCount()];
+		for (Evento obj : aux) {
+			row[0] = obj.getId();
+			row[1] = obj.getTitulo();
+			row[2] = obj.getTipo();
+			row[3] = formato.format(obj.getFecha());
+			if(obj.getEstado()) {
+				row[4] = "Proximamente";
+			}else {
+				row[4] = "Finalizado";
+			}
+			modelo.addRow(row);
+		}
+	}
 }

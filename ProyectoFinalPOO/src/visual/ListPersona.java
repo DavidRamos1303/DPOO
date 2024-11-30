@@ -13,16 +13,39 @@ import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import logico.GestionEvento;
+import logico.Jurado;
+import logico.Participante;
+import logico.Persona;
+
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.JTable;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListPersona extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTable table;
-	private JTable table_1;
+	private static DefaultTableModel modeloJurd;
+	private static Object[] rowJurd;
+	private static DefaultTableModel modeloPart;
+	private static Object[] rowPart;
+	private int indexP = -1;
+	private int indexJ = -1;
+	private Persona selected = null;
+	private JTable tableP;
+	private JTable tableJ;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JButton cancelButton;
 
 	/**
 	 * Launch the application.
@@ -59,18 +82,40 @@ public class ListPersona extends JDialog {
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(null);
 			{
-				JPanel panel_1 = new JPanel();
-				panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-				panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Participantes", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
-				panel_1.setBounds(10, 11, 296, 350);
-				panel.add(panel_1);
-				panel_1.setLayout(new BorderLayout(0, 0));
+				JPanel panelPart = new JPanel();
+				panelPart.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+				panelPart.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Participantes", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+				panelPart.setBounds(10, 11, 296, 350);
+				panel.add(panelPart);
+				panelPart.setLayout(new BorderLayout(0, 0));
 				
 				JScrollPane scrollPane = new JScrollPane();
-				panel_1.add(scrollPane, BorderLayout.CENTER);
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollPane.addMouseListener(new MouseAdapter() {
+				});
+				panelPart.add(scrollPane, BorderLayout.CENTER);
 				
-				table = new JTable();
-				scrollPane.setViewportView(table);
+				tableP = new JTable();
+				tableP.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						indexP = tableP.getSelectedRow();
+						if(indexP > 0) {
+							String cedula = tableP.getValueAt(indexP, 0).toString();
+							selected = GestionEvento.getInstance().buscarPersonasCedula(cedula);
+							if(selected != null) {
+								btnModificar.setEnabled(true);
+								btnEliminar.setEnabled(true);
+							}
+						}
+					}
+				});
+				scrollPane.setViewportView(tableP);
+				modeloPart = new DefaultTableModel();
+				String[] identificadores1 = {"Cédula", "Nombre", "Teléfono"};
+				modeloPart.setColumnIdentifiers(identificadores1);
+				tableP.setModel(modeloPart);
+				scrollPane.setViewportView(tableP);
 			}
 			{
 				JPanel panel_1 = new JPanel();
@@ -81,10 +126,28 @@ public class ListPersona extends JDialog {
 				panel_1.setLayout(new BorderLayout(0, 0));
 				
 				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				panel_1.add(scrollPane, BorderLayout.CENTER);
 				
-				table_1 = new JTable();
-				scrollPane.setViewportView(table_1);
+				tableJ = new JTable();
+				tableJ.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						indexJ = tableJ.getSelectedRow();
+						String cedula = tableJ.getValueAt(indexJ, 0).toString();
+						selected = GestionEvento.getInstance().buscarPersonasCedula(cedula);
+						if(selected != null) {
+							btnEliminar.setEnabled(true);
+							btnModificar.setEnabled(true);
+						}
+					}
+				});
+				scrollPane.setViewportView(tableJ);
+				modeloJurd = new DefaultTableModel();
+				String[] identificadores = {"Cédula","Nombre", "Área"};
+				modeloJurd.setColumnIdentifiers(identificadores);
+				tableJ.setModel(modeloJurd);
+				scrollPane.setViewportView(tableJ);
 			}
 		}
 		{
@@ -92,10 +155,68 @@ public class ListPersona extends JDialog {
 			buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			
+			btnModificar = new JButton("Modificar");
+			btnModificar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					
+					
+					btnEliminar.setEnabled(false);
+					btnModificar.setEnabled(false);
+				}
+			});
+			btnModificar.setEnabled(false);
+			btnModificar.setActionCommand("Cancel");
+			buttonPane.add(btnModificar);
+			
+			btnEliminar = new JButton("Eliminar");
+			btnEliminar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					
+					
+					btnEliminar.setEnabled(false);
+					btnModificar.setEnabled(false);
+				}
+			});
+			btnEliminar.setEnabled(false);
+			btnEliminar.setActionCommand("Cancel");
+			buttonPane.add(btnEliminar);
 			{
-				JButton cancelButton = new JButton("Cancelar");
+				cancelButton = new JButton("Cancelar");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+			}
+		}
+		loadParticipante();
+		loadJurado();
+	}
+
+	private void loadJurado() {
+		modeloJurd.setRowCount(0);
+		ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas();
+		rowJurd = new Object[tableJ.getColumnCount()];
+		for (Persona obj : aux) {
+			if(obj instanceof Jurado) {
+				rowJurd[0] = obj.getCedula();
+				rowJurd[1] = obj.getNombre();
+				rowJurd[2] = ((Jurado) obj).getArea();
+				modeloJurd.addRow(rowJurd);
+			}
+		}
+	}
+
+	private void loadParticipante() {
+		modeloPart.setRowCount(0);
+		ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas();
+		rowPart = new Object[tableP.getColumnCount()];
+		for (Persona obj : aux) {
+			if(obj instanceof Participante){
+				rowPart[0] = obj.getCedula();
+				rowPart[1] = obj.getNombre();
+				rowPart[2] = obj.getTelefono();
+				modeloPart.addRow(rowPart);
 			}
 		}
 	}
