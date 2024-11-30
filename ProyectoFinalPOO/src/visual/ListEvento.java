@@ -90,10 +90,13 @@ public class ListEvento extends JDialog {
 								String cod = table.getValueAt(index, 0).toString();
 								selected = GestionEvento.getInstance().buscarEventoID(cod);
 								if(selected != null && selected.getEstado()) {
+									btnVerReporte.setEnabled(false);
 									btnModificar.setEnabled(true);
 									btnEliminar.setEnabled(true);
 								}else if(selected != null && !(selected.getEstado())) {
 									btnVerReporte.setEnabled(true);
+									btnModificar.setEnabled(false);
+									btnEliminar.setEnabled(false);
 								}
 							}
 						}
