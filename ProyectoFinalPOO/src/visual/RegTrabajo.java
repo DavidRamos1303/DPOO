@@ -189,15 +189,32 @@ public class RegTrabajo extends JDialog {
         		if(existe) {
         			if(txtNombre.getText().toString().equals("") || cmbArea.getSelectedIndex() == 0) {
         				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos generales.", 
-                                "Error", JOptionPane.WARNING_MESSAGE);
+                                "Error", JOptionPane.ERROR_MESSAGE);
         			}else {
         				TrabajoCientifico trabajo = new TrabajoCientifico(txtId.getText().toString(), txtNombre.getText().toString(), cmbArea.getSelectedItem().toString(), participante);
         				GestionEvento.getInstance().insertarTrabajo(trabajo);
         				JOptionPane.showMessageDialog(null, "Registro exitoso.", 
                                 "Aviso", JOptionPane.WARNING_MESSAGE);
+        				clean();
         			}
         		}else {
-        			
+        			if(txtNombre.getText().toString().equals("") || cmbArea.getSelectedIndex() == 0) {
+        				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos generales.", 
+        						"Error", JOptionPane.WARNING_MESSAGE);
+        			}else {
+        				if(txtCedulaAutor.getText().toString().equals("") || txtNombreAutor.getText().toString().equals("") || txtApellidosAutor.getText().toString().equals("") || txtTelefonoAutor.getText().toString().equals("")) {
+        					JOptionPane.showMessageDialog(null, "Debe llenar todos los datos del autor.", 
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+        				}else {
+        					Participante participante = new Participante(txtCedulaAutor.getText().toString(), txtNombreAutor.getText().toString(), txtApellidosAutor.getText().toString(), txtTelefonoAutor.getText().toString());
+        					TrabajoCientifico trabajo = new TrabajoCientifico(txtId.getText().toString(), txtNombre.getText().toString(), cmbArea.getSelectedItem().toString(), participante);
+        					GestionEvento.getInstance().insertarPersonas(participante);
+        					GestionEvento.getInstance().insertarTrabajo(trabajo);
+        					JOptionPane.showMessageDialog(null, "Registro exitoso.", 
+        							"Aviso", JOptionPane.WARNING_MESSAGE);
+        					clean();
+        				}
+        			}
         		}
         	}
         });
@@ -217,7 +234,10 @@ public class RegTrabajo extends JDialog {
         cmbArea.setSelectedIndex(0);
         txtCedulaAutor.setText("");
         txtNombreAutor.setText("");
+        txtNombreAutor.setEditable(false);
         txtApellidosAutor.setText("");
+        txtApellidosAutor.setEditable(false);
         txtTelefonoAutor.setText("");
+        txtTelefonoAutor.setEditable(false);
     }
 }
