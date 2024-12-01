@@ -343,7 +343,7 @@ public class RegComision extends JDialog {
 			            
 			        	if(cbxArea.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
 			        		JOptionPane.showMessageDialog(null,"Debe elegir un área.", "Error", JOptionPane.ERROR_MESSAGE);
-			        	}else if(modeloNoSelectTrabajo.getValueAt(selectedRow, 2).toString().equalsIgnoreCase(cbxArea.getSelectedItem().toString())) {
+			        	}else if(modeloNoSelectTrabajo.getValueAt(selectedRow, 1).toString().equalsIgnoreCase(cbxArea.getSelectedItem().toString())) {
 			        		Object[] rowData = new Object[2];
 				            for(int i = 0; i < 2; i++) {
 				                rowData[i] = modeloNoSelectTrabajo.getValueAt(selectedRow, i);
@@ -352,6 +352,10 @@ public class RegComision extends JDialog {
 				            modeloSelecTrabajo.addRow(rowData);
 				            modeloNoSelectTrabajo.removeRow(selectedRow);
 				            
+				            if(modeloSelecTrabajo.getRowCount() > 0) {
+			                    cbxArea.setEnabled(false);
+			                }
+				            
 				            String titulo = rowData[0].toString();
 				            for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
 				                if (trabajo.getNombre().equals(titulo)) {
@@ -359,7 +363,11 @@ public class RegComision extends JDialog {
 				                    break;
 				                }
 				            }
-			        	}
+			        	}else {
+			                JOptionPane.showMessageDialog(null, 
+				                    "El área del jurado debe coincidir con el área de la comisión",
+				                    "Error", JOptionPane.ERROR_MESSAGE);
+				        }
 			        }
 			    }
 			});
@@ -392,7 +400,11 @@ public class RegComision extends JDialog {
 			            
 			            modeloNoSelectTrabajo.addRow(rowData);
 			            modeloSelecTrabajo.removeRow(selectedRow);
-			           
+			            
+			            if(modeloSelecTrabajo.getRowCount() == 0) {
+			                cbxArea.setEnabled(true);
+			            }
+			            
 			            String titulo = rowData[0].toString();
 			            for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
 			                if (trabajo.getNombre().equals(titulo)) {
