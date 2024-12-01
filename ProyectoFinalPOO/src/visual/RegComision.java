@@ -164,23 +164,23 @@ public class RegComision extends JDialog {
 			
 			JPanel panel_1 = new JPanel();
 			panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-			panel_1.setBorder(new TitledBorder(null, "Datos:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
+			panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 			panel_1.setBounds(10, 11, 1069, 117);
 			panel.add(panel_1);
 			panel_1.setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("C\u00F3digo:");
-			lblNewLabel.setForeground(new Color(255, 255, 255));
+			lblNewLabel.setForeground(Color.BLACK);
 			lblNewLabel.setBounds(10, 31, 42, 14);
 			panel_1.add(lblNewLabel);
 			
 			JLabel lblNewLabel_1 = new JLabel("Nombre:");
-			lblNewLabel_1.setForeground(new Color(255, 255, 255));
+			lblNewLabel_1.setForeground(Color.BLACK);
 			lblNewLabel_1.setBounds(10, 80, 48, 14);
 			panel_1.add(lblNewLabel_1);
 			
 			JLabel lblNewLabel_2 = new JLabel("\u00C1rea:");
-			lblNewLabel_2.setForeground(new Color(255, 255, 255));
+			lblNewLabel_2.setForeground(Color.BLACK);
 			lblNewLabel_2.setBounds(240, 31, 32, 14);
 			panel_1.add(lblNewLabel_2);
 			
@@ -202,7 +202,7 @@ public class RegComision extends JDialog {
 			panel_1.add(cbxArea);
 			
 			JPanel panel_2 = new JPanel();
-			panel_2.setBorder(new TitledBorder(null, "Jurados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
+			panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Jurados:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 			panel_2.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			panel_2.setBounds(10, 139, 524, 333);
 			panel.add(panel_2);
@@ -297,7 +297,7 @@ public class RegComision extends JDialog {
 			panel_2.add(btnNewButton_1);
 			
 			JPanel panel_3 = new JPanel();
-			panel_3.setBorder(new TitledBorder(null, "Trabajos Cient\u00EDficos:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
+			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Trabajos Cient\u00EDficos:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 			panel_3.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 			panel_3.setBounds(555, 139, 524, 333);
 			panel.add(panel_3);
@@ -468,7 +468,7 @@ public class RegComision extends JDialog {
 			if(persona instanceof Jurado) {
 				rowJuradoSelect[0] = persona.getNombre();
 				rowJuradoSelect[1] = persona.getCedula();
-				rowJuradoSelect[0] = ((Jurado) persona).getArea();
+				rowJuradoSelect[2] = ((Jurado) persona).getArea();
 				modeloNoSelectJurado.addRow(rowJuradoSelect);
 			}
 		}

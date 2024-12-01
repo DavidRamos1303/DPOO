@@ -14,7 +14,7 @@ import logico.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class RegRecursos extends JDialog {
+public class RegRecurso extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTextField txt_Id;
     private JTextField txt_Nombre;
@@ -24,13 +24,15 @@ public class RegRecursos extends JDialog {
     private JRadioButton rdLocal;
     private JRadioButton rdOtro;
     private JComboBox cmbCampus;
+    private Boolean modificar = false;
     private Recurso recursoAModificar = null;
     
-    public RegRecursos(Recurso recurso) {
+    public RegRecurso(Recurso recurso) {
         this(); 
         
         try {
             this.recursoAModificar = recurso;
+            this.modificar = true;
             setTitle("Modificar Recurso");
             
             txt_Id.setText(recurso.getId());
@@ -39,12 +41,16 @@ public class RegRecursos extends JDialog {
             if(recurso instanceof RecursoLocal) {
                 rdLocal.setSelected(true);
                 rdOtro.setSelected(false);
+                rdLocal.setEnabled(false);
+                rdOtro.setEnabled(false);
                 panel_campus.setVisible(true);
                 panel_otro.setVisible(false);
                 cmbCampus.setSelectedItem(((RecursoLocal) recurso).getCiudad());
             } else {
                 rdLocal.setSelected(false);
                 rdOtro.setSelected(true);
+                rdLocal.setEnabled(false);
+                rdOtro.setEnabled(false);
                 panel_campus.setVisible(false);
                 panel_otro.setVisible(true);
                 txt_tipo.setText(recurso.getTipo());
@@ -76,7 +82,7 @@ public class RegRecursos extends JDialog {
 
     public static void main(String[] args) {
         try {
-            RegRecursos dialog = new RegRecursos();
+            RegRecurso dialog = new RegRecurso();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -84,7 +90,7 @@ public class RegRecursos extends JDialog {
         }
     }
 
-    public RegRecursos() {
+    public RegRecurso() {
         
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
@@ -180,9 +186,13 @@ public class RegRecursos extends JDialog {
         panel_campus.setLayout(null);
         
         cmbCampus = new JComboBox();
-        cmbCampus.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Campus Santiago", "Campus Santo Domingo"}));
-        cmbCampus.setBounds(27, 20, 164, 22);
+        cmbCampus.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Santiago", "Santo Domingo"}));
+        cmbCampus.setBounds(116, 21, 164, 22);
         panel_campus.add(cmbCampus);
+        
+        JLabel lblNewLabel_3 = new JLabel("Campus:");
+        lblNewLabel_3.setBounds(31, 25, 78, 14);
+        panel_campus.add(lblNewLabel_3);
         
         panel_otro = new JPanel();
         panel_otro.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -194,11 +204,11 @@ public class RegRecursos extends JDialog {
         
         JLabel lblNewLabel_2 = new JLabel("Tipo:");
         lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblNewLabel_2.setBounds(12, 20, 56, 16);
+        lblNewLabel_2.setBounds(31, 25, 56, 16);
         panel_otro.add(lblNewLabel_2);
         
         txt_tipo = new JTextField();
-        txt_tipo.setBounds(64, 20, 152, 22);
+        txt_tipo.setBounds(116, 21, 152, 22);
         panel_otro.add(txt_tipo);
         txt_tipo.setColumns(10);
         
@@ -209,41 +219,55 @@ public class RegRecursos extends JDialog {
 
         JButton okButton = new JButton("Registrar");
         okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(!(txt_Nombre.getText().equals(""))) {
-                    if(rdLocal.isSelected()) {
-                        if(cmbCampus.getSelectedIndex() > 0) {
-                            RecursoLocal local = new RecursoLocal(txt_Id.getText().toString(),
-                                    txt_Nombre.getText().toString(),
-                                    "Local",
-                                    cmbCampus.getSelectedItem().toString()); 
-                            GestionEvento.getInstance().insertarRecurso(local);
-                            JOptionPane.showMessageDialog(null, "Recurso registrado exitosamente", 
-                                    "Registro", JOptionPane.INFORMATION_MESSAGE);
-                            clean();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Debe seleccionar un campus", 
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else {
-                        if(!(txt_tipo.getText().equals(""))) {
-                            Recurso otro = new Recurso(txt_Id.getText().toString(),
-                                    txt_Nombre.getText().toString(), 
-                                    txt_tipo.getText().toString());
-                            GestionEvento.getInstance().insertarRecurso(otro);
-                            JOptionPane.showMessageDialog(null, "Recurso registrado exitosamente", 
-                                    "Registro", JOptionPane.INFORMATION_MESSAGE);
-                            clean();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Debe especificar el tipo de recurso", 
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe completar todos los campos", 
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+        	public void actionPerformed(ActionEvent e) {
+        		if(modificar == false) {
+        			if(!(txt_Nombre.getText().equals(""))) {
+        				if(rdLocal.isSelected()) {
+        					if(cmbCampus.getSelectedIndex() > 0) {
+        						RecursoLocal local = new RecursoLocal(txt_Id.getText().toString(),
+        								txt_Nombre.getText().toString(),
+        								"Local",
+        								cmbCampus.getSelectedItem().toString()); 
+        						GestionEvento.getInstance().insertarRecurso(local);
+        						JOptionPane.showMessageDialog(null, "Recurso registrado exitosamente", 
+        								"Registro", JOptionPane.INFORMATION_MESSAGE);
+        						clean();
+        					} else {
+        						JOptionPane.showMessageDialog(null, "Debe seleccionar un campus", 
+        								"Error", JOptionPane.ERROR_MESSAGE);
+        					}
+        				} else {
+        					if(!(txt_tipo.getText().equals(""))) {
+        						Recurso otro = new Recurso(txt_Id.getText().toString(),
+        								txt_Nombre.getText().toString(), 
+        								txt_tipo.getText().toString());
+        						GestionEvento.getInstance().insertarRecurso(otro);
+        						JOptionPane.showMessageDialog(null, "Recurso registrado exitosamente", 
+        								"Registro", JOptionPane.INFORMATION_MESSAGE);
+        						clean();
+        					} else {
+        						JOptionPane.showMessageDialog(null, "Debe especificar el tipo de recurso", 
+        								"Error", JOptionPane.ERROR_MESSAGE);
+        					}
+        				}
+        			} else {
+        				JOptionPane.showMessageDialog(null, "Debe completar todos los campos", 
+        						"Error", JOptionPane.ERROR_MESSAGE);
+        			}
+        		}else {
+        			String cod = txt_Id.getText().toString();
+        			Recurso recursoMod = GestionEvento.getInstance().buscarRecursoID(cod);
+        			recursoMod.setNombre(txt_Nombre.getText().toString());
+        			if(recursoMod.getTipo().equals("Local")) {
+        				((RecursoLocal) recursoMod).setCiudad(cmbCampus.getSelectedItem().toString());
+        			}else {
+        				recursoMod.setTipo(txt_tipo.getText().toString());
+        			}
+        			JOptionPane.showMessageDialog(null, "Modificación exitosa.", 
+							"Modificación", JOptionPane.INFORMATION_MESSAGE);
+        			dispose();
+        		}
+        	}
         });
         okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         okButton.setActionCommand("OK");

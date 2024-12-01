@@ -23,13 +23,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListRecursos extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
+	private int selectedRow = -1;
 	private DefaultTableModel modelo;
 	private Object row[];
+	private JButton btnModificar;
+	private JButton btnEliminar;
 	/**
 	 * Launch the application.
 	 */
@@ -51,6 +56,7 @@ public class ListRecursos extends JDialog {
 		setBounds(100, 100, 575, 466);
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
+        setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,6 +79,15 @@ public class ListRecursos extends JDialog {
 			panel_1.add(scrollPane, BorderLayout.CENTER);
 			
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					selectedRow = table.getSelectedRow();
+					btnModificar.setEnabled(true);
+					btnEliminar.setEnabled(true);
+				
+				}
+			});
 			modelo = new DefaultTableModel();
 			String[] identificadores = {"Código", "Nombre", "Tipo", "Campus"};
 			modelo.setColumnIdentifiers(identificadores);
@@ -84,17 +99,20 @@ public class ListRecursos extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Modificar");
-				okButton.addActionListener(new ActionListener() {
+				btnModificar = new JButton("Modificar");
+				btnModificar.setEnabled(false);
+				btnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int selectedRow = table.getSelectedRow();
 				        if(selectedRow >= 0) {
 				            String codigo = (String)modelo.getValueAt(selectedRow, 0);
-				            Recurso recursoSeleccionado = buscarRecurso(codigo);
+				            Recurso recursoSeleccionado = GestionEvento.getInstance().buscarRecursoID(codigo);
 				            if(recursoSeleccionado != null) {
-				                RegRecursos regRecursos = new RegRecursos(recursoSeleccionado);
+				                RegRecurso regRecursos = new RegRecurso(recursoSeleccionado);
 				                regRecursos.setModal(true);
 				                regRecursos.setVisible(true);
+				                btnModificar.setEnabled(false);
+				                btnEliminar.setEnabled(false);
 				                loadRecursos();
 				            }
 				        } else {
@@ -104,15 +122,15 @@ public class ListRecursos extends JDialog {
 				        }
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnModificar.setActionCommand("OK");
+				buttonPane.add(btnModificar);
+				getRootPane().setDefaultButton(btnModificar);
 			}
 			{
-				JButton btnNewButton = new JButton("Eliminar");
-				btnNewButton.addActionListener(new ActionListener() {
+				btnEliminar = new JButton("Eliminar");
+				btnEliminar.setEnabled(false);
+				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int selectedRow = table.getSelectedRow();
 				        if(selectedRow >= 0) {
 				            int option = JOptionPane.showConfirmDialog(null,
 				                "¿Está seguro que desea eliminar este recurso?",
@@ -120,27 +138,32 @@ public class ListRecursos extends JDialog {
 				            
 				            if(option == JOptionPane.YES_OPTION) {
 				                String codigo = (String) modelo.getValueAt(selectedRow, 0);
-				                eliminarRecurso(codigo);
+				                Recurso recursoSeleccionado = GestionEvento.getInstance().buscarRecursoID(codigo);
+				                GestionEvento.getInstance().eliminarRecurso(recursoSeleccionado);
+				                JOptionPane.showMessageDialog(null, 
+						                "Eliminación completada.",
+						                "Aviso", JOptionPane.ERROR_MESSAGE);
+				                btnModificar.setEnabled(false);
+				                btnEliminar.setEnabled(false);
 				                loadRecursos();
+				            }else {
+				            	btnModificar.setEnabled(false);
+				                btnEliminar.setEnabled(false);
 				            }
-				        } else {
-				            JOptionPane.showMessageDialog(null, 
-				                "Debe seleccionar un recurso para eliminar.",
-				                "Error", JOptionPane.ERROR_MESSAGE);
-				        }
+				        } 
 					}
 				});
-				buttonPane.add(btnNewButton);
+				buttonPane.add(btnEliminar);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
-		}loadRecursos();
-		
-		
+		}
+		loadRecursos();
 	}
+	
 	private void loadRecursos() {
 	    modelo.setRowCount(0);
 	    row = new Object[table.getColumnCount()];
@@ -156,24 +179,4 @@ public class ListRecursos extends JDialog {
 	        modelo.addRow(row);
 	    }
 	}
-	
-	private Recurso buscarRecurso(String codigo) {
-	    for(Recurso recurso : GestionEvento.getInstance().getMisRecursos()) {
-	        if(recurso.getId().equals(codigo)) {
-	            return recurso;
-	        }
-	    }
-	    return null;
-	}
-	
-	private void eliminarRecurso(String codigo) {
-	    Recurso recursoAEliminar = buscarRecurso(codigo);
-	    if(recursoAEliminar != null) {
-	        GestionEvento.getInstance().getMisRecursos().remove(recursoAEliminar);
-	        JOptionPane.showMessageDialog(null, 
-	            "Recurso eliminado exitosamente.",
-	            "Información", JOptionPane.INFORMATION_MESSAGE);
-	    }
-	}
-
 }

@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -19,6 +20,7 @@ import logico.GestionEvento;
 import logico.Jurado;
 import logico.Participante;
 import logico.Persona;
+import logico.Recurso;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -100,7 +102,7 @@ public class ListPersona extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						indexP = tableP.getSelectedRow();
-						if(indexP > 0) {
+						if(indexP >= 0) {
 							String cedula = tableP.getValueAt(indexP, 0).toString();
 							selected = GestionEvento.getInstance().buscarPersonasCedula(cedula);
 							if(selected != null) {
@@ -134,11 +136,13 @@ public class ListPersona extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						indexJ = tableJ.getSelectedRow();
-						String cedula = tableJ.getValueAt(indexJ, 0).toString();
-						selected = GestionEvento.getInstance().buscarPersonasCedula(cedula);
-						if(selected != null) {
-							btnEliminar.setEnabled(true);
-							btnModificar.setEnabled(true);
+						if(indexJ >= 0) {
+							String cedula = tableJ.getValueAt(indexJ, 0).toString();
+							selected = GestionEvento.getInstance().buscarPersonasCedula(cedula);
+							if(selected != null) {
+								btnEliminar.setEnabled(true);
+								btnModificar.setEnabled(true);
+							}
 						}
 					}
 				});
@@ -173,11 +177,23 @@ public class ListPersona extends JDialog {
 			btnEliminar = new JButton("Eliminar");
 			btnEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					
-					
-					btnEliminar.setEnabled(false);
-					btnModificar.setEnabled(false);
+					int option = JOptionPane.showConfirmDialog(null,
+			                "¿Está seguro que desea eliminar este recurso?",
+			                "Confirmación", JOptionPane.YES_NO_OPTION);
+			            
+			            if(option == JOptionPane.YES_OPTION) {
+			                GestionEvento.getInstance().eliminarPersona(selected);
+			                JOptionPane.showMessageDialog(null, 
+					                "Eliminación completada.",
+					                "Aviso", JOptionPane.ERROR_MESSAGE);
+			                btnModificar.setEnabled(false);
+			                btnEliminar.setEnabled(false);
+			                loadParticipante();
+			                loadJurado();
+			            }else {
+			            	btnModificar.setEnabled(false);
+			                btnEliminar.setEnabled(false);
+			            }
 				}
 			});
 			btnEliminar.setEnabled(false);

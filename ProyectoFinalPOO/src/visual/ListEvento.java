@@ -86,7 +86,7 @@ public class ListEvento extends JDialog {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							index = table.getSelectedRow();
-							if(index > 0) {
+							if(index >= 0) {
 								String cod = table.getValueAt(index, 0).toString();
 								selected = GestionEvento.getInstance().buscarEventoID(cod);
 								if(selected != null && selected.getEstado()) {

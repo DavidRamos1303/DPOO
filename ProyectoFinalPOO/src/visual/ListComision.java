@@ -55,6 +55,7 @@ public class ListComision extends JDialog {
 		setBounds(100, 100, 602, 533);
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
+        setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

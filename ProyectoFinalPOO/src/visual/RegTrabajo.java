@@ -5,7 +5,7 @@ import javax.swing.border.*;
 import java.awt.*;
 import logico.*;
 
-public class RegTrabajos extends JDialog {
+public class RegTrabajo extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTextField txtId;
     private JTextField txtNombre;
@@ -20,7 +20,7 @@ public class RegTrabajos extends JDialog {
 
     public static void main(String[] args) {
         try {
-            RegTrabajos dialog = new RegTrabajos();
+            RegTrabajo dialog = new RegTrabajo();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -28,7 +28,7 @@ public class RegTrabajos extends JDialog {
         }
     }
 
-    public RegTrabajos() {
+    public RegTrabajo() {
         setTitle("Registrar Trabajo Científico");
         
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
