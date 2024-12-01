@@ -6,15 +6,14 @@ import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import logico.*;
 
-public class ListTrabajosCientificos extends JDialog {
+public class ListTrabajosCientifico extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel model;
-    private GestionEvento gestion;
 
     public static void main(String[] args) {
         try {
-            ListTrabajosCientificos dialog = new ListTrabajosCientificos();
+            ListTrabajosCientifico dialog = new ListTrabajosCientifico();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -22,12 +21,7 @@ public class ListTrabajosCientificos extends JDialog {
         }
     }
 
-    public ListTrabajosCientificos() {
-        this(null);
-    }
-
-    public ListTrabajosCientificos(GestionEvento gestion) {
-        this.gestion = gestion != null ? gestion : new GestionEvento();
+    public ListTrabajosCientifico() {
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
         setTitle("Listar Trabajos Científicos");
@@ -88,7 +82,7 @@ public class ListTrabajosCientificos extends JDialog {
 
     private void loadTrabajos() {
         model.setRowCount(0); 
-        for (TrabajoCientifico trabajo : gestion.getMisTrabajosCientificos()) {
+        for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
             Participante autor = trabajo.getAutor();
             Object[] row = {
                 trabajo.getId(),

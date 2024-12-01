@@ -163,9 +163,9 @@ public class ListPersona extends JDialog {
 			btnModificar = new JButton("Modificar");
 			btnModificar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					
-					
+					ModPersona dialog = new ModPersona(selected);
+					dialog.setModal(true);
+					dialog.setVisible(true);
 					btnEliminar.setEnabled(false);
 					btnModificar.setEnabled(false);
 				}
@@ -230,7 +230,7 @@ public class ListPersona extends JDialog {
 		for (Persona obj : aux) {
 			if(obj instanceof Participante){
 				rowPart[0] = obj.getCedula();
-				rowPart[1] = obj.getNombre();
+				rowPart[1] = obj.getNombre() + " " + obj.getApellidos();
 				rowPart[2] = obj.getTelefono();
 				modeloPart.addRow(rowPart);
 			}

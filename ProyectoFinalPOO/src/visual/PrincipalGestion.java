@@ -130,7 +130,7 @@ public class PrincipalGestion extends JFrame {
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Trabajos Cient\u00EDficos");
 		mntmNewMenuItem_7.addActionListener(e -> {
-			ListTrabajosCientificos dialog = new ListTrabajosCientificos();
+			ListTrabajosCientifico dialog = new ListTrabajosCientifico();
             dialog.setLocationRelativeTo(this);
             dialog.setModal(true);
             dialog.setVisible(true);

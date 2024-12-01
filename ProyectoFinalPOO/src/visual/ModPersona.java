@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logico.Persona;
+
 public class ModPersona extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -17,7 +19,7 @@ public class ModPersona extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ModPersona dialog = new ModPersona();
+			ModPersona dialog = new ModPersona(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -28,7 +30,7 @@ public class ModPersona extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ModPersona() {
+	public ModPersona(Persona obj) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
