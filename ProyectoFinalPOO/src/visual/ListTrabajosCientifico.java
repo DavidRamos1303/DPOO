@@ -5,6 +5,8 @@ import javax.swing.border.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import logico.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListTrabajosCientifico extends JDialog {
     private final JPanel contentPanel = new JPanel();
@@ -61,10 +63,6 @@ public class ListTrabajosCientifico extends JDialog {
         buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
-
-        JButton cancelButton = new JButton("Cancelar");
-        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-        cancelButton.addActionListener(e -> dispose());
         
         JButton btnNewButton_1 = new JButton("Modificar");
         btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -75,7 +73,15 @@ public class ListTrabajosCientifico extends JDialog {
         btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnNewButton.setEnabled(false);
         buttonPane.add(btnNewButton);
-        buttonPane.add(cancelButton);
+        
+        JButton btnCerrar = new JButton("Cerrar");
+        btnCerrar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        	}
+        });
+        btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        buttonPane.add(btnCerrar);
 
         loadTrabajos();
     }

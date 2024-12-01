@@ -221,11 +221,15 @@ public class RegTrabajo extends JDialog {
         okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         buttonPane.add(okButton);
         getRootPane().setDefaultButton(okButton);
-
-        JButton cancelButton = new JButton("Cancelar");
-        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-        cancelButton.addActionListener(e -> dispose());
-        buttonPane.add(cancelButton);
+        
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        	}
+        });
+        btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        buttonPane.add(btnCancelar);
     }
 
     private void clean() {
