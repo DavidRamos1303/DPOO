@@ -85,6 +85,9 @@ public class RegComision extends JDialog {
 	            trabajo.setSeleccionado(false);
 	        }
 	        
+	        loadJurados();
+	        loadNoSelectTrabajos();
+	        
 	        // Cargar jurados seleccionados
 	        for (Jurado jurado : comision.getJurado()) {
 	            jurado.setSeleccionado(true);
@@ -497,17 +500,17 @@ public class RegComision extends JDialog {
 	}
 	
 	private void loadJurados() {
-		modeloNoSelectJurado.setRowCount(0);
-		ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas();
-		rowJuradoSelect = new Object[table.getColumnCount()];
-		for(Persona persona : aux) {
-			if(persona instanceof Jurado) {
-				rowJuradoSelect[0] = persona.getNombre();
-				rowJuradoSelect[1] = persona.getApellidos();
-				rowJuradoSelect[2] = ((Jurado) persona).getArea();
-				modeloNoSelectJurado.addRow(rowJuradoSelect);
-			}
-		}
+	    modeloNoSelectJurado.setRowCount(0);
+	    ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas();
+	    rowJuradoSelect = new Object[3]; 
+	    for(Persona persona : aux) {
+	        if(persona instanceof Jurado && !((Jurado) persona).isSeleccionado()) {
+	            rowJuradoSelect[0] = persona.getNombre();
+	            rowJuradoSelect[1] = persona.getApellidos();
+	            rowJuradoSelect[2] = ((Jurado) persona).getArea();
+	            modeloNoSelectJurado.addRow(rowJuradoSelect);
+	        }
+	    }
 	}
 	
 	private void loadSelectJurados() { 
@@ -526,11 +529,13 @@ public class RegComision extends JDialog {
 	private void loadNoSelectTrabajos() {
 	    modeloNoSelectTrabajo.setRowCount(0);
 	    ArrayList<TrabajoCientifico> aux = GestionEvento.getInstance().getMisTrabajosCientificos();
-	    rowTrabajoNoSelect = new Object[table_2.getColumnCount()];
+	    rowTrabajoNoSelect = new Object[2];
 	    for (TrabajoCientifico trabajo : aux) {
-	    	rowTrabajoNoSelect[0] = trabajo.getNombre();
-	    	rowTrabajoNoSelect[1] = trabajo.getArea();
-	        modeloNoSelectTrabajo.addRow(rowTrabajoNoSelect);
+	        if(!trabajo.isSeleccionado()) {
+	            rowTrabajoNoSelect[0] = trabajo.getNombre();
+	            rowTrabajoNoSelect[1] = trabajo.getArea();
+	            modeloNoSelectTrabajo.addRow(rowTrabajoNoSelect);
+	        }
 	    }
 	}
 
@@ -538,11 +543,11 @@ public class RegComision extends JDialog {
 	private void loadSelectTrabajos() {
 	    modeloSelecTrabajo.setRowCount(0);
 	    ArrayList<TrabajoCientifico> aux = GestionEvento.getInstance().getMisTrabajosCientificos();
-	    rowTrabajoSelect = new Object[table_3.getColumnCount()];
+	    rowTrabajoSelect = new Object[2];
 	    for (TrabajoCientifico trabajo : aux) {
 	        if (trabajo.isSeleccionado()) {
-	        	rowTrabajoSelect[0] = trabajo.getNombre();
-	        	rowTrabajoSelect[1] = trabajo.getArea();
+	            rowTrabajoSelect[0] = trabajo.getNombre();
+	            rowTrabajoSelect[1] = trabajo.getArea();
 	            modeloSelecTrabajo.addRow(rowTrabajoSelect);
 	        }
 	    }
