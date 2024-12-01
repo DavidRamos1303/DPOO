@@ -197,7 +197,7 @@ public class RegComision extends JDialog {
 			txtNombre.setColumns(10);
 			
 			cbxArea = new JComboBox();
-			cbxArea.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Tecnolog\u00EDa e Inform\u00E1tica", "Ciencias de la Salud", "Ciencias Sociales", "Investigaci\u00F3n y Desarrollo"}));
+			cbxArea.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Tecnolog\u00EDa en inform\u00E1tica ", "Ciencias de la salud", "Ciencias Sociales", "Investigaci\u00F3n\u00A0y\u00A0Desarrollo"}));
 			cbxArea.setBounds(282, 28, 179, 20);
 			panel_1.add(cbxArea);
 			
@@ -243,23 +243,32 @@ public class RegComision extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					int selectedRow = table.getSelectedRow();
 			        if(selectedRow >= 0) {
-			            Object[] rowData = new Object[3];
-			            for(int i = 0; i < 3; i++) {
-			                rowData[i] = modeloNoSelectJurado.getValueAt(selectedRow, i);
-			            }
-			            
-			            modeloSelectJurado.addRow(rowData);
-			            modeloNoSelectJurado.removeRow(selectedRow);
-			            
-			            String nombre = rowData[0].toString();
-			            String cedula = rowData[1].toString();
-			            for (Persona persona : GestionEvento.getInstance().getMisPersonas()) {
-			                if (persona instanceof Jurado && 
-			                    persona.getNombre().equals(nombre) && 
-			                    persona.getCedula().equals(cedula)) {
-			                    ((Jurado) persona).setSeleccionado(true);
-			                    break;
+			        	
+			        	if(cbxArea.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
+			        		JOptionPane.showMessageDialog(null,"Debe elegir un área.", "Error", JOptionPane.ERROR_MESSAGE);
+			        	}else if(modeloNoSelectJurado.getValueAt(selectedRow, 2).toString().equalsIgnoreCase(cbxArea.getSelectedItem().toString())) {
+			                Object[] rowData = new Object[3];
+			                for(int i = 0; i < 3; i++) {
+			                    rowData[i] = modeloNoSelectJurado.getValueAt(selectedRow, i);
 			                }
+			                
+			                modeloSelectJurado.addRow(rowData);
+			                modeloNoSelectJurado.removeRow(selectedRow);
+			                
+			                String nombre = rowData[0].toString();
+			                String cedula = rowData[1].toString();
+			                for (Persona persona : GestionEvento.getInstance().getMisPersonas()) {
+			                    if (persona instanceof Jurado && 
+			                        persona.getNombre().equals(nombre) && 
+			                        persona.getCedula().equals(cedula)) {
+			                        ((Jurado) persona).setSeleccionado(true);
+			                        break;
+			                    }
+			                }
+			            } else {
+			                JOptionPane.showMessageDialog(null, 
+			                    "El área del jurado debe coincidir con el área de la comisión",
+			                    "Error", JOptionPane.ERROR_MESSAGE);
 			            }
 			        }
 				}
@@ -477,7 +486,7 @@ public class RegComision extends JDialog {
 	private void loadSelectJurados() { 
 		modeloSelectJurado.setRowCount(0);  
 		ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas(); 
-		rowJuradoNoSelect = new Object[table_1.getColumnCount()]; 
+		rowJuradoNoSelect = new Object[3]; 
 		for (Persona persona : aux) { 
 			if (persona instanceof Jurado && ((Jurado) persona).isSeleccionado()) { 
 				rowJuradoNoSelect[0] = persona.getNombre(); 
