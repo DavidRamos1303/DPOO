@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import logico.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ModTrabajo extends JDialog {
     private final JPanel contentPanel = new JPanel();
@@ -192,10 +194,14 @@ public class ModTrabajo extends JDialog {
         });
         buttonPane.add(okButton);
         getRootPane().setDefaultButton(okButton);
-
-        JButton cancelButton = new JButton("Cancelar");
-        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-        cancelButton.addActionListener(e -> dispose());
-        buttonPane.add(cancelButton);
+        
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        	}
+        });
+        btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        buttonPane.add(btnCancelar);
     }
 }
