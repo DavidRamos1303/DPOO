@@ -185,7 +185,7 @@ public class ListPersona extends JDialog {
 			                GestionEvento.getInstance().eliminarPersona(selected);
 			                JOptionPane.showMessageDialog(null, 
 					                "Eliminación completada.",
-					                "Aviso", JOptionPane.ERROR_MESSAGE);
+					                "Aviso", JOptionPane.WARNING_MESSAGE);
 			                btnModificar.setEnabled(false);
 			                btnEliminar.setEnabled(false);
 			                loadParticipante();

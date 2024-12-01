@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class RegTrabajo extends JDialog {
     private final JPanel contentPanel = new JPanel();
+    private Boolean existe = false;
     private JTextField txtId;
     private Participante participante = null;
     private JTextField txtNombre;
@@ -161,10 +162,12 @@ public class RegTrabajo extends JDialog {
         	public void actionPerformed(ActionEvent e) {
         		participante = (Participante) GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());
         		if(participante != null) {
+        			existe = true;
         			txtNombreAutor.setText(participante.getNombre());
         			txtApellidosAutor.setText(participante.getApellidos());
         			txtTelefonoAutor.setText(participante.getTelefono());
         		}else {
+        			existe = false;
         			txtNombreAutor.setEditable(true);
         			txtApellidosAutor.setEditable(true);
         			txtTelefonoAutor.setEditable(true);
@@ -181,8 +184,24 @@ public class RegTrabajo extends JDialog {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton okButton = new JButton("Registrar");
+        okButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(existe) {
+        			if(txtNombre.getText().toString().equals("") || cmbArea.getSelectedIndex() == 0) {
+        				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos generales.", 
+                                "Error", JOptionPane.WARNING_MESSAGE);
+        			}else {
+        				TrabajoCientifico trabajo = new TrabajoCientifico(txtId.getText().toString(), txtNombre.getText().toString(), cmbArea.getSelectedItem().toString(), participante);
+        				GestionEvento.getInstance().insertarTrabajo(trabajo);
+        				JOptionPane.showMessageDialog(null, "Registro exitoso.", 
+                                "Aviso", JOptionPane.WARNING_MESSAGE);
+        			}
+        		}else {
+        			
+        		}
+        	}
+        });
         okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-        okButton.addActionListener(e -> registrarTrabajo());
         buttonPane.add(okButton);
         getRootPane().setDefaultButton(okButton);
 
@@ -193,7 +212,6 @@ public class RegTrabajo extends JDialog {
     }
 
     private void clean() {
-        GestionEvento.getInstance().codTrabajos++;
         txtId.setText("T-" + GestionEvento.getInstance().codTrabajos);
         txtNombre.setText("");
         cmbArea.setSelectedIndex(0);
@@ -201,69 +219,5 @@ public class RegTrabajo extends JDialog {
         txtNombreAutor.setText("");
         txtApellidosAutor.setText("");
         txtTelefonoAutor.setText("");
-    }
-
-    private void registrarTrabajo() {
-        // Validar campos del trabajo
-        if (txtNombre.getText().trim().isEmpty() || 
-            cmbArea.getSelectedIndex() == 0) {
-            
-            JOptionPane.showMessageDialog(this, 
-                "Por favor, complete todos los campos del trabajo",
-                "Error de Validación",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Validar campos del autor
-        if (txtCedulaAutor.getText().trim().isEmpty() || 
-            txtNombreAutor.getText().trim().isEmpty() || 
-            txtApellidosAutor.getText().trim().isEmpty() || 
-            txtTelefonoAutor.getText().trim().isEmpty()) {
-            
-            JOptionPane.showMessageDialog(this, 
-                "Por favor, complete todos los campos del autor",
-                "Error de Validación",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Crear el participante
-        Participante autor = new Participante(
-            txtCedulaAutor.getText().trim(),
-            txtNombreAutor.getText().trim(),
-            txtApellidosAutor.getText().trim(),
-            txtTelefonoAutor.getText().trim()
-        );
-
-        // Crear el trabajo científico
-        TrabajoCientifico nuevoTrabajo = new TrabajoCientifico(
-            txtId.getText().trim(),
-            txtNombre.getText().trim(),
-            cmbArea.getSelectedItem().toString(),
-            autor
-        );
-
-        // Agregar el autor a la lista de personas si no existe
-        boolean autorExiste = false;
-        for (Persona p : GestionEvento.getInstance().getMisPersonas()) {
-            if (p.getCedula().equals(autor.getCedula())) {
-                autorExiste = true;
-                break;
-            }
-        }
-        if (!autorExiste) {
-            GestionEvento.getInstance().getMisPersonas().add(autor);
-        }
-
-        // Agregar el trabajo
-        GestionEvento.getInstance().getMisTrabajosCientificos().add(nuevoTrabajo);
-
-        JOptionPane.showMessageDialog(this,
-            "Trabajo científico registrado exitosamente",
-            "Registro",
-            JOptionPane.INFORMATION_MESSAGE);
-        
-        clean();
     }
 }
