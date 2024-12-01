@@ -255,6 +255,10 @@ public class RegComision extends JDialog {
 			                modeloSelectJurado.addRow(rowData);
 			                modeloNoSelectJurado.removeRow(selectedRow);
 			                
+			                if(modeloSelectJurado.getRowCount() > 0) {
+			                    cbxArea.setEnabled(false);
+			                }
+			               
 			                String nombre = rowData[0].toString();
 			                String cedula = rowData[1].toString();
 			                for (Persona persona : GestionEvento.getInstance().getMisPersonas()) {
@@ -289,6 +293,10 @@ public class RegComision extends JDialog {
 			            modeloNoSelectJurado.addRow(rowData);
 			            modeloSelectJurado.removeRow(selectedRow);
 			            
+			            if(modeloSelectJurado.getRowCount() == 0) {
+			                cbxArea.setEnabled(true);
+			            }
+			            
 			            String nombre = rowData[0].toString();
 			            String cedula = rowData[1].toString();
 			            for (Persona persona : GestionEvento.getInstance().getMisPersonas()) {
@@ -322,7 +330,7 @@ public class RegComision extends JDialog {
 			
 			table_1 = new JTable(); 
 			modeloNoSelectTrabajo = new DefaultTableModel(); 
-			String[] identificadoresTrabajos = {"Título", "Autor"};
+			String[] identificadoresTrabajos = {"Título", "Area"};
 			table_1.setModel(modeloNoSelectTrabajo); 
 			scrollPane_1.setViewportView(table_1);
 			modeloNoSelectTrabajo.setColumnIdentifiers(identificadoresTrabajos); 
@@ -333,21 +341,25 @@ public class RegComision extends JDialog {
 			        int selectedRow = table_1.getSelectedRow();
 			        if(selectedRow >= 0) {
 			            
-			            Object[] rowData = new Object[2];
-			            for(int i = 0; i < 2; i++) {
-			                rowData[i] = modeloNoSelectTrabajo.getValueAt(selectedRow, i);
-			            }
+			        	if(cbxArea.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
+			        		JOptionPane.showMessageDialog(null,"Debe elegir un área.", "Error", JOptionPane.ERROR_MESSAGE);
+			        	}else if(modeloNoSelectTrabajo.getValueAt(selectedRow, 2).toString().equalsIgnoreCase(cbxArea.getSelectedItem().toString())) {
+			        		Object[] rowData = new Object[2];
+				            for(int i = 0; i < 2; i++) {
+				                rowData[i] = modeloNoSelectTrabajo.getValueAt(selectedRow, i);
+				            }
 
-			            modeloSelecTrabajo.addRow(rowData);
-			            modeloNoSelectTrabajo.removeRow(selectedRow);
-			            
-			            String titulo = rowData[0].toString();
-			            for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
-			                if (trabajo.getNombre().equals(titulo)) {
-			                    trabajo.setSeleccionado(true);
-			                    break;
-			                }
-			            }
+				            modeloSelecTrabajo.addRow(rowData);
+				            modeloNoSelectTrabajo.removeRow(selectedRow);
+				            
+				            String titulo = rowData[0].toString();
+				            for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
+				                if (trabajo.getNombre().equals(titulo)) {
+				                    trabajo.setSeleccionado(true);
+				                    break;
+				                }
+				            }
+			        	}
 			        }
 			    }
 			});
@@ -406,7 +418,6 @@ public class RegComision extends JDialog {
 						if(modeloSelectJurado.getRowCount() > 0 && modeloSelecTrabajo.getRowCount() > 0 && !txtNombre.getText().isEmpty() 
 							&& cbxArea.getSelectedIndex() != 0) {
 							
-							
 							 Comision comision;
 					            if(comisionAModificar == null) {
 					                
@@ -414,7 +425,6 @@ public class RegComision extends JDialog {
 					                                      cbxArea.getSelectedItem().toString());
 					                GestionEvento.getInstance().insertarComision(comision);
 					            } else {
-					                
 					                comisionAModificar.setNombre(txtNombre.getText());
 					                comisionAModificar.setArea(cbxArea.getSelectedItem().toString());
 					                comisionAModificar.getJurado().clear();
@@ -476,7 +486,7 @@ public class RegComision extends JDialog {
 		for(Persona persona : aux) {
 			if(persona instanceof Jurado) {
 				rowJuradoSelect[0] = persona.getNombre();
-				rowJuradoSelect[1] = persona.getCedula();
+				rowJuradoSelect[1] = persona.getApellidos();
 				rowJuradoSelect[2] = ((Jurado) persona).getArea();
 				modeloNoSelectJurado.addRow(rowJuradoSelect);
 			}
@@ -490,7 +500,7 @@ public class RegComision extends JDialog {
 		for (Persona persona : aux) { 
 			if (persona instanceof Jurado && ((Jurado) persona).isSeleccionado()) { 
 				rowJuradoNoSelect[0] = persona.getNombre(); 
-				rowJuradoNoSelect[1] = persona.getCedula(); 
+				rowJuradoNoSelect[1] = persona.getApellidos();
 				rowJuradoNoSelect[2] = ((Jurado) persona).getArea(); modeloSelectJurado.addRow(rowJuradoNoSelect); 
 			} 
 		} 
@@ -502,7 +512,7 @@ public class RegComision extends JDialog {
 	    rowTrabajoNoSelect = new Object[table_2.getColumnCount()];
 	    for (TrabajoCientifico trabajo : aux) {
 	    	rowTrabajoNoSelect[0] = trabajo.getNombre();
-	    	rowTrabajoNoSelect[1] = trabajo.getAutor().getNombre();
+	    	rowTrabajoNoSelect[1] = trabajo.getArea();
 	        modeloNoSelectTrabajo.addRow(rowTrabajoNoSelect);
 	    }
 	}
@@ -515,7 +525,7 @@ public class RegComision extends JDialog {
 	    for (TrabajoCientifico trabajo : aux) {
 	        if (trabajo.isSeleccionado()) {
 	        	rowTrabajoSelect[0] = trabajo.getNombre();
-	        	rowTrabajoSelect[1] = trabajo.getAutor();
+	        	rowTrabajoSelect[1] = trabajo.getArea();
 	            modeloSelecTrabajo.addRow(rowTrabajoSelect);
 	        }
 	    }
