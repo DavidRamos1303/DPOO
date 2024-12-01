@@ -19,7 +19,7 @@ public class ModTrabajo extends JDialog {
 
     public static void main(String[] args) {
         try {
-            ModTrabajoCientifico dialog = new ModTrabajoCientifico(null);
+            ModTrabajo dialog = new ModTrabajo(null);
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -27,7 +27,7 @@ public class ModTrabajo extends JDialog {
         }
     }
 
-    public ModTrabajoCientifico(TrabajoCientifico trabajo) {
+    public ModTrabajo(TrabajoCientifico trabajo) {
         this.trabajo = trabajo;
         if (trabajo == null) {
             dispose();
