@@ -4,14 +4,17 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import logico.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ListTrabajosCientifico extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel model;
+    private JButton btnEliminar;
+    private JButton btnModificar;
+    private TrabajoCientifico selectedTrabajo = null;
 
     public static void main(String[] args) {
         try {
@@ -28,6 +31,7 @@ public class ListTrabajosCientifico extends JDialog {
         setIconImage(icon);
         setTitle("Listar Trabajos Científicos");
         setBounds(100, 100, 800, 500);
+        setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -35,13 +39,18 @@ public class ListTrabajosCientifico extends JDialog {
 
         JPanel panel = new JPanel();
         panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient"), UIManager.getColor("InternalFrame.activeTitleGradient")));
+        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient")));
         contentPanel.add(panel);
         panel.setLayout(null);
 
         JPanel panelTable = new JPanel();
         panelTable.setForeground(Color.WHITE);
-        panelTable.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Trabajos Cient\u00EDficos", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
+        panelTable.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+            "Trabajos Científicos", TitledBorder.LEADING, TitledBorder.TOP, null, 
+            UIManager.getColor("FormattedTextField.foreground")));
         panelTable.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         panelTable.setBounds(12, 13, 748, 382);
         panel.add(panelTable);
@@ -51,39 +60,90 @@ public class ListTrabajosCientifico extends JDialog {
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         panelTable.add(scrollPane, BorderLayout.CENTER);
 
-        model = new DefaultTableModel();
+        model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         String[] headers = {"ID", "Nombre", "Área", "Autor", "Cédula Autor"};
         model.setColumnIdentifiers(headers);
 
         table = new JTable();
         table.setModel(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = table.getSelectedRow();
+                if (index >= 0) {
+                    btnEliminar.setEnabled(true);
+                    btnModificar.setEnabled(true);
+                    String trabajoId = table.getValueAt(index, 0).toString();
+                    selectedTrabajo = findTrabajoById(trabajoId);
+                }
+            }
+        });
         scrollPane.setViewportView(table);
 
         JPanel buttonPane = new JPanel();
         buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
+
+        JButton cancelButton = new JButton("Cancelar");
+        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+        cancelButton.addActionListener(e -> dispose());
         
-        JButton btnNewButton_1 = new JButton("Modificar");
-        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-        btnNewButton_1.setEnabled(false);
-        buttonPane.add(btnNewButton_1);
-        
-        JButton btnNewButton = new JButton("Eliminar");
-        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-        btnNewButton.setEnabled(false);
-        buttonPane.add(btnNewButton);
-        
-        JButton btnCerrar = new JButton("Cerrar");
-        btnCerrar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		dispose();
-        	}
+        btnModificar = new JButton("Modificar");
+        btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnModificar.setEnabled(false);
+        btnModificar.addActionListener(e -> {
+            if (selectedTrabajo != null) {
+                ModTrabajoCientifico modDialog = new ModTrabajoCientifico(selectedTrabajo);
+                modDialog.setModal(true);
+                modDialog.setLocationRelativeTo(this);
+                modDialog.setVisible(true);
+                loadTrabajos();
+            }
         });
-        btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 13));
-        buttonPane.add(btnCerrar);
+        buttonPane.add(btnModificar);
+        
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(e -> {
+            if (selectedTrabajo != null) {
+                int option = JOptionPane.showConfirmDialog(null,
+                    "¿Está seguro que desea eliminar este trabajo científico?",
+                    "Confirmación", JOptionPane.YES_NO_OPTION);
+                
+                if (option == JOptionPane.YES_OPTION) {
+                    GestionEvento.getInstance().getMisTrabajosCientificos().remove(selectedTrabajo);
+                    loadTrabajos();
+                    btnEliminar.setEnabled(false);
+                    btnModificar.setEnabled(false);
+                    selectedTrabajo = null;
+                    JOptionPane.showMessageDialog(null, 
+                        "Trabajo científico eliminado exitosamente",
+                        "Eliminación exitosa",
+                        JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        buttonPane.add(btnEliminar);
+        buttonPane.add(cancelButton);
 
         loadTrabajos();
+    }
+
+    private TrabajoCientifico findTrabajoById(String id) {
+        for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
+            if (trabajo.getId().equals(id)) {
+                return trabajo;
+            }
+        }
+        return null;
     }
 
     private void loadTrabajos() {
@@ -99,5 +159,8 @@ public class ListTrabajosCientifico extends JDialog {
             };
             model.addRow(row);
         }
+        btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        selectedTrabajo = null;
     }
 }
