@@ -9,6 +9,7 @@ public class Comision {
 	private String area;
 	private ArrayList<Jurado> jurado;
 	private ArrayList<TrabajoCientifico> trabajos;
+	private Boolean selected;
 	
 	public Comision(String codComision, String nombre, String area) {
 		super();
@@ -17,6 +18,7 @@ public class Comision {
 		this.area = area;
 		jurado = new ArrayList<>();
 		trabajos = new ArrayList<>();
+		this.selected = false;
 	}
 	
 	public String getCodComision() {
@@ -49,7 +51,12 @@ public class Comision {
 	public void setTrabajos(ArrayList<TrabajoCientifico> trabajos) {
 		this.trabajos = trabajos;
 	}
-	
-	
 
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
+	}
 }

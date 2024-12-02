@@ -39,6 +39,7 @@ public class ModPersona extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
+        setLocationRelativeTo(null);
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

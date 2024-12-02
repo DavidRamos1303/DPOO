@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,6 +32,9 @@ public class PlanificarEvento extends JDialog {
 	 */
 	public PlanificarEvento() {
 		setBounds(100, 100, 450, 300);
+		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setIconImage(icon);
+        setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
