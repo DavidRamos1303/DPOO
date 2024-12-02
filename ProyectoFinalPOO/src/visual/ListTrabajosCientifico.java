@@ -100,7 +100,7 @@ public class ListTrabajosCientifico extends JDialog {
         btnModificar.setEnabled(false);
         btnModificar.addActionListener(e -> {
             if (selectedTrabajo != null) {
-                ModTrabajoCientifico modDialog = new ModTrabajoCientifico(selectedTrabajo);
+                ModTrabajo modDialog = new ModTrabajo(selectedTrabajo);
                 modDialog.setModal(true);
                 modDialog.setLocationRelativeTo(this);
                 modDialog.setVisible(true);
