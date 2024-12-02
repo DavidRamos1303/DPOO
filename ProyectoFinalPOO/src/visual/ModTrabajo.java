@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 public class ModTrabajo extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTextField txtId;
+    private Boolean existe = false;
+    private Persona obj = null;
     private JTextField txtNombre;
     private JComboBox cmbArea;
     private JPanel panelAutor;
@@ -128,7 +130,6 @@ public class ModTrabajo extends JDialog {
         panelAutor.add(lblCedulaAutor);
 
         txtCedulaAutor = new JTextField(autor.getCedula());
-        txtCedulaAutor.setEditable(false);
         txtCedulaAutor.setBounds(107, 37, 200, 22);
         panelAutor.add(txtCedulaAutor);
 
@@ -167,33 +168,37 @@ public class ModTrabajo extends JDialog {
         txtTelefonoAutor.setEditable(false);
         txtTelefonoAutor.setBounds(425, 94, 200, 22);
         panelAutor.add(txtTelefonoAutor);
+        
+        JButton btnNewButton = new JButton("Buscar");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		obj = GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());
+        		if(obj != null) {
+        			if(obj instanceof Participante) {
+        				existe = true;
+        				txtNombreAutor.setText(obj.getNombre());
+        				txtApellidosAutor.setText(obj.getApellidos());
+        				txtTelefonoAutor.setText(obj.getTelefono());
+        				txtNombreAutor.setEditable(false);
+        				txtApellidosAutor.setEditable(false);
+        				txtTelefonoAutor.setEditable(false);
+        			}
+        		}else {
+        			existe = false;
+        			txtNombreAutor.setEditable(true);
+        			txtApellidosAutor.setEditable(true);
+        			txtTelefonoAutor.setEditable(true);
+        		}
+        	}
+        });
+        btnNewButton.setBounds(345, 37, 89, 23);
+        panelAutor.add(btnNewButton);
 
         // Panel de botones
         JPanel buttonPane = new JPanel();
         buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
-
-        JButton okButton = new JButton("Modificar");
-        okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-        okButton.addActionListener(e -> {
-            if(txtNombre.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, 
-                    "El nombre no puede estar vacío", 
-                    "Error de Validación", 
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            trabajo.setNombre(txtNombre.getText().trim());
-            JOptionPane.showMessageDialog(null,
-                "Trabajo científico modificado exitosamente",
-                "Modificación",
-                JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        });
-        buttonPane.add(okButton);
-        getRootPane().setDefaultButton(okButton);
         
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(new ActionListener() {
@@ -201,6 +206,35 @@ public class ModTrabajo extends JDialog {
         		dispose();
         	}
         });
+        
+        JButton btnModificar = new JButton("Modificar");
+        btnModificar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(existe) {
+        			if(!(cmbArea.getSelectedItem().toString().equals(""))) {
+        				trabajo.setNombre(txtNombre.getText().toString());
+        				obj = (Participante)GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());
+        				trabajo.setAutor((Participante) obj);
+        				JOptionPane.showMessageDialog(null, "Modificación completada.", 
+                                "Modificación", JOptionPane.WARNING_MESSAGE);
+        				dispose();
+        			}else {
+        				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos generales.", 
+                                "Error", JOptionPane.ERROR_MESSAGE);
+        			}
+        		}else {
+        			trabajo.setNombre(txtNombre.getText().toString());
+        			Participante participante = new Participante(txtCedulaAutor.getText().toString(), txtNombreAutor.getText().toString(), txtApellidosAutor.getText().toString(), txtTelefonoAutor.getText().toString());
+        			GestionEvento.getInstance().insertarPersonas(participante);
+    				trabajo.setAutor(participante);
+    				JOptionPane.showMessageDialog(null, "Modificación completada.", 
+                            "Modificación", JOptionPane.WARNING_MESSAGE);
+    				dispose();
+        		}
+        	}
+        });
+        btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        buttonPane.add(btnModificar);
         btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
         buttonPane.add(btnCancelar);
     }

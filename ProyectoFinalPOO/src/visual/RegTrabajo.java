@@ -11,7 +11,7 @@ public class RegTrabajo extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private Boolean existe = false;
     private JTextField txtId;
-    private Participante participante = null;
+    private Persona participante = null;
     private JTextField txtNombre;
     private JPanel panelAutor;
     private JTextField txtCedulaAutor;
@@ -160,12 +160,17 @@ public class RegTrabajo extends JDialog {
         JButton btnNewButton = new JButton("Buscar");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		participante = (Participante) GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());
+        		participante = GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());
         		if(participante != null) {
-        			existe = true;
-        			txtNombreAutor.setText(participante.getNombre());
-        			txtApellidosAutor.setText(participante.getApellidos());
-        			txtTelefonoAutor.setText(participante.getTelefono());
+        			if(participante instanceof Participante) {
+        				existe = true;
+        				txtNombreAutor.setText(participante.getNombre());
+        				txtApellidosAutor.setText(participante.getApellidos());
+        				txtTelefonoAutor.setText(participante.getTelefono());
+        				txtNombreAutor.setEditable(false);
+        				txtApellidosAutor.setEditable(false);
+        				txtTelefonoAutor.setEditable(false);
+        			}
         		}else {
         			existe = false;
         			txtNombreAutor.setEditable(true);
@@ -191,7 +196,7 @@ public class RegTrabajo extends JDialog {
         				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos generales.", 
                                 "Error", JOptionPane.ERROR_MESSAGE);
         			}else {
-        				TrabajoCientifico trabajo = new TrabajoCientifico(txtId.getText().toString(), txtNombre.getText().toString(), cmbArea.getSelectedItem().toString(), participante);
+        				TrabajoCientifico trabajo = new TrabajoCientifico(txtId.getText().toString(), txtNombre.getText().toString(), cmbArea.getSelectedItem().toString(), (Participante) participante);
         				GestionEvento.getInstance().insertarTrabajo(trabajo);
         				JOptionPane.showMessageDialog(null, "Registro exitoso.", 
                                 "Aviso", JOptionPane.WARNING_MESSAGE);

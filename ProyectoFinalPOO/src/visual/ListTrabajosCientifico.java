@@ -7,14 +7,16 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import logico.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListTrabajosCientifico extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel model;
-    private JButton btnEliminar;
-    private JButton btnModificar;
     private TrabajoCientifico selectedTrabajo = null;
+    private JButton btnModificar;
+    private JButton btnEliminar;
 
     public static void main(String[] args) {
         try {
@@ -95,42 +97,48 @@ public class ListTrabajosCientifico extends JDialog {
         cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         cancelButton.addActionListener(e -> dispose());
         
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if (selectedTrabajo != null) {
+        			int option = JOptionPane.showConfirmDialog(null,
+        					"¿Está seguro que desea eliminar este trabajo científico?",
+        					"Confirmación", JOptionPane.YES_NO_OPTION);
+
+        			if (option == JOptionPane.YES_OPTION) {
+        				GestionEvento.getInstance().getMisTrabajosCientificos().remove(selectedTrabajo);
+        				loadTrabajos();
+        				btnEliminar.setEnabled(false);
+        				btnModificar.setEnabled(false);
+        				selectedTrabajo = null;
+        				JOptionPane.showMessageDialog(null, 
+        						"Trabajo científico eliminado exitosamente",
+        						"Eliminación exitosa",
+        						JOptionPane.INFORMATION_MESSAGE);
+        			}
+        		}
+        	}
+        });
+        
         btnModificar = new JButton("Modificar");
+        btnModificar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(selectedTrabajo != null) {
+        			ModTrabajo dialog = new ModTrabajo(selectedTrabajo);
+        			dialog.setModal(true);
+        			dialog.setVisible(true);
+        			btnEliminar.setEnabled(false);
+        			btnModificar.setEnabled(false);
+        			selectedTrabajo = null;
+        			loadTrabajos();
+        		}
+        	}
+        });
         btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnModificar.setEnabled(false);
-        btnModificar.addActionListener(e -> {
-            if (selectedTrabajo != null) {
-                ModTrabajo modDialog = new ModTrabajo(selectedTrabajo);
-                modDialog.setModal(true);
-                modDialog.setLocationRelativeTo(this);
-                modDialog.setVisible(true);
-                loadTrabajos();
-            }
-        });
         buttonPane.add(btnModificar);
-        
-        btnEliminar = new JButton("Eliminar");
         btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnEliminar.setEnabled(false);
-        btnEliminar.addActionListener(e -> {
-            if (selectedTrabajo != null) {
-                int option = JOptionPane.showConfirmDialog(null,
-                    "¿Está seguro que desea eliminar este trabajo científico?",
-                    "Confirmación", JOptionPane.YES_NO_OPTION);
-                
-                if (option == JOptionPane.YES_OPTION) {
-                    GestionEvento.getInstance().getMisTrabajosCientificos().remove(selectedTrabajo);
-                    loadTrabajos();
-                    btnEliminar.setEnabled(false);
-                    btnModificar.setEnabled(false);
-                    selectedTrabajo = null;
-                    JOptionPane.showMessageDialog(null, 
-                        "Trabajo científico eliminado exitosamente",
-                        "Eliminación exitosa",
-                        JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
         buttonPane.add(btnEliminar);
         buttonPane.add(cancelButton);
 
@@ -159,8 +167,6 @@ public class ListTrabajosCientifico extends JDialog {
             };
             model.addRow(row);
         }
-        btnEliminar.setEnabled(false);
-        btnModificar.setEnabled(false);
         selectedTrabajo = null;
     }
 }

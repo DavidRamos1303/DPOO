@@ -138,6 +138,13 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Eventos");
+		mntmNewMenuItem_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListEvento dialog = new ListEvento();
+				dialog.setModal(true);
+				dialog.setVisible(true);
+			}
+		});
 		mnNewMenu_2.add(mntmNewMenuItem_8);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Comisiones");
