@@ -102,6 +102,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Comisi\u00F3n");
+		mntmNewMenuItem_2.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\comision (1).png"));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegComision regcomision = new RegComision();
