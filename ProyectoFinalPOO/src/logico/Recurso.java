@@ -6,6 +6,7 @@ public class Recurso {
 	protected String nombre;
 	protected String tipo;
 	protected Boolean disponibilidad;
+	protected Boolean selected;
 	
 	public Recurso(String id, String nombre, String tipo) {
 		super();
@@ -13,6 +14,7 @@ public class Recurso {
 		this.nombre = nombre;
 		this.tipo = tipo;
 		this.disponibilidad = true;
+		this.selected = false;
 	}
 
 	public String getId() {
@@ -45,5 +47,13 @@ public class Recurso {
 
 	public void setDisponibilidad(Boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
+	}
+
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
 	}
 }
