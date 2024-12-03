@@ -368,7 +368,7 @@ public class RegComision extends JDialog {
 				            }
 			        	}else {
 			                JOptionPane.showMessageDialog(null, 
-				                    "El área del jurado debe coincidir con el área de la comisión",
+				                    "El área del trabajo debe coincidir con el área de la comisión",
 				                    "Error", JOptionPane.ERROR_MESSAGE);
 				        }
 			        }

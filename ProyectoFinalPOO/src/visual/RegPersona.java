@@ -166,7 +166,7 @@ public class RegPersona extends JDialog {
 			cmbArea = new JComboBox();
 			cmbArea.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Tecnolog\u00EDa en inform\u00E1tica ", "Ciencias de la salud", "Ciencias Sociales", "Investigaci\u00F3n\u00A0y\u00A0Desarrollo"}));
 			cmbArea.setEnabled(false);
-			cmbArea.setBounds(76, 21, 165, 20);
+			cmbArea.setBounds(76, 21, 220, 20);
 			panel_2.add(cmbArea);
 		}
 		{

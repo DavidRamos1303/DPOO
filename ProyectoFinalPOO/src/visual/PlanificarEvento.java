@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 import logico.Comision;
 import logico.GestionEvento;
+import logico.Jurado;
+import logico.Persona;
 import logico.Recurso;
 
 import javax.swing.border.SoftBevelBorder;
@@ -28,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
@@ -72,6 +75,7 @@ public class PlanificarEvento extends JDialog {
 	private JButton btnQuitComision;
 	private JTable tableRecurso;
 	private JTable tableRecursoS;
+	private JSpinner spnFecha;
 
 	/**
 	 * Launch the application.
@@ -120,6 +124,7 @@ public class PlanificarEvento extends JDialog {
 			
 			txtCodigo = new JTextField();
 			txtCodigo.setEditable(false);
+			txtCodigo.setText("Evento-"+GestionEvento.getInstance().codRecursos);
 			txtCodigo.setBounds(96, 30, 151, 20);
 			panel_1.add(txtCodigo);
 			txtCodigo.setColumns(10);
@@ -146,15 +151,17 @@ public class PlanificarEvento extends JDialog {
 			lblNewLabel_3.setBounds(433, 76, 46, 14);
 			panel_1.add(lblNewLabel_3);
 			
-			JSpinner spinner = new JSpinner();
-			spinner.setModel(new SpinnerDateModel(new Date(1733112000000L), new Date(1733112000000L), null, Calendar.DAY_OF_YEAR));
-			spinner.setBounds(489, 73, 139, 20);
-			panel_1.add(spinner);
+			spnFecha = new JSpinner();
+			spnFecha.setModel(new SpinnerDateModel(new Date(1733112000000L), new Date(1733112000000L), null, Calendar.DAY_OF_YEAR));
+			spnFecha.setBounds(489, 73, 139, 20);
+			Date fechaActual = new Date();
+			spnFecha.setValue(fechaActual);
+			panel_1.add(spnFecha);
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new TitledBorder(null, "Comisiones", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("FormattedTextField.foreground")));
 			panel_2.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-			panel_2.setBounds(10, 163, 209, 254);
+			panel_2.setBounds(10, 151, 209, 266);
 			panel.add(panel_2);
 			panel_2.setLayout(new BorderLayout(0, 0));
 			
@@ -186,12 +193,18 @@ public class PlanificarEvento extends JDialog {
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
 				}
 			});
 			btnAddComision.setBounds(229, 211, 82, 23);
 			panel.add(btnAddComision);
 			
 			btnQuitComision = new JButton("Quitar");
+			btnQuitComision.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 			btnQuitComision.setEnabled(false);
 			btnQuitComision.setBounds(229, 294, 82, 23);
 			panel.add(btnQuitComision);
@@ -199,7 +212,7 @@ public class PlanificarEvento extends JDialog {
 			JPanel panel_3 = new JPanel();
 			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Comisiones seleccionadas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			panel_3.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-			panel_3.setBounds(321, 164, 209, 254);
+			panel_3.setBounds(321, 151, 209, 266);
 			panel.add(panel_3);
 			panel_3.setLayout(new BorderLayout(0, 0));
 			
@@ -231,7 +244,7 @@ public class PlanificarEvento extends JDialog {
 			JPanel panel_4 = new JPanel();
 			panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Recursos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			panel_4.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-			panel_4.setBounds(553, 163, 209, 254);
+			panel_4.setBounds(553, 151, 209, 266);
 			panel.add(panel_4);
 			panel_4.setLayout(new BorderLayout(0, 0));
 			
@@ -261,11 +274,21 @@ public class PlanificarEvento extends JDialog {
 			scrollPane_2.setViewportView(tableRecurso);
 			
 			btnAddRecurso = new JButton("Agregar");
+			btnAddRecurso.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 			btnAddRecurso.setEnabled(false);
 			btnAddRecurso.setBounds(772, 211, 82, 23);
 			panel.add(btnAddRecurso);
 			
 			btnQuitRecurso = new JButton("Quitar");
+			btnQuitRecurso.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
 			btnQuitRecurso.setEnabled(false);
 			btnQuitRecurso.setBounds(772, 294, 82, 23);
 			panel.add(btnQuitRecurso);
@@ -273,7 +296,7 @@ public class PlanificarEvento extends JDialog {
 			JPanel panel_5 = new JPanel();
 			panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Recursos seleccionados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			panel_5.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-			panel_5.setBounds(864, 164, 209, 254);
+			panel_5.setBounds(864, 151, 209, 266);
 			panel.add(panel_5);
 			panel_5.setLayout(new BorderLayout(0, 0));
 			
@@ -308,6 +331,11 @@ public class PlanificarEvento extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Planificar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						clean();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -330,27 +358,67 @@ public class PlanificarEvento extends JDialog {
 	}
 
 	private void loadRecursosSelect() {
-		// TODO Auto-generated method stub
-		
+		modeloRecursoSelected.setRowCount(0);
+		ArrayList<Recurso> aux = GestionEvento.getInstance().getMisRecursos();
+		rowRecursoSelected = new Object[tableRecursoS.getColumnCount()];
+		for (Recurso obj : aux) {
+			if(obj.getDisponibilidad()) {
+				if(obj.getSelected()) {
+					rowRecursoSelected[0] = obj.getId();
+					rowRecursoSelected[1] = obj.getNombre();
+					rowRecursoSelected[2] = obj.getTipo();
+					modeloRecursoSelected.addRow(rowRecursoSelected);
+				}
+			}
+		}
 	}
 
 	private void loadRecursos() {
-		// TODO Auto-generated method stubs
-		
+		modeloRecurso.setRowCount(0);
+		ArrayList<Recurso> aux = GestionEvento.getInstance().getMisRecursos();
+		rowRecurso = new Object[tableRecurso.getColumnCount()];
+		for (Recurso obj : aux) {
+			if(obj.getDisponibilidad()) {
+				rowRecurso[0] = obj.getId();
+				rowRecurso[1] = obj.getNombre();
+				rowRecurso[2] = obj.getTipo();
+				modeloRecurso.addRow(rowRecurso);
+			}
+		}	
 	}
 
 	private void loaddComisionesSelect() {
-		// TODO Auto-generated method stub
-		
+		modeloComisionSelected.setRowCount(0);
+		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
+		rowComisionSelected = new Object[tableComisionS.getColumnCount()];
+		for (Comision obj : aux) {
+			if(obj.getSelected()){
+				rowComisionSelected[0] = obj.getCodComision();
+				rowComisionSelected[1] = obj.getNombre();
+				rowComisionSelected[2] = obj.getArea();
+				modeloComisionSelected.addRow(rowComisionSelected);
+			}
+		}	
 	}
 
 	private void loadComisiones() {
-		// TODO Auto-generated method stub
-		
+		modeloComision.setRowCount(0);
+		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
+		rowComision = new Object[tableComision.getColumnCount()];
+		for (Comision obj : aux) {
+			rowComision[0] = obj.getCodComision();
+			rowComision[1] = obj.getNombre();
+			rowComision[2] = obj.getArea();
+			modeloComision.addRow(rowComision);
+		}
 	}
 	
 	private void clean() {
-		
+		txtCodigo.setText("Evento-"+GestionEvento.getInstance().codRecursos);
+		txtTitulo.setText("");
+		cmbTipo.setSelectedIndex(0);
+		Date fechaActual = new Date();
+		spnFecha.setValue(fechaActual);
 	}
 	
 	public static Date convertirFecha(String fechaStr) {
