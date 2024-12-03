@@ -81,7 +81,7 @@ public class PrincipalGestion extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Persona");
-		mntmNewMenuItem.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/persona (1).jpg")));
+		mntmNewMenuItem.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/persona2 (1).png")));
 		
 		
 		mntmNewMenuItem.addActionListener(new ActionListener() {
@@ -94,7 +94,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
-		mntmNewMenuItem_1.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/trabajo (1).png")));
+		mntmNewMenuItem_1.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/trabajo2 (1).png")));
 		mntmNewMenuItem_1.addActionListener(e ->{
 			RegTrabajo dialog = new RegTrabajo();
 			dialog.setModal(true);
@@ -126,6 +126,7 @@ public class PrincipalGestion extends JFrame {
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Personas");
+		mntmNewMenuItem_5.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/listarPersona (1).png")));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListPersona dialog = new ListPersona();
@@ -136,6 +137,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Recursos");
+		mntmNewMenuItem_6.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/recurso (1).png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListRecursos listarRecursos = new ListRecursos();
@@ -146,6 +148,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Trabajos Cient\u00EDficos");
+		mntmNewMenuItem_7.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/trabajo2 (1).png")));
 		mntmNewMenuItem_7.addActionListener(e -> {
 			ListTrabajosCientifico dialog = new ListTrabajosCientifico();
             dialog.setLocationRelativeTo(this);
@@ -155,6 +158,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Eventos");
+		mntmNewMenuItem_8.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/evento (1).png")));
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListEvento dialog = new ListEvento();
@@ -165,6 +169,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_8);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Comisiones");
+		mntmNewMenuItem_9.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/comision (1).png")));
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListComision listcomision = new ListComision();
@@ -178,6 +183,7 @@ public class PrincipalGestion extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Planificar evento");
+		mntmNewMenuItem_4.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/evento (1).png")));
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlanificarEvento dialog = new PlanificarEvento();
