@@ -81,7 +81,8 @@ public class PrincipalGestion extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Persona");
-		mntmNewMenuItem.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\persona (1).jpg"));
+		mntmNewMenuItem.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/persona (1).jpg")));
+		
 		
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +94,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
-		mntmNewMenuItem_1.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\trabajo (1).png"));
+		mntmNewMenuItem_1.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/trabajo (1).png")));
 		mntmNewMenuItem_1.addActionListener(e ->{
 			RegTrabajo dialog = new RegTrabajo();
 			dialog.setModal(true);
@@ -102,7 +103,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Comisi\u00F3n");
-		mntmNewMenuItem_2.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\comision (1).png"));
+		mntmNewMenuItem_2.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/comision (1).png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegComision regcomision = new RegComision();
@@ -113,7 +114,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
-		mntmNewMenuItem_3.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\recurso (1).png"));
+		mntmNewMenuItem_3.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/recurso (1).png")));
 		mntmNewMenuItem_3.addActionListener(e -> {
             RegRecurso dialog = new RegRecurso();
             dialog.setModal(true);
