@@ -24,6 +24,8 @@ import javax.swing.UIManager;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class ListComision extends JDialog {
@@ -32,6 +34,11 @@ public class ListComision extends JDialog {
 	private DefaultTableModel modelo;
 	private Object row[];
 	private JTable table;
+	private int index = -1;
+	private Comision selected = null;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JButton cancelButton;
 	
 
 	/**
@@ -79,6 +86,20 @@ public class ListComision extends JDialog {
 			panel_1.add(scrollPane, BorderLayout.CENTER);
 			{
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					index = table.getSelectedRow();
+					if(index >= 0) {
+						String codigo = table.getValueAt(index, 0).toString();
+						selected = GestionEvento.getInstance().buscarComisionID(codigo);
+						if(selected != null) {
+							btnModificar.setEnabled(true);
+							btnEliminar.setEnabled(true);
+						}
+					}
+				}
+			});
 			modelo = new DefaultTableModel();
 			String [] identificadores = {"Código", "Nombre", "Area"};
 			modelo.setColumnIdentifiers(identificadores);
@@ -92,8 +113,8 @@ public class ListComision extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Modificar");
-				okButton.addActionListener(new ActionListener() {
+				btnModificar = new JButton("Modificar");
+				btnModificar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int selectedRow = table.getSelectedRow();
 				        if(selectedRow >= 0) {
@@ -103,6 +124,8 @@ public class ListComision extends JDialog {
 				                RegComision regComision = new RegComision(comisionSeleccionada);
 				                regComision.setModal(true);
 				                regComision.setVisible(true);
+				                btnEliminar.setEnabled(false);
+								btnModificar.setEnabled(false);
 				                loadComisiones(); 
 				            }
 				        } else {
@@ -112,16 +135,19 @@ public class ListComision extends JDialog {
 				        }
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnModificar.setEnabled(false);
+				btnModificar.setActionCommand("Cancel");
+				buttonPane.add(btnModificar);
+				getRootPane().setDefaultButton(btnModificar);
 			}
 			{
-				JButton btnNewButton = new JButton("Eliminar");
-				btnNewButton.addActionListener(new ActionListener() {
+				btnEliminar = new JButton("Eliminar");
+				btnEliminar.setEnabled(false);
+				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int selectedRow = table.getSelectedRow();
 				        if(selectedRow >= 0) {
+				        	
 				            int option = JOptionPane.showConfirmDialog(null,
 				                "¿Está seguro que desea eliminar esta comisión?",
 				                "Confirmación", JOptionPane.YES_NO_OPTION);
@@ -129,19 +155,25 @@ public class ListComision extends JDialog {
 				            if(option == JOptionPane.YES_OPTION) {
 				                String codigo = (String) modelo.getValueAt(selectedRow, 0);
 				                eliminarComision(codigo);
+				                btnModificar.setEnabled(false);
+				                btnEliminar.setEnabled(false);
 				                loadComisiones(); 
 				            }
 				        } else {
+				        	btnModificar.setEnabled(false);
+			                btnEliminar.setEnabled(false);
 				            JOptionPane.showMessageDialog(null, 
 				                "Debe seleccionar una comisión para eliminar.",
 				                "Error", JOptionPane.ERROR_MESSAGE);
 				        }
 					}
 				});
-				buttonPane.add(btnNewButton);
+				buttonPane.add(btnEliminar);
+                btnEliminar.setEnabled(false);
+                btnEliminar.setActionCommand("Cancel");
 			}
 			{
-				JButton cancelButton = new JButton("Cerrar");
+				cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
