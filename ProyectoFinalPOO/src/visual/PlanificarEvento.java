@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Comision;
+import logico.Evento;
 import logico.GestionEvento;
 import logico.Jurado;
 import logico.Persona;
@@ -25,6 +26,7 @@ import logico.Recurso;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
@@ -344,7 +346,50 @@ public class PlanificarEvento extends JDialog {
 				JButton okButton = new JButton("Planificar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						clean();
+						if(txtTitulo.getText().toString().equals("") || cmbTipo.getSelectedIndex() == 0) {
+							JOptionPane.showMessageDialog(null, 
+					                "Debe llenar todos los datos generales.",
+					                "Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							Date fecha = (Date) spnFecha.getValue();
+							int cantRecurSel = 0;
+							int cantComiSel = 0;
+							for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+								if(obj.getSelected()) {
+									cantRecurSel++;
+								}
+							}
+							for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+								if(obj.getSelected()) {
+									cantComiSel++;
+								}
+							}
+							if(cantRecurSel == 0 || cantComiSel == 0) {
+								JOptionPane.showMessageDialog(null, 
+						                "Debe seleccionar al menos una comisión y un recurso.",
+						                "Error", JOptionPane.ERROR_MESSAGE);
+							}else {
+								Evento evento = new Evento(txtCodigo.getText().toString(), txtTitulo.getText().toString(), cmbTipo.getSelectedItem().toString(), fecha);
+								GestionEvento.getInstance().insertarEvento(evento);
+								for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+									if(obj.getSelected()) {
+										evento.getRecursos().add(obj);
+										obj.setSelected(false);
+									}
+								}
+								for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+									if(obj.getSelected()) {
+										evento.getComisiones().add(obj);
+										obj.setSelected(false);
+									}
+								}
+								GestionEvento.getInstance().insertarEvento(evento);
+								JOptionPane.showMessageDialog(null, 
+						                "Planificación exitosa.",
+						                "Aviso", JOptionPane.WARNING_MESSAGE);
+								clean();
+							}
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -433,15 +478,14 @@ public class PlanificarEvento extends JDialog {
 		txtTitulo.setText("");
 		cmbTipo.setSelectedIndex(0);
 		Date fechaActual = new Date();
-		spnFecha.setValue(fechaActual);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaActual);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date limiteInferior = calendar.getTime();
+		spnFecha.setModel(new SpinnerDateModel(fechaActual, limiteInferior, null, Calendar.DAY_OF_YEAR));
+		loadComisiones();
+		loadComisionesSelect();
+		loadRecursos();
+		loadRecursosSelect();
 	}
-	
-	public static Date convertirFecha(String fechaStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-        try {
-            return sdf.parse(fechaStr);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
 }
