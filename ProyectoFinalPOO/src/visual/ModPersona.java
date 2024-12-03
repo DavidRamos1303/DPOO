@@ -4,66 +4,188 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import logico.Persona;
+import javax.swing.*;
+import javax.swing.border.*;
+import logico.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ModPersona extends JDialog {
+    private final JPanel contentPanel = new JPanel();
+    private JTextField txtCedula;
+    private JTextField txtNombre;
+    private JTextField txtApellido;
+    private JTextField txtTelefono;
+    private JRadioButton rdJurd;
+    private JRadioButton rdPart;
+    private JComboBox cmbArea;
+    private Persona miPersona;
 
-	private final JPanel contentPanel = new JPanel();
+    public static void main(String[] args) {
+        try {
+            ModPersona dialog = new ModPersona(null);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			ModPersona dialog = new ModPersona(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public ModPersona(Persona persona) {
+        this.miPersona = persona;
+        if (persona == null) {
+            dispose();
+            return;
+        }
 
-	/**
-	 * Create the dialog.
-	 */
-	public ModPersona(Persona obj) {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        setTitle("Modificar Persona");
+        
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
+        
+        setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+        getContentPane().setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+        setBounds(100, 100, 583, 369);
         setLocationRelativeTo(null);
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
-	}
+        getContentPane().setLayout(new BorderLayout());
+        contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+        contentPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient"), 
+            UIManager.getColor("InternalFrame.activeTitleGradient")));
+        getContentPane().add(contentPanel, BorderLayout.CENTER);
+        contentPanel.setLayout(new BorderLayout(0, 0));
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        contentPanel.add(panel, BorderLayout.CENTER);
+        panel.setLayout(null);
 
+        // Panel de datos generales
+        JPanel panel_1 = new JPanel();
+        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+            "Datos generales:", TitledBorder.LEADING, TitledBorder.TOP, null, 
+            UIManager.getColor("FormattedTextField.foreground")));
+        panel_1.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        panel_1.setBounds(10, 0, 541, 150);
+        panel.add(panel_1);
+        panel_1.setLayout(null);
+
+        // Campos con los datos de la persona
+        JLabel lblNewLabel = new JLabel("Cédula:");
+        lblNewLabel.setBounds(10, 31, 46, 14);
+        panel_1.add(lblNewLabel);
+
+        txtCedula = new JTextField(persona.getCedula());
+        txtCedula.setEditable(false);
+        txtCedula.setBounds(76, 28, 172, 20);
+        panel_1.add(txtCedula);
+
+        JLabel lblNewLabel_1 = new JLabel("Nombre:");
+        lblNewLabel_1.setBounds(10, 76, 63, 14);
+        panel_1.add(lblNewLabel_1);
+
+        txtNombre = new JTextField(persona.getNombre());
+        txtNombre.setBounds(77, 73, 150, 20);
+        panel_1.add(txtNombre);
+
+        JLabel lblNewLabel_2 = new JLabel("Apellido:");
+        lblNewLabel_2.setBounds(10, 113, 63, 14);
+        panel_1.add(lblNewLabel_2);
+
+        txtApellido = new JTextField(persona.getApellidos());
+        txtApellido.setBounds(76, 110, 150, 20);
+        panel_1.add(txtApellido);
+
+        JLabel lblNewLabel_3 = new JLabel("Teléfono:");
+        lblNewLabel_3.setBounds(284, 76, 70, 14);
+        panel_1.add(lblNewLabel_3);
+
+        txtTelefono = new JTextField(persona.getTelefono());
+        txtTelefono.setBounds(345, 73, 135, 20);
+        panel_1.add(txtTelefono);
+
+        // Panel tipo
+        JPanel panel_2 = new JPanel();
+        panel_2.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        panel_2.setBorder(new TitledBorder(null, "Tipo:", TitledBorder.LEADING, TitledBorder.TOP, 
+            null, UIManager.getColor("FormattedTextField.foreground")));
+        panel_2.setBounds(10, 152, 541, 54);
+        panel.add(panel_2);
+        panel_2.setLayout(null);
+
+        rdPart = new JRadioButton("Participante");
+        rdPart.setEnabled(false);
+        rdPart.setSelected(persona instanceof Participante);
+        rdPart.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        rdPart.setBounds(76, 15, 109, 23);
+        panel_2.add(rdPart);
+
+        rdJurd = new JRadioButton("Jurado");
+        rdJurd.setEnabled(false);
+        rdJurd.setSelected(persona instanceof Jurado);
+        rdJurd.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        rdJurd.setBounds(287, 15, 109, 23);
+        panel_2.add(rdJurd);
+
+        // Panel área
+        JPanel panel_3 = new JPanel();
+        panel_3.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_3.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+        panel_3.setBounds(10, 216, 541, 64);
+        panel.add(panel_3);
+        panel_3.setLayout(null);
+
+        JLabel lblNewLabel_4 = new JLabel("Area:");
+        lblNewLabel_4.setBounds(10, 24, 46, 14);
+        panel_3.add(lblNewLabel_4);
+
+        cmbArea = new JComboBox();
+        cmbArea.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", 
+            "Tecnología en informática", "Ciencias de la salud", "Ciencias Sociales", 
+            "Investigación y Desarrollo"}));
+        cmbArea.setEnabled(false);
+        cmbArea.setBounds(76, 21, 165, 20);
+        panel_3.add(cmbArea);
+
+        // Si es jurado, seleccionar su área
+        if (persona instanceof Jurado) {
+            Jurado jurado = (Jurado) persona;
+            cmbArea.setSelectedItem(jurado.getArea());
+        }
+
+        // Panel de botones
+        JPanel buttonPane = new JPanel();
+        buttonPane.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
+        buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        getContentPane().add(buttonPane, BorderLayout.SOUTH);
+
+        JButton okButton = new JButton("Modificar");
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || 
+                   txtTelefono.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Actualizar los datos de la persona
+                    miPersona.setNombre(txtNombre.getText());
+                    miPersona.setApellidos(txtApellido.getText());
+                    miPersona.setTelefono(txtTelefono.getText());
+
+                    JOptionPane.showMessageDialog(null, "Persona modificada exitosamente.", 
+                        "Modificación", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                }
+            }
+        });
+        okButton.setActionCommand("OK");
+        buttonPane.add(okButton);
+        getRootPane().setDefaultButton(okButton);
+
+        JButton cancelButton = new JButton("Cancelar");
+        cancelButton.addActionListener(e -> dispose());
+        cancelButton.setActionCommand("Cancel");
+        buttonPane.add(cancelButton);
+    }
 }
