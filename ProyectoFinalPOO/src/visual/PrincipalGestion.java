@@ -24,6 +24,7 @@ import logico.GestionEvento;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+import javax.swing.ImageIcon;
 
 public class PrincipalGestion extends JFrame {
 
@@ -70,6 +71,8 @@ public class PrincipalGestion extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Persona");
+		mntmNewMenuItem.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\persona (1).jpg"));
+		
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegPersona dialog = new RegPersona();
@@ -80,6 +83,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
+		mntmNewMenuItem_1.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\trabajo (1).png"));
 		mntmNewMenuItem_1.addActionListener(e ->{
 			RegTrabajo dialog = new RegTrabajo();
 			dialog.setModal(true);

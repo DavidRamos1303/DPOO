@@ -21,6 +21,7 @@ import logico.GestionEvento;
 import logico.Jurado;
 import logico.Participante;
 import logico.Persona;
+import logico.Recurso;
 import logico.TrabajoCientifico;
 
 import javax.swing.JLabel;
@@ -31,6 +32,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -56,6 +59,17 @@ public class RegComision extends JDialog {
 	private JTextField txtNombre;
 	private JComboBox cbxArea;
 	private Comision comisionAModificar = null;
+	private JButton btnQuitJurado;
+	private JButton btnAddJurado;
+	private JButton btnAddTrabajo;
+	private JButton btnQuitTrabajo;
+	private int indexJ = -1;
+	private int indexT = -1;
+	private int indexJS = -1;
+	private int indexTS = -1;
+	private Jurado selectedJurado = null;
+	private TrabajoCientifico selectedTrabajo = null;
+	
 
 	
 	public RegComision(Comision comision) {
@@ -146,6 +160,7 @@ public class RegComision extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegComision() {
+		
 		setTitle("Registrar Comisiones");
 		
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
@@ -220,8 +235,22 @@ public class RegComision extends JDialog {
 			panel_4.add(scrollPane, BorderLayout.CENTER);
 			
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					indexJ = table.getSelectedRow();
+					if(indexJ >=  0) {
+						String cedula = (String) table.getValueAt(indexJ, 0);
+						selectedJurado = (Jurado) GestionEvento.getInstance().buscarPersonasCedula(cedula);
+						if(selectedJurado != null) {
+							btnAddJurado.setEnabled(true);
+							btnQuitJurado.setEnabled(false);
+						}
+					}
+				}
+			});
 			modeloNoSelectJurado = new DefaultTableModel();
-			String [] identificadores2 = {"Nombre", "Apellido","Area"};
+			String [] identificadores2 = {"Cédula", "Apellido","Area"};
 			modeloNoSelectJurado.setColumnIdentifiers(identificadores2);
 			table.setModel(modeloNoSelectJurado);
 			scrollPane.setViewportView(table);
@@ -235,14 +264,29 @@ public class RegComision extends JDialog {
 			panel_5.add(scrollPane_2, BorderLayout.CENTER);
 			
 			table_2 = new JTable(); 
+			table_2.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					indexJS = table_2.getSelectedRow();
+					if(indexJS >=  0) {
+						String cedula = (String) table_2.getValueAt(indexJS, 0);
+						selectedJurado = (Jurado) GestionEvento.getInstance().buscarPersonasCedula(cedula);
+						if(selectedJurado != null) {
+							btnAddJurado.setEnabled(false);
+							btnQuitJurado.setEnabled(true);
+						}
+					}
+				}
+			});
 			modeloSelectJurado = new DefaultTableModel(); 
-			String [] identificadores3 = {"Nombre", "Apellido","Area"};
+			String [] identificadores3 = {"Cédula", "Apellido","Area"};
 			table_2.setModel(modeloSelectJurado); 
 			scrollPane_2.setViewportView(table_2);
 			modeloSelectJurado.setColumnIdentifiers(identificadores3);
 			
-			JButton btnNewButton = new JButton("Agregar");
-			btnNewButton.addActionListener(new ActionListener() {
+			btnAddJurado = new JButton("Agregar");
+			btnAddJurado.setEnabled(false);
+			btnAddJurado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int selectedRow = table.getSelectedRow();
 			        if(selectedRow >= 0) {
@@ -280,11 +324,13 @@ public class RegComision extends JDialog {
 			        }
 				}
 			});
-			btnNewButton.setBounds(217, 172, 89, 23);
-			panel_2.add(btnNewButton);
 			
-			JButton btnNewButton_1 = new JButton("Quitar");
-			btnNewButton_1.addActionListener(new ActionListener() {
+			btnAddJurado.setBounds(217, 172, 89, 23);
+			panel_2.add(btnAddJurado);
+			
+			btnQuitJurado = new JButton("Quitar");
+			btnQuitJurado.setEnabled(false);
+			btnQuitJurado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int selectedRow = table_2.getSelectedRow();
 			        if(selectedRow >= 0) {
@@ -313,8 +359,9 @@ public class RegComision extends JDialog {
 			        }
 				}
 			});
-			btnNewButton_1.setBounds(217, 205, 89, 23);
-			panel_2.add(btnNewButton_1);
+			
+			btnQuitJurado.setBounds(217, 205, 89, 23);
+			panel_2.add(btnQuitJurado);
 			
 			JPanel panel_3 = new JPanel();
 			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Trabajos Cient\u00EDficos:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
@@ -332,23 +379,39 @@ public class RegComision extends JDialog {
 			panel_6.add(scrollPane_1, BorderLayout.CENTER);
 			
 			table_1 = new JTable(); 
+			table_1.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					indexT= table_1.getSelectedRow();
+					if(indexT >=  0) {
+						String cod = (String) table_1.getValueAt(indexT, 0);
+						selectedTrabajo = GestionEvento.getInstance().buscarTrabajoID(cod);
+						if(selectedTrabajo != null) {
+							btnAddTrabajo.setEnabled(true);
+							btnQuitTrabajo.setEnabled(false);
+						}
+
+					}
+				}
+			});
 			modeloNoSelectTrabajo = new DefaultTableModel(); 
-			String[] identificadoresTrabajos = {"Título", "Area"};
+			String[] identificadoresTrabajos = {"Código","Título", "Area"};
 			table_1.setModel(modeloNoSelectTrabajo); 
 			scrollPane_1.setViewportView(table_1);
 			modeloNoSelectTrabajo.setColumnIdentifiers(identificadoresTrabajos); 
 			
-			JButton btnNewButton_2 = new JButton("Agregar");
-			btnNewButton_2.addActionListener(new ActionListener() {
+			btnAddTrabajo = new JButton("Agregar");
+			btnAddTrabajo.setEnabled(false);
+			btnAddTrabajo.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
 			        int selectedRow = table_1.getSelectedRow();
 			        if(selectedRow >= 0) {
 			            
 			        	if(cbxArea.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
 			        		JOptionPane.showMessageDialog(null,"Debe elegir un área.", "Error", JOptionPane.ERROR_MESSAGE);
-			        	}else if(modeloNoSelectTrabajo.getValueAt(selectedRow, 1).toString().equalsIgnoreCase(cbxArea.getSelectedItem().toString())) {
-			        		Object[] rowData = new Object[2];
-				            for(int i = 0; i < 2; i++) {
+			        	}else if(modeloNoSelectTrabajo.getValueAt(selectedRow, 2).toString().equalsIgnoreCase(cbxArea.getSelectedItem().toString())) {
+			        		Object[] rowData = new Object[3];
+				            for(int i = 0; i < 3; i++) {
 				                rowData[i] = modeloNoSelectTrabajo.getValueAt(selectedRow, i);
 				            }
 
@@ -374,8 +437,8 @@ public class RegComision extends JDialog {
 			        }
 			    }
 			});
-			btnNewButton_2.setBounds(218, 169, 89, 23);
-			panel_3.add(btnNewButton_2);
+			btnAddTrabajo.setBounds(218, 169, 89, 23);
+			panel_3.add(btnAddTrabajo);
 			
 			JPanel panel_7 = new JPanel();
 			panel_7.setBounds(316, 25, 198, 299);
@@ -386,18 +449,34 @@ public class RegComision extends JDialog {
 			panel_7.add(scrollPane_3, BorderLayout.CENTER);
 			
 			table_3 = new JTable(); 
+			table_3.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					indexTS = table_3.getSelectedRow();
+					if(indexTS >=  0) {
+						String cod = (String) table_3.getValueAt(indexTS, 0);
+						selectedTrabajo = GestionEvento.getInstance().buscarTrabajoID(cod);
+						if(selectedTrabajo != null) {
+							btnAddTrabajo.setEnabled(false);
+							btnQuitTrabajo.setEnabled(true);
+						}
+
+					}
+				}
+			});
 			modeloSelecTrabajo = new DefaultTableModel(); 
 			table_3.setModel(modeloSelecTrabajo); 
 			scrollPane_3.setViewportView(table_3);
 			modeloSelecTrabajo.setColumnIdentifiers(identificadoresTrabajos); 
 			
-			JButton btnNewButton_3 = new JButton("Quitar");
-			btnNewButton_3.addActionListener(new ActionListener() {
+			btnQuitTrabajo = new JButton("Quitar");
+			btnQuitTrabajo.setEnabled(false);
+			btnQuitTrabajo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int selectedRow = table_3.getSelectedRow();
 			        if(selectedRow >= 0) {
-			            Object[] rowData = new Object[2];
-			            for(int i = 0; i < 2; i++) {
+			            Object[] rowData = new Object[3];
+			            for(int i = 0; i < 3; i++) {
 			                rowData[i] = modeloSelecTrabajo.getValueAt(selectedRow, i);
 			            }
 			            
@@ -418,8 +497,9 @@ public class RegComision extends JDialog {
 			        }
 				}
 			});
-			btnNewButton_3.setBounds(218, 203, 89, 23);
-			panel_3.add(btnNewButton_3);
+			
+			btnQuitTrabajo.setBounds(218, 203, 89, 23);
+			panel_3.add(btnQuitTrabajo);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -466,7 +546,7 @@ public class RegComision extends JDialog {
 					            
 					            JOptionPane.showMessageDialog(null, 
 					                comisionAModificar == null ? "Comisión registrada con éxito" : "Comisión modificada con éxito");
-					            dispose();
+					            clean();
 					        } else {
 					            if(txtNombre.getText().isEmpty() && cbxArea.getSelectedIndex() == 0) {
 					                JOptionPane.showMessageDialog(null, "Debe completar todos los datos generales.");
@@ -476,6 +556,7 @@ public class RegComision extends JDialog {
 					                JOptionPane.showMessageDialog(null, "Debe ingresar al menos un trabajo científico.");
 					            }
 					        }
+						
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -499,13 +580,40 @@ public class RegComision extends JDialog {
 		loadSelectTrabajos();
 	}
 	
+	private void clean() {
+	    txtCodigo.setText("C-"+GestionEvento.getInstance().codComision);
+	    txtNombre.setText("");
+	    cbxArea.setSelectedIndex(0);
+	    cbxArea.setEnabled(true);
+	    
+	    for (Persona persona : GestionEvento.getInstance().getMisPersonas()) {
+	        if (persona instanceof Jurado) {
+	            ((Jurado) persona).setSeleccionado(false);
+	        }
+	    }
+	    
+	    for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
+	        trabajo.setSeleccionado(false);
+	    }
+	    
+	    loadJurados();
+	    loadSelectJurados();
+	    loadNoSelectTrabajos();
+	    loadSelectTrabajos();
+	    
+	    btnAddJurado.setEnabled(false);
+	    btnQuitJurado.setEnabled(false);
+	    btnAddTrabajo.setEnabled(false);
+	    btnQuitTrabajo.setEnabled(false);
+	}
+	
 	private void loadJurados() {
 	    modeloNoSelectJurado.setRowCount(0);
 	    ArrayList<Persona> aux = GestionEvento.getInstance().getMisPersonas();
 	    rowJuradoSelect = new Object[3]; 
 	    for(Persona persona : aux) {
 	        if(persona instanceof Jurado && !((Jurado) persona).isSeleccionado()) {
-	            rowJuradoSelect[0] = persona.getNombre();
+	            rowJuradoSelect[0] = persona.getCedula();
 	            rowJuradoSelect[1] = persona.getApellidos();
 	            rowJuradoSelect[2] = ((Jurado) persona).getArea();
 	            modeloNoSelectJurado.addRow(rowJuradoSelect);
@@ -519,7 +627,7 @@ public class RegComision extends JDialog {
 		rowJuradoNoSelect = new Object[3]; 
 		for (Persona persona : aux) { 
 			if (persona instanceof Jurado && ((Jurado) persona).isSeleccionado()) { 
-				rowJuradoNoSelect[0] = persona.getNombre(); 
+				rowJuradoNoSelect[0] = persona.getCedula();
 				rowJuradoNoSelect[1] = persona.getApellidos();
 				rowJuradoNoSelect[2] = ((Jurado) persona).getArea(); modeloSelectJurado.addRow(rowJuradoNoSelect); 
 			} 
@@ -529,11 +637,12 @@ public class RegComision extends JDialog {
 	private void loadNoSelectTrabajos() {
 	    modeloNoSelectTrabajo.setRowCount(0);
 	    ArrayList<TrabajoCientifico> aux = GestionEvento.getInstance().getMisTrabajosCientificos();
-	    rowTrabajoNoSelect = new Object[2];
+	    rowTrabajoNoSelect = new Object[3];
 	    for (TrabajoCientifico trabajo : aux) {
 	        if(!trabajo.isSeleccionado()) {
-	            rowTrabajoNoSelect[0] = trabajo.getNombre();
-	            rowTrabajoNoSelect[1] = trabajo.getArea();
+	            rowTrabajoNoSelect[0] = trabajo.getId();
+	            rowTrabajoNoSelect[1] = trabajo.getNombre();
+	            rowTrabajoNoSelect[2] = trabajo.getArea();
 	            modeloNoSelectTrabajo.addRow(rowTrabajoNoSelect);
 	        }
 	    }
@@ -543,11 +652,12 @@ public class RegComision extends JDialog {
 	private void loadSelectTrabajos() {
 	    modeloSelecTrabajo.setRowCount(0);
 	    ArrayList<TrabajoCientifico> aux = GestionEvento.getInstance().getMisTrabajosCientificos();
-	    rowTrabajoSelect = new Object[2];
+	    rowTrabajoSelect = new Object[3];
 	    for (TrabajoCientifico trabajo : aux) {
 	        if (trabajo.isSeleccionado()) {
-	            rowTrabajoSelect[0] = trabajo.getNombre();
-	            rowTrabajoSelect[1] = trabajo.getArea();
+	        	rowTrabajoNoSelect[0] = trabajo.getId();
+	            rowTrabajoNoSelect[1] = trabajo.getNombre();
+	            rowTrabajoNoSelect[2] = trabajo.getArea();
 	            modeloSelecTrabajo.addRow(rowTrabajoSelect);
 	        }
 	    }
