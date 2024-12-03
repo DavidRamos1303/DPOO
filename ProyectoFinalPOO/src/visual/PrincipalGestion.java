@@ -113,6 +113,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
+		mntmNewMenuItem_3.setIcon(new ImageIcon("C:\\Users\\Renso Peralta\\Desktop\\recurso (1).png"));
 		mntmNewMenuItem_3.addActionListener(e -> {
             RegRecurso dialog = new RegRecurso();
             dialog.setModal(true);
