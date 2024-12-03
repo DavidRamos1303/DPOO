@@ -20,8 +20,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+import logico.Evento;
 import logico.GestionEvento;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
@@ -53,6 +55,14 @@ public class PrincipalGestion extends JFrame {
 
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
+        
+        Date fechaActual = new Date();
+        
+        for (Evento obj : GestionEvento.getInstance().getMisEventos()) {
+			if(obj.getFecha().after(fechaActual)) {
+				obj.setEstado(false);
+			}
+		}
 		
 		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");

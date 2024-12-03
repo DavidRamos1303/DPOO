@@ -152,10 +152,13 @@ public class PlanificarEvento extends JDialog {
 			panel_1.add(lblNewLabel_3);
 			
 			spnFecha = new JSpinner();
-			spnFecha.setModel(new SpinnerDateModel(new Date(1733112000000L), new Date(1733112000000L), null, Calendar.DAY_OF_YEAR));
-			spnFecha.setBounds(489, 73, 139, 20);
 			Date fechaActual = new Date();
-			spnFecha.setValue(fechaActual);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaActual);
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+			Date limiteInferior = calendar.getTime();
+			spnFecha.setModel(new SpinnerDateModel(fechaActual, limiteInferior, null, Calendar.DAY_OF_YEAR));
+			spnFecha.setBounds(489, 73, 139, 20);
 			panel_1.add(spnFecha);
 			
 			JPanel panel_2 = new JPanel();
