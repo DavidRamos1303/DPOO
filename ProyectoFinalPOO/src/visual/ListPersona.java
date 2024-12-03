@@ -32,6 +32,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
 
 public class ListPersona extends JDialog {
 
@@ -98,6 +99,7 @@ public class ListPersona extends JDialog {
 				panelPart.add(scrollPane, BorderLayout.CENTER);
 				
 				tableP = new JTable();
+				tableP.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				tableP.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -132,6 +134,7 @@ public class ListPersona extends JDialog {
 				panel_1.add(scrollPane, BorderLayout.CENTER);
 				
 				tableJ = new JTable();
+				tableJ.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				tableJ.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {

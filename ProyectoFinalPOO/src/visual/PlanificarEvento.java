@@ -46,6 +46,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JProgressBar;
+import javax.swing.ListSelectionModel;
 
 public class PlanificarEvento extends JDialog {
 
@@ -176,6 +177,7 @@ public class PlanificarEvento extends JDialog {
 			panel_2.add(scrollPane, BorderLayout.CENTER);
 			
 			tableComision = new JTable();
+			tableComision.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tableComision.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -232,6 +234,7 @@ public class PlanificarEvento extends JDialog {
 			panel_3.add(scrollPane_1, BorderLayout.CENTER);
 			
 			tableComisionS = new JTable();
+			tableComisionS.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tableComisionS.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -264,6 +267,7 @@ public class PlanificarEvento extends JDialog {
 			panel_4.add(scrollPane_2, BorderLayout.CENTER);
 			
 			tableRecurso = new JTable();
+			tableRecurso.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tableRecurso.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -320,6 +324,7 @@ public class PlanificarEvento extends JDialog {
 			panel_5.add(scrollPane_3, BorderLayout.CENTER);
 
 			tableRecursoS = new JTable();
+			tableRecursoS.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tableRecursoS.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

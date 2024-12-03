@@ -37,6 +37,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ListSelectionModel;
 
 public class RegComision extends JDialog {
 
@@ -235,6 +236,7 @@ public class RegComision extends JDialog {
 			panel_4.add(scrollPane, BorderLayout.CENTER);
 			
 			table = new JTable();
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -264,6 +266,7 @@ public class RegComision extends JDialog {
 			panel_5.add(scrollPane_2, BorderLayout.CENTER);
 			
 			table_2 = new JTable(); 
+			table_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table_2.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -379,6 +382,7 @@ public class RegComision extends JDialog {
 			panel_6.add(scrollPane_1, BorderLayout.CENTER);
 			
 			table_1 = new JTable(); 
+			table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -449,6 +453,7 @@ public class RegComision extends JDialog {
 			panel_7.add(scrollPane_3, BorderLayout.CENTER);
 			
 			table_3 = new JTable(); 
+			table_3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table_3.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

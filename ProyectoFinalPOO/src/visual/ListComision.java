@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
 
 public class ListComision extends JDialog {
 
@@ -86,6 +87,7 @@ public class ListComision extends JDialog {
 			panel_1.add(scrollPane, BorderLayout.CENTER);
 			{
 			table = new JTable();
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

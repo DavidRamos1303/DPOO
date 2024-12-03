@@ -29,6 +29,7 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.ListSelectionModel;
 
 public class ListEvento extends JDialog {
 
@@ -83,6 +84,7 @@ public class ListEvento extends JDialog {
 				panel.add(scrollPane, BorderLayout.CENTER);
 				{
 					table = new JTable();
+					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					table.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
