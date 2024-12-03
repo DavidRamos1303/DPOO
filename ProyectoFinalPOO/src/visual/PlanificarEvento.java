@@ -127,7 +127,7 @@ public class PlanificarEvento extends JDialog {
 			
 			txtCodigo = new JTextField();
 			txtCodigo.setEditable(false);
-			txtCodigo.setText("Evento-"+GestionEvento.getInstance().codRecursos);
+			txtCodigo.setText("Evento-"+GestionEvento.getInstance().codEvento);
 			txtCodigo.setBounds(96, 30, 151, 20);
 			panel_1.add(txtCodigo);
 			txtCodigo.setColumns(10);
@@ -372,7 +372,6 @@ public class PlanificarEvento extends JDialog {
 						                "Error", JOptionPane.ERROR_MESSAGE);
 							}else {
 								Evento evento = new Evento(txtCodigo.getText().toString(), txtTitulo.getText().toString(), cmbTipo.getSelectedItem().toString(), fecha);
-								GestionEvento.getInstance().insertarEvento(evento);
 								for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
 									if(obj.getSelected()) {
 										evento.getRecursos().add(obj);
@@ -476,7 +475,7 @@ public class PlanificarEvento extends JDialog {
 	}
 	
 	private void clean() {
-		txtCodigo.setText("Evento-"+GestionEvento.getInstance().codRecursos);
+		txtCodigo.setText("Evento-"+GestionEvento.getInstance().codEvento);
 		txtTitulo.setText("");
 		cmbTipo.setSelectedIndex(0);
 		Date fechaActual = new Date();
@@ -485,6 +484,10 @@ public class PlanificarEvento extends JDialog {
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		Date limiteInferior = calendar.getTime();
 		spnFecha.setModel(new SpinnerDateModel(fechaActual, limiteInferior, null, Calendar.DAY_OF_YEAR));
+		btnAddComision.setEnabled(false);
+		btnQuitComision.setEnabled(false);
+		btnAddRecurso.setEnabled(false);
+		btnQuitRecurso.setEnabled(false);
 		loadComisiones();
 		loadComisionesSelect();
 		loadRecursos();

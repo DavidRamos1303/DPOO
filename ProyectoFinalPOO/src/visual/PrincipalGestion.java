@@ -56,14 +56,6 @@ public class PrincipalGestion extends JFrame {
 
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
-        
-        Date fechaActual = new Date();
-        
-        for (Evento obj : GestionEvento.getInstance().getMisEventos()) {
-			if(obj.getFecha().after(fechaActual)) {
-				obj.setEstado(false);
-			}
-		}
 		
 		setBackground(new Color(255, 255, 0));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");
@@ -161,6 +153,12 @@ public class PrincipalGestion extends JFrame {
 		mntmNewMenuItem_8.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/evento (1).png")));
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Date fechaActual = new Date();
+		        for (Evento obj : GestionEvento.getInstance().getMisEventos()) {
+					if(obj.getFecha().before(fechaActual)) {
+						obj.setEstado(false);
+					}
+				}
 				ListEvento dialog = new ListEvento();
 				dialog.setModal(true);
 				dialog.setVisible(true);
