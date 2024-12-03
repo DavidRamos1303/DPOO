@@ -185,12 +185,22 @@ public class ModEvento extends JDialog {
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					selectedComision.setSelected(true);
+					loadComisiones();
+					loadComisionesSelect();
 				}
 			});
 			btnAddComision.setBounds(229, 211, 82, 23);
 			panel.add(btnAddComision);
 			
 			btnQuitComision = new JButton("Quitar");
+			btnQuitComision.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedComision.setSelected(false);
+					loadComisiones();
+					loadComisionesSelect();
+				}
+			});
 			btnQuitComision.setEnabled(false);
 			btnQuitComision.setBounds(229, 294, 82, 23);
 			panel.add(btnQuitComision);
@@ -260,11 +270,25 @@ public class ModEvento extends JDialog {
 			scrollPane_2.setViewportView(tableRecurso);
 			
 			btnAddRecurso = new JButton("Agregar");
+			btnAddRecurso.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedRecurso.setSelected(true);
+					loadRecursos();
+					loadRecursosSelect();
+				}
+			});
 			btnAddRecurso.setEnabled(false);
 			btnAddRecurso.setBounds(772, 211, 82, 23);
 			panel.add(btnAddRecurso);
 			
 			btnQuitRecurso = new JButton("Quitar");
+			btnQuitRecurso.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedRecurso.setSelected(false);
+					loadRecursos();
+					loadRecursosSelect();
+				}
+			});
 			btnQuitRecurso.setEnabled(false);
 			btnQuitRecurso.setBounds(772, 294, 82, 23);
 			panel.add(btnQuitRecurso);
@@ -323,7 +347,7 @@ public class ModEvento extends JDialog {
 			}
 		}
 		loadComisiones();
-		loaddComisionesSelect();
+		loadComisionesSelect();
 		loadRecursos();
 		loadRecursosSelect();
 	}
@@ -350,15 +374,17 @@ public class ModEvento extends JDialog {
 		rowRecurso = new Object[tableRecurso.getColumnCount()];
 		for (Recurso obj : aux) {
 			if(obj.getDisponibilidad()) {
-				rowRecurso[0] = obj.getId();
-				rowRecurso[1] = obj.getNombre();
-				rowRecurso[2] = obj.getTipo();
-				modeloRecurso.addRow(rowRecurso);
+				if(!(obj.getSelected())) {
+					rowRecurso[0] = obj.getId();
+					rowRecurso[1] = obj.getNombre();
+					rowRecurso[2] = obj.getTipo();
+					modeloRecurso.addRow(rowRecurso);
+				}
 			}
 		}	
 	}
 
-	private void loaddComisionesSelect() {
+	private void loadComisionesSelect() {
 		modeloComisionSelected.setRowCount(0);
 		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
 		rowComisionSelected = new Object[tableComisionS.getColumnCount()];
@@ -377,10 +403,12 @@ public class ModEvento extends JDialog {
 		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
 		rowComision = new Object[tableComision.getColumnCount()];
 		for (Comision obj : aux) {
-			rowComision[0] = obj.getCodComision();
-			rowComision[1] = obj.getNombre();
-			rowComision[2] = obj.getArea();
-			modeloComision.addRow(rowComision);
+			if(!(obj.getSelected())){
+				rowComision[0] = obj.getCodComision();
+				rowComision[1] = obj.getNombre();
+				rowComision[2] = obj.getArea();
+				modeloComision.addRow(rowComision);
+			}
 		}
 	}
 	

@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.UIManager;
@@ -119,8 +120,17 @@ public class ListEvento extends JDialog {
 				btnEliminar = new JButton("Cancelar");
 				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						
+						int option = JOptionPane.showConfirmDialog(null,
+				                "¿Está seguro que desea cancelar este Evento?",
+				                "Confirmación", JOptionPane.YES_NO_OPTION);
+				            
+				            if(option == JOptionPane.YES_OPTION) {
+				                GestionEvento.getInstance().eliminarEvento(selected);;
+				                JOptionPane.showMessageDialog(null, 
+						                "Cancelación completada.",
+						                "Aviso", JOptionPane.WARNING_MESSAGE);
+				                loadEvento();
+				            }
 						btnModificar.setEnabled(false);
 						btnEliminar.setEnabled(false);
 						btnVerReporte.setEnabled(false);
@@ -130,8 +140,12 @@ public class ListEvento extends JDialog {
 					btnModificar = new JButton("Modificar");
 					btnModificar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							
-							
+							if(selected != null) {
+								ModEvento dialog = new ModEvento(selected);
+								dialog.setModal(true);
+								dialog.setVisible(true);
+								loadEvento();
+							}
 							btnModificar.setEnabled(false);
 							btnEliminar.setEnabled(false);
 							btnVerReporte.setEnabled(false);

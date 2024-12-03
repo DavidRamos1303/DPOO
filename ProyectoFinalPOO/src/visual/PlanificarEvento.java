@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Comision;
+import logico.Evento;
 import logico.GestionEvento;
 import logico.Jurado;
 import logico.Persona;
@@ -25,6 +26,7 @@ import logico.Recurso;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
@@ -152,10 +154,13 @@ public class PlanificarEvento extends JDialog {
 			panel_1.add(lblNewLabel_3);
 			
 			spnFecha = new JSpinner();
-			spnFecha.setModel(new SpinnerDateModel(new Date(1733112000000L), new Date(1733112000000L), null, Calendar.DAY_OF_YEAR));
-			spnFecha.setBounds(489, 73, 139, 20);
 			Date fechaActual = new Date();
-			spnFecha.setValue(fechaActual);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaActual);
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+			Date limiteInferior = calendar.getTime();
+			spnFecha.setModel(new SpinnerDateModel(fechaActual, limiteInferior, null, Calendar.DAY_OF_YEAR));
+			spnFecha.setBounds(489, 73, 139, 20);
 			panel_1.add(spnFecha);
 			
 			JPanel panel_2 = new JPanel();
@@ -193,7 +198,9 @@ public class PlanificarEvento extends JDialog {
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					selectedComision.setSelected(true);
+					loadComisiones();
+					loadComisionesSelect();
 				}
 			});
 			btnAddComision.setBounds(229, 211, 82, 23);
@@ -202,7 +209,9 @@ public class PlanificarEvento extends JDialog {
 			btnQuitComision = new JButton("Quitar");
 			btnQuitComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					selectedComision.setSelected(false);
+					loadComisiones();
+					loadComisionesSelect();
 				}
 			});
 			btnQuitComision.setEnabled(false);
@@ -276,7 +285,9 @@ public class PlanificarEvento extends JDialog {
 			btnAddRecurso = new JButton("Agregar");
 			btnAddRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					selectedRecurso.setSelected(true);
+					loadRecursos();
+					loadRecursosSelect();
 				}
 			});
 			btnAddRecurso.setEnabled(false);
@@ -286,7 +297,9 @@ public class PlanificarEvento extends JDialog {
 			btnQuitRecurso = new JButton("Quitar");
 			btnQuitRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					selectedRecurso.setSelected(false);
+					loadRecursos();
+					loadRecursosSelect();
 				}
 			});
 			btnQuitRecurso.setEnabled(false);
@@ -333,7 +346,50 @@ public class PlanificarEvento extends JDialog {
 				JButton okButton = new JButton("Planificar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						clean();
+						if(txtTitulo.getText().toString().equals("") || cmbTipo.getSelectedIndex() == 0) {
+							JOptionPane.showMessageDialog(null, 
+					                "Debe llenar todos los datos generales.",
+					                "Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							Date fecha = (Date) spnFecha.getValue();
+							int cantRecurSel = 0;
+							int cantComiSel = 0;
+							for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+								if(obj.getSelected()) {
+									cantRecurSel++;
+								}
+							}
+							for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+								if(obj.getSelected()) {
+									cantComiSel++;
+								}
+							}
+							if(cantRecurSel == 0 || cantComiSel == 0) {
+								JOptionPane.showMessageDialog(null, 
+						                "Debe seleccionar al menos una comisión y un recurso.",
+						                "Error", JOptionPane.ERROR_MESSAGE);
+							}else {
+								Evento evento = new Evento(txtCodigo.getText().toString(), txtTitulo.getText().toString(), cmbTipo.getSelectedItem().toString(), fecha);
+								GestionEvento.getInstance().insertarEvento(evento);
+								for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+									if(obj.getSelected()) {
+										evento.getRecursos().add(obj);
+										obj.setSelected(false);
+									}
+								}
+								for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+									if(obj.getSelected()) {
+										evento.getComisiones().add(obj);
+										obj.setSelected(false);
+									}
+								}
+								GestionEvento.getInstance().insertarEvento(evento);
+								JOptionPane.showMessageDialog(null, 
+						                "Planificación exitosa.",
+						                "Aviso", JOptionPane.WARNING_MESSAGE);
+								clean();
+							}
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -352,7 +408,7 @@ public class PlanificarEvento extends JDialog {
 			}
 		}
 		loadComisiones();
-		loaddComisionesSelect();
+		loadComisionesSelect();
 		loadRecursos();
 		loadRecursosSelect();
 	}
@@ -379,15 +435,17 @@ public class PlanificarEvento extends JDialog {
 		rowRecurso = new Object[tableRecurso.getColumnCount()];
 		for (Recurso obj : aux) {
 			if(obj.getDisponibilidad()) {
-				rowRecurso[0] = obj.getId();
-				rowRecurso[1] = obj.getNombre();
-				rowRecurso[2] = obj.getTipo();
-				modeloRecurso.addRow(rowRecurso);
+				if(!(obj.getSelected())) {
+					rowRecurso[0] = obj.getId();
+					rowRecurso[1] = obj.getNombre();
+					rowRecurso[2] = obj.getTipo();
+					modeloRecurso.addRow(rowRecurso);
+				}
 			}
 		}	
 	}
 
-	private void loaddComisionesSelect() {
+	private void loadComisionesSelect() {
 		modeloComisionSelected.setRowCount(0);
 		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
 		rowComisionSelected = new Object[tableComisionS.getColumnCount()];
@@ -406,10 +464,12 @@ public class PlanificarEvento extends JDialog {
 		ArrayList<Comision> aux = GestionEvento.getInstance().getMisComisiones();
 		rowComision = new Object[tableComision.getColumnCount()];
 		for (Comision obj : aux) {
-			rowComision[0] = obj.getCodComision();
-			rowComision[1] = obj.getNombre();
-			rowComision[2] = obj.getArea();
-			modeloComision.addRow(rowComision);
+			if(!(obj.getSelected())){
+				rowComision[0] = obj.getCodComision();
+				rowComision[1] = obj.getNombre();
+				rowComision[2] = obj.getArea();
+				modeloComision.addRow(rowComision);
+			}
 		}
 	}
 	
@@ -418,15 +478,14 @@ public class PlanificarEvento extends JDialog {
 		txtTitulo.setText("");
 		cmbTipo.setSelectedIndex(0);
 		Date fechaActual = new Date();
-		spnFecha.setValue(fechaActual);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fechaActual);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date limiteInferior = calendar.getTime();
+		spnFecha.setModel(new SpinnerDateModel(fechaActual, limiteInferior, null, Calendar.DAY_OF_YEAR));
+		loadComisiones();
+		loadComisionesSelect();
+		loadRecursos();
+		loadRecursosSelect();
 	}
-	
-	public static Date convertirFecha(String fechaStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-        try {
-            return sdf.parse(fechaStr);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
 }
