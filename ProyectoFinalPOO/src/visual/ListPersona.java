@@ -168,6 +168,8 @@ public class ListPersona extends JDialog {
 					dialog.setVisible(true);
 					btnEliminar.setEnabled(false);
 					btnModificar.setEnabled(false);
+					loadParticipante();
+					loadJurado();
 				}
 			});
 			btnModificar.setEnabled(false);
