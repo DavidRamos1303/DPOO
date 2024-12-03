@@ -78,6 +78,7 @@ public class PlanificarEvento extends JDialog {
 	private JTable tableRecurso;
 	private JTable tableRecursoS;
 	private JSpinner spnFecha;
+	private Boolean tieneLocal = false;
 
 	/**
 	 * Launch the application.
@@ -198,6 +199,7 @@ public class PlanificarEvento extends JDialog {
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
 					selectedComision.setSelected(true);
 					loadComisiones();
 					loadComisionesSelect();
