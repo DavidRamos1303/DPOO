@@ -527,7 +527,7 @@ public class PlanificarEvento extends JDialog {
 			if(comision.getSelected()) {
 				for (Jurado jurado : comision.getJurado()) {
 					for (Jurado jurado2 : obj.getJurado()) {
-						if(jurado2.getCedula().toString().equals(jurado.getCedula().toString())) {
+						if(jurado2.getId().equals(jurado.getId())) {
 							return true;
 						}
 					}

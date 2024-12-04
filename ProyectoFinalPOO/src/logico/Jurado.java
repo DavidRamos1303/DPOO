@@ -5,8 +5,8 @@ public class Jurado extends Persona {
 	private String area;
 	private boolean seleccionado;
 
-	public Jurado(String id, String nombre, String apellidos, String telefono, String area) {
-		super(id, nombre, apellidos, telefono);
+	public Jurado(String id, String cedula, String nombre, String apellidos, String telefono, String area) {
+		super(id, cedula, nombre, apellidos, telefono);
 		this.area = area;
 		this.seleccionado = false;
 	}

@@ -225,7 +225,7 @@ public class ModTrabajo extends JDialog {
         			}
         		}else {
         			trabajo.setNombre(txtNombre.getText().toString());
-        			Participante participante = new Participante(txtCedulaAutor.getText().toString(), txtNombreAutor.getText().toString(), txtApellidosAutor.getText().toString(), txtTelefonoAutor.getText().toString());
+        			Participante participante = new Participante(("P-"+GestionEvento.getInstance().codPersona),txtCedulaAutor.getText().toString(), txtNombreAutor.getText().toString(), txtApellidosAutor.getText().toString(), txtTelefonoAutor.getText().toString());
         			GestionEvento.getInstance().insertarPersonas(participante);
     				trabajo.setAutor(participante);
     				JOptionPane.showMessageDialog(null, "Modificación completada.", 

@@ -12,6 +12,7 @@ public class GestionEvento {
 	
 	public static GestionEvento gestion = null;
 	
+	public static int codPersona = 1;
 	public static int codTrabajos = 1;
 	public static int codComision = 1;
 	public static int codEvento = 1;
@@ -66,6 +67,7 @@ public class GestionEvento {
 	
 	public void insertarPersonas(Persona obj) {
 		misPersonas.add(obj);
+		codPersona++;
 	}
 	
 	public void eliminarPersona(Persona obj) {

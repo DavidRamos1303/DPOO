@@ -212,7 +212,7 @@ public class RegTrabajo extends JDialog {
         					JOptionPane.showMessageDialog(null, "Debe llenar todos los datos del autor.", 
                                     "Error", JOptionPane.ERROR_MESSAGE);
         				}else {
-        					Participante participante = new Participante(txtCedulaAutor.getText().toString(), txtNombreAutor.getText().toString(), txtApellidosAutor.getText().toString(), txtTelefonoAutor.getText().toString());
+        					Participante participante = new Participante(("P-"+GestionEvento.getInstance().codPersona), txtCedulaAutor.getText().toString(), txtNombreAutor.getText().toString(), txtApellidosAutor.getText().toString(), txtTelefonoAutor.getText().toString());
         					TrabajoCientifico trabajo = new TrabajoCientifico(txtId.getText().toString(), txtNombre.getText().toString(), cmbArea.getSelectedItem().toString(), participante);
         					GestionEvento.getInstance().insertarPersonas(participante);
         					GestionEvento.getInstance().insertarTrabajo(trabajo);

@@ -192,7 +192,7 @@ public class RegPersona extends JDialog {
                                     "Error", JOptionPane.ERROR_MESSAGE);
 						}else {
 							if(rdPart.isSelected()) {
-								Participante participante = new Participante(txtCedula.getText().toString(), txtNombre.getText().toString(), txtApellido.getText().toString(), txtTelefono.getText().toString());
+								Participante participante = new Participante(("P-"+GestionEvento.getInstance().codPersona), txtCedula.getText().toString(), txtNombre.getText().toString(), txtApellido.getText().toString(), txtTelefono.getText().toString());
 								GestionEvento.getInstance().insertarPersonas(participante);
 								JOptionPane.showMessageDialog(null, "Operación Exitosa.", 
 	                                    "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -202,7 +202,7 @@ public class RegPersona extends JDialog {
 									JOptionPane.showMessageDialog(null, "Debe seleccionar un área.", 
 		                                    "Error", JOptionPane.ERROR_MESSAGE);
 								}else {
-									Jurado jurado = new Jurado(txtCedula.getText().toString(), txtNombre.getText().toString(), txtApellido.getText().toString(), txtTelefono.getText().toString(), cmbArea.getSelectedItem().toString());
+									Jurado jurado = new Jurado(("P-"+GestionEvento.getInstance().codPersona), txtCedula.getText().toString(), txtNombre.getText().toString(), txtApellido.getText().toString(), txtTelefono.getText().toString(), cmbArea.getSelectedItem().toString());
 									GestionEvento.getInstance().insertarPersonas(jurado);
 									JOptionPane.showMessageDialog(null, "Operación Exitosa.", 
 		                                    "Aviso", JOptionPane.WARNING_MESSAGE);
