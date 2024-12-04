@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -28,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import logico.Comision;
 import logico.Evento;
 import logico.GestionEvento;
+import logico.Jurado;
 import logico.Recurso;
 
 import java.awt.event.ActionListener;
@@ -72,6 +74,7 @@ public class ModEvento extends JDialog {
 	private JTable tableRecurso;
 	private JTable tableRecursoS;
 	private JSpinner spnFecha;
+	private Boolean tieneLocal = true;
 
 	/**
 	 * Launch the application.
@@ -95,6 +98,21 @@ public class ModEvento extends JDialog {
 		setBounds(100, 100, 1104, 506);
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
+        
+        for (Comision comision : evento.getComisiones()) {
+			Comision encontrado = GestionEvento.getInstance().buscarComisionID(comision.getCodComision());
+			if(encontrado != null) {
+				encontrado.setSelected(true);
+			}
+		}
+        
+        for (Recurso recurso : evento.getRecursos()) {
+			Recurso encontrado = GestionEvento.getInstance().buscarRecursoID(recurso.getId());
+			if(encontrado != null) {
+				encontrado.setSelected(true);
+			}
+		}
+        
         setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
@@ -120,6 +138,7 @@ public class ModEvento extends JDialog {
 			panel_1.add(lblNewLabel);
 			
 			txtCodigo = new JTextField();
+			txtCodigo.setText(evento.getId());
 			txtCodigo.setEditable(false);
 			txtCodigo.setBounds(96, 30, 151, 20);
 			panel_1.add(txtCodigo);
@@ -131,6 +150,7 @@ public class ModEvento extends JDialog {
 			panel_1.add(lblNewLabel_1);
 			
 			txtTitulo = new JTextField();
+			txtTitulo.setText(evento.getTitulo());
 			txtTitulo.setBounds(96, 73, 281, 20);
 			panel_1.add(txtTitulo);
 			txtTitulo.setColumns(10);
@@ -143,6 +163,7 @@ public class ModEvento extends JDialog {
 			cmbTipo = new JComboBox();
 			cmbTipo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Conferencia", "Panel", "Ponencia", "Poster", "Mesa Reonda"}));
 			cmbTipo.setBounds(489, 30, 139, 20);
+			cmbTipo.setSelectedItem(evento.getTipo().toString());
 			panel_1.add(cmbTipo);
 			
 			JLabel lblNewLabel_3 = new JLabel("Fecha:");
@@ -151,7 +172,8 @@ public class ModEvento extends JDialog {
 			panel_1.add(lblNewLabel_3);
 			
 			spnFecha = new JSpinner();
-			spnFecha.setModel(new SpinnerDateModel(new Date(1733112000000L), new Date(1733112000000L), null, Calendar.DAY_OF_YEAR));
+			Date limiteInferior = new Date();
+			spnFecha.setModel(new SpinnerDateModel(evento.getFecha(), limiteInferior, null, Calendar.DAY_OF_YEAR));
 			spnFecha.setBounds(489, 73, 139, 20);
 			panel_1.add(spnFecha);
 			
@@ -190,10 +212,18 @@ public class ModEvento extends JDialog {
 			btnAddComision.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					selectedComision.setSelected(true);
-					loadComisiones();
-					loadComisionesSelect();
+				 public void actionPerformed(ActionEvent e) {
+					 if(existeJurados(selectedComision)) {
+							JOptionPane.showMessageDialog(null, 
+									"Esta comisión tiene jurados en común con otra ya seleccionada.",
+									"Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							selectedComision.setSelected(true);
+						}
+						loadComisiones();
+						loadComisionesSelect();
+						btnAddComision.setEnabled(false);
+						btnQuitComision.setEnabled(false);
 				}
 			});
 			btnAddComision.setBounds(229, 211, 87, 23);
@@ -207,6 +237,8 @@ public class ModEvento extends JDialog {
 					selectedComision.setSelected(false);
 					loadComisiones();
 					loadComisionesSelect();
+					btnAddComision.setEnabled(false);
+					btnQuitComision.setEnabled(false);
 				}
 			});
 			btnQuitComision.setEnabled(false);
@@ -281,9 +313,20 @@ public class ModEvento extends JDialog {
 			btnAddRecurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnAddRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedRecurso.setSelected(true);
+					if(!(tieneLocal) && (selectedRecurso.getTipo().toString().equals("Local"))) {
+						selectedRecurso.setSelected(true);
+						tieneLocal = true;
+					}else if(tieneLocal && (selectedRecurso.getTipo().toString().equals("Local"))) {
+						JOptionPane.showMessageDialog(null, 
+				                "Solo se puede seleccionar un local.",
+				                "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						selectedRecurso.setSelected(true);
+					}
 					loadRecursos();
 					loadRecursosSelect();
+					btnAddRecurso.setEnabled(false);
+					btnQuitRecurso.setEnabled(false);
 				}
 			});
 			btnAddRecurso.setEnabled(false);
@@ -294,9 +337,14 @@ public class ModEvento extends JDialog {
 			btnQuitRecurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnQuitRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(selectedRecurso.getTipo().toString().equals("Local")) {
+						tieneLocal = false;
+					}
 					selectedRecurso.setSelected(false);
 					loadRecursos();
 					loadRecursosSelect();
+					btnAddRecurso.setEnabled(false);
+					btnQuitRecurso.setEnabled(false);
 				}
 			});
 			btnQuitRecurso.setEnabled(false);
@@ -341,6 +389,62 @@ public class ModEvento extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Modificar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(txtTitulo.getText().toString().equals("") || cmbTipo.getSelectedIndex() == 0) {
+							JOptionPane.showMessageDialog(null, 
+					                "Debe llenar todos los datos generales.",
+					                "Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							Date fecha = (Date) spnFecha.getValue();
+							int cantRecurSel = 0;
+							int cantComiSel = 0;
+							for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+								if(obj.getSelected()) {
+									cantRecurSel++;
+								}
+							}
+							for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+								if(obj.getSelected()) {
+									cantComiSel++;
+								}
+							}
+							if(cantRecurSel == 0 || cantComiSel == 0) {
+								JOptionPane.showMessageDialog(null, 
+										"Debe seleccionar al menos una comisión y un recurso.",
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}else {
+								if(tieneLocal) {
+									evento.setTitulo(txtTitulo.getText().toString());
+									evento.setTipo(cmbTipo.getSelectedItem().toString());
+									evento.setFecha(fecha);
+									evento.getComisiones().clear();
+									evento.getRecursos().clear();
+									for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+										if(obj.getSelected()) {
+											evento.getRecursos().add(obj);
+											obj.setSelected(false);
+										}
+									}
+									for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+										if(obj.getSelected()) {
+											evento.getComisiones().add(obj);
+											obj.setSelected(false);
+										}
+									}
+									JOptionPane.showMessageDialog(null, 
+											"Modificación exitosa.",
+											"Aviso", JOptionPane.WARNING_MESSAGE);
+									dispose();
+								}else {
+									JOptionPane.showMessageDialog(null, 
+							                "Su evento debe tener un local.",
+							                "Error", JOptionPane.ERROR_MESSAGE);
+								}
+							}
+						}
+					}
+				});
 				okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -422,6 +526,21 @@ public class ModEvento extends JDialog {
 				modeloComision.addRow(rowComision);
 			}
 		}
+	}
+	
+	private Boolean existeJurados(Comision obj) {
+		for (Comision comision : GestionEvento.getInstance().getMisComisiones()) {
+			if(comision.getSelected()) {
+				for (Jurado jurado : comision.getJurado()) {
+					for (Jurado jurado2 : obj.getJurado()) {
+						if(jurado2.getId().equals(jurado.getId())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	public static Date convertirFecha(String fechaStr) {

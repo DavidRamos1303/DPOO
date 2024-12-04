@@ -551,6 +551,7 @@ public class PlanificarEvento extends JDialog {
 		btnQuitComision.setEnabled(false);
 		btnAddRecurso.setEnabled(false);
 		btnQuitRecurso.setEnabled(false);
+		tieneLocal = false;
 		loadComisiones();
 		loadComisionesSelect();
 		loadRecursos();
