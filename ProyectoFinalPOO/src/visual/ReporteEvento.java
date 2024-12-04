@@ -122,8 +122,7 @@ public class ReporteEvento extends JDialog {
         comisionesPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground") != null ?
             UIManager.getColor("InternalFrame.activeTitleBackground") :
             new Color(240, 240, 240));
-        comisionesPanel.setBorder(new TitledBorder(null, "Comisiones", 
-            TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+        comisionesPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         tabbedPane.addTab("Comisiones", null, comisionesPanel, null);
 
         modelComisiones = new DefaultTableModel() {
@@ -146,8 +145,7 @@ public class ReporteEvento extends JDialog {
         recursosPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground") != null ?
             UIManager.getColor("InternalFrame.activeTitleBackground") :
             new Color(240, 240, 240));
-        recursosPanel.setBorder(new TitledBorder(null, "Recursos", 
-            TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+        recursosPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         tabbedPane.addTab("Recursos", null, recursosPanel, null);
 
         modelRecursos = new DefaultTableModel() {
