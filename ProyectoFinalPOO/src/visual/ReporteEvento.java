@@ -5,6 +5,7 @@ import javax.swing.border.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import logico.*;
 
 public class ReporteEvento extends JDialog {
@@ -17,6 +18,18 @@ public class ReporteEvento extends JDialog {
     private JLabel lblTotalComisiones;
     private JLabel lblTotalRecursos;
     private JLabel lblTotalTrabajos;
+
+    public static void main(String[] args) {
+        try {
+            // Evento de prueba para ejecución independiente
+            Evento eventoEjemplo = new Evento("E-1", "Evento de Prueba", "Conferencia", new Date());
+            ReporteEvento dialog = new ReporteEvento(eventoEjemplo);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public ReporteEvento(Evento evento) {
         this.evento = evento;
@@ -45,7 +58,7 @@ public class ReporteEvento extends JDialog {
         contentPanel.add(mainPanel);
         mainPanel.setLayout(null);
 
-        // Información General
+        // Panel Información General
         JPanel infoPanel = new JPanel();
         infoPanel.setBorder(new TitledBorder(null, "Información General", TitledBorder.LEADING, TitledBorder.TOP, 
             null, UIManager.getColor("FormattedTextField.foreground")));
@@ -96,12 +109,12 @@ public class ReporteEvento extends JDialog {
         lblTotalTrabajos.setBounds(220, 20, 200, 14);
         statsPanel.add(lblTotalTrabajos);
 
-        // Panel de tablas
+        // Panel de pestañas (JTabbedPane)
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setBounds(10, 213, 764, 300);
         mainPanel.add(tabbedPane);
 
-        // Tabla de Comisiones
+        // Primera pestaña: Comisiones
         JPanel comisionesPanel = new JPanel(new BorderLayout());
         tabbedPane.addTab("Comisiones", null, comisionesPanel, null);
 
@@ -118,7 +131,7 @@ public class ReporteEvento extends JDialog {
         JScrollPane scrollComisiones = new JScrollPane(tableComisiones);
         comisionesPanel.add(scrollComisiones);
 
-        // Tabla de Recursos
+        // Segunda pestaña: Recursos
         JPanel recursosPanel = new JPanel(new BorderLayout());
         tabbedPane.addTab("Recursos", null, recursosPanel, null);
 
