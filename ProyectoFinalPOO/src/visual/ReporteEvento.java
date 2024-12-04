@@ -21,7 +21,6 @@ public class ReporteEvento extends JDialog {
 
     public static void main(String[] args) {
         try {
-            // Evento de prueba para ejecución independiente
             Evento eventoEjemplo = new Evento("E-1", "Evento de Prueba", "Conferencia", new Date());
             ReporteEvento dialog = new ReporteEvento(eventoEjemplo);
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -39,10 +38,6 @@ public class ReporteEvento extends JDialog {
         }
 
         setTitle("Reporte de Evento: " + evento.getTitulo());
-        
-        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
-        setIconImage(icon);
-        
         setBounds(100, 100, 800, 600);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
@@ -53,15 +48,17 @@ public class ReporteEvento extends JDialog {
         // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-        mainPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, UIManager.getColor("InternalFrame.activeTitleGradient"), 
+        mainPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, 
+            UIManager.getColor("InternalFrame.activeTitleGradient"),
             UIManager.getColor("InternalFrame.activeTitleGradient")));
         contentPanel.add(mainPanel);
         mainPanel.setLayout(null);
 
         // Panel Información General
         JPanel infoPanel = new JPanel();
-        infoPanel.setBorder(new TitledBorder(null, "Información General", TitledBorder.LEADING, TitledBorder.TOP, 
-            null, UIManager.getColor("FormattedTextField.foreground")));
+        infoPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+            "Información General", TitledBorder.LEADING, TitledBorder.TOP, null, 
+            UIManager.getColor("FormattedTextField.foreground")));
         infoPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         infoPanel.setBounds(10, 11, 764, 100);
         mainPanel.add(infoPanel);
@@ -70,58 +67,54 @@ public class ReporteEvento extends JDialog {
         // Detalles del evento
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         JLabel lblId = new JLabel("ID: " + evento.getId());
-        lblId.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblId.setForeground(Color.BLACK);
+        lblId.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblId.setBounds(10, 20, 200, 14);
         infoPanel.add(lblId);
 
         JLabel lblFecha = new JLabel("Fecha: " + sdf.format(evento.getFecha()));
-        lblFecha.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblFecha.setForeground(Color.BLACK);
+        lblFecha.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblFecha.setBounds(10, 40, 200, 14);
         infoPanel.add(lblFecha);
 
         JLabel lblTipo = new JLabel("Tipo: " + evento.getTipo());
-        lblTipo.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblTipo.setForeground(Color.BLACK);
+        lblTipo.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblTipo.setBounds(10, 60, 200, 14);
         infoPanel.add(lblTipo);
 
         // Panel de Estadísticas
         JPanel statsPanel = new JPanel();
-        statsPanel.setBorder(new TitledBorder(null, "Estadísticas", TitledBorder.LEADING, TitledBorder.TOP, 
-            null, UIManager.getColor("FormattedTextField.foreground")));
+        statsPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+            "Estadísticas", TitledBorder.LEADING, TitledBorder.TOP, null, 
+            UIManager.getColor("FormattedTextField.foreground")));
         statsPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         statsPanel.setBounds(10, 122, 764, 80);
         mainPanel.add(statsPanel);
         statsPanel.setLayout(null);
 
         lblTotalComisiones = new JLabel("Total Comisiones: " + evento.getComisiones().size());
-        lblTotalComisiones.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblTotalComisiones.setForeground(Color.BLACK);
+        lblTotalComisiones.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblTotalComisiones.setBounds(10, 20, 200, 14);
         statsPanel.add(lblTotalComisiones);
 
         lblTotalRecursos = new JLabel("Total Recursos: " + evento.getRecursos().size());
-        lblTotalRecursos.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblTotalRecursos.setForeground(Color.BLACK);
+        lblTotalRecursos.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblTotalRecursos.setBounds(10, 40, 200, 14);
         statsPanel.add(lblTotalRecursos);
 
         int totalTrabajos = contarTrabajosTotal();
         lblTotalTrabajos = new JLabel("Total Trabajos: " + totalTrabajos);
-        lblTotalTrabajos.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblTotalTrabajos.setForeground(Color.BLACK);
+        lblTotalTrabajos.setForeground(UIManager.getColor("FormattedTextField.foreground"));
         lblTotalTrabajos.setBounds(220, 20, 200, 14);
         statsPanel.add(lblTotalTrabajos);
 
-        // Panel de pestañas (JTabbedPane)
+        // Panel de pestañas
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setBounds(10, 213, 764, 300);
         mainPanel.add(tabbedPane);
 
         // Primera pestaña: Comisiones
         JPanel comisionesPanel = new JPanel(new BorderLayout());
+        comisionesPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         tabbedPane.addTab("Comisiones", null, comisionesPanel, null);
 
         modelComisiones = new DefaultTableModel() {
@@ -139,6 +132,7 @@ public class ReporteEvento extends JDialog {
 
         // Segunda pestaña: Recursos
         JPanel recursosPanel = new JPanel(new BorderLayout());
+        recursosPanel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
         tabbedPane.addTab("Recursos", null, recursosPanel, null);
 
         modelRecursos = new DefaultTableModel() {
@@ -161,7 +155,6 @@ public class ReporteEvento extends JDialog {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton closeButton = new JButton("Cerrar");
-        closeButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         closeButton.addActionListener(e -> dispose());
         buttonPane.add(closeButton);
 
