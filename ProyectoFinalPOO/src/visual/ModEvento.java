@@ -187,7 +187,7 @@ public class ModEvento extends JDialog {
 			scrollPane.setViewportView(tableComision);
 			
 			btnAddComision = new JButton("Agregar");
-			btnAddComision.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnAddComision.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -200,7 +200,7 @@ public class ModEvento extends JDialog {
 			panel.add(btnAddComision);
 			
 			btnQuitComision = new JButton("Quitar");
-			btnQuitComision.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnQuitComision.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnQuitComision.setBackground(new Color(240, 240, 240));
 			btnQuitComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -278,7 +278,7 @@ public class ModEvento extends JDialog {
 			scrollPane_2.setViewportView(tableRecurso);
 			
 			btnAddRecurso = new JButton("Agregar");
-			btnAddRecurso.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnAddRecurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnAddRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedRecurso.setSelected(true);
@@ -291,7 +291,7 @@ public class ModEvento extends JDialog {
 			panel.add(btnAddRecurso);
 			
 			btnQuitRecurso = new JButton("Quitar");
-			btnQuitRecurso.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnQuitRecurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnQuitRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedRecurso.setSelected(false);

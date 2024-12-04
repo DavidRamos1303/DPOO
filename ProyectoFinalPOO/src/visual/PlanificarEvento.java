@@ -22,6 +22,7 @@ import logico.GestionEvento;
 import logico.Jurado;
 import logico.Persona;
 import logico.Recurso;
+import logico.RecursoLocal;
 
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
@@ -203,7 +204,7 @@ public class PlanificarEvento extends JDialog {
 			scrollPane.setViewportView(tableComision);
 			
 			btnAddComision = new JButton("Agregar");
-			btnAddComision.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnAddComision.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -218,7 +219,7 @@ public class PlanificarEvento extends JDialog {
 			panel.add(btnAddComision);
 			
 			btnQuitComision = new JButton("Quitar");
-			btnQuitComision.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnQuitComision.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnQuitComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedComision.setSelected(false);
@@ -299,10 +300,19 @@ public class PlanificarEvento extends JDialog {
 			scrollPane_2.setViewportView(tableRecurso);
 			
 			btnAddRecurso = new JButton("Agregar");
-			btnAddRecurso.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnAddRecurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnAddRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedRecurso.setSelected(true);
+					if(!(tieneLocal) && (selectedRecurso.getTipo().toString().equals("Local"))) {
+						selectedRecurso.setSelected(true);
+						tieneLocal = true;
+					}else if(tieneLocal && (selectedRecurso.getTipo().toString().equals("Local"))) {
+						JOptionPane.showMessageDialog(null, 
+				                "Solo se puede seleccionar un local.",
+				                "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						selectedRecurso.setSelected(true);
+					}
 					loadRecursos();
 					loadRecursosSelect();
 					btnAddRecurso.setEnabled(false);
@@ -314,9 +324,12 @@ public class PlanificarEvento extends JDialog {
 			panel.add(btnAddRecurso);
 			
 			btnQuitRecurso = new JButton("Quitar");
-			btnQuitRecurso.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnQuitRecurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnQuitRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(selectedRecurso.getTipo().toString().equals("Local")) {
+						tieneLocal = false;
+					}
 					selectedRecurso.setSelected(false);
 					loadRecursos();
 					loadRecursosSelect();
@@ -390,27 +403,33 @@ public class PlanificarEvento extends JDialog {
 							}
 							if(cantRecurSel == 0 || cantComiSel == 0) {
 								JOptionPane.showMessageDialog(null, 
-						                "Debe seleccionar al menos una comisión y un recurso.",
-						                "Error", JOptionPane.ERROR_MESSAGE);
+										"Debe seleccionar al menos una comisión y un recurso.",
+										"Error", JOptionPane.ERROR_MESSAGE);
 							}else {
-								Evento evento = new Evento(txtCodigo.getText().toString(), txtTitulo.getText().toString(), cmbTipo.getSelectedItem().toString(), fecha);
-								for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
-									if(obj.getSelected()) {
-										evento.getRecursos().add(obj);
-										obj.setSelected(false);
+								if(tieneLocal) {
+									Evento evento = new Evento(txtCodigo.getText().toString(), txtTitulo.getText().toString(), cmbTipo.getSelectedItem().toString(), fecha);
+									for (Recurso obj : GestionEvento.getInstance().getMisRecursos()) {
+										if(obj.getSelected()) {
+											evento.getRecursos().add(obj);
+											obj.setSelected(false);
+										}
 									}
-								}
-								for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
-									if(obj.getSelected()) {
-										evento.getComisiones().add(obj);
-										obj.setSelected(false);
+									for (Comision obj : GestionEvento.getInstance().getMisComisiones()) {
+										if(obj.getSelected()) {
+											evento.getComisiones().add(obj);
+											obj.setSelected(false);
+										}
 									}
+									GestionEvento.getInstance().insertarEvento(evento);
+									JOptionPane.showMessageDialog(null, 
+											"Planificación exitosa.",
+											"Aviso", JOptionPane.WARNING_MESSAGE);
+									clean();
+								}else {
+									JOptionPane.showMessageDialog(null, 
+							                "Su evento debe tener un local.",
+							                "Error", JOptionPane.ERROR_MESSAGE);
 								}
-								GestionEvento.getInstance().insertarEvento(evento);
-								JOptionPane.showMessageDialog(null, 
-						                "Planificación exitosa.",
-						                "Aviso", JOptionPane.WARNING_MESSAGE);
-								clean();
 							}
 						}
 					}

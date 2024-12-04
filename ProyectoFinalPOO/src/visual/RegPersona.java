@@ -120,7 +120,7 @@ public class RegPersona extends JDialog {
 				panel_1.add(lblNewLabel_3);
 				
 				txtTelefono = new JTextField();
-				txtTelefono.setBounds(345, 73, 135, 20);
+				txtTelefono.setBounds(367, 74, 135, 20);
 				panel_1.add(txtTelefono);
 				txtTelefono.setColumns(10);
 			}
