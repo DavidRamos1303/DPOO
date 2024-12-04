@@ -173,11 +173,14 @@ public class ListEvento extends JDialog {
 					btnVerReporte = new JButton("Ver Reporte");
 					btnVerReporte.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							
-							
-							btnModificar.setEnabled(false);
-							btnEliminar.setEnabled(false);
-							btnVerReporte.setEnabled(false);
+							if (selected != null) {
+					            ReporteEvento dialog = new ReporteEvento(selected);
+					            dialog.setModal(true);
+					            dialog.setVisible(true);
+					        }
+					        btnModificar.setEnabled(false);
+					        btnEliminar.setEnabled(false);
+					        btnVerReporte.setEnabled(false);
 						}
 					});
 					btnVerReporte.setEnabled(false);
