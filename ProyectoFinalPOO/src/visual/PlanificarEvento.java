@@ -207,10 +207,11 @@ public class PlanificarEvento extends JDialog {
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
 					selectedComision.setSelected(true);
 					loadComisiones();
 					loadComisionesSelect();
+					btnAddComision.setEnabled(false);
+					btnQuitComision.setEnabled(false);
 				}
 			});
 			btnAddComision.setBounds(229, 211, 87, 23);
@@ -223,6 +224,8 @@ public class PlanificarEvento extends JDialog {
 					selectedComision.setSelected(false);
 					loadComisiones();
 					loadComisionesSelect();
+					btnAddComision.setEnabled(false);
+					btnQuitComision.setEnabled(false);
 				}
 			});
 			btnQuitComision.setEnabled(false);
@@ -302,6 +305,8 @@ public class PlanificarEvento extends JDialog {
 					selectedRecurso.setSelected(true);
 					loadRecursos();
 					loadRecursosSelect();
+					btnAddRecurso.setEnabled(false);
+					btnQuitRecurso.setEnabled(false);
 				}
 			});
 			btnAddRecurso.setEnabled(false);
@@ -315,6 +320,8 @@ public class PlanificarEvento extends JDialog {
 					selectedRecurso.setSelected(false);
 					loadRecursos();
 					loadRecursosSelect();
+					btnAddRecurso.setEnabled(false);
+					btnQuitRecurso.setEnabled(false);
 				}
 			});
 			btnQuitRecurso.setEnabled(false);
