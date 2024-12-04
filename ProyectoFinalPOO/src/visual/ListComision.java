@@ -143,6 +143,7 @@ public class ListComision extends JDialog {
 				btnModificar.setActionCommand("Cancel");
 				buttonPane.add(btnModificar);
 				getRootPane().setDefaultButton(btnModificar);
+				
 			}
 			{
 				btnEliminar = new JButton("Eliminar");
@@ -190,6 +191,7 @@ public class ListComision extends JDialog {
 			}
 		}
 		loadComisiones();
+		
 	}
 	private void loadComisiones() {
 		modelo.setRowCount(0);

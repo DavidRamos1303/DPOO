@@ -75,22 +75,17 @@ public class RegComision extends JDialog {
 
 	
 	public RegComision(Comision comision) {
-	    // Primero llamamos al constructor original que inicializa todos los componentes
 	    this();
 	    
-	    // Después de que todo está inicializado, modificamos los componentes
 	    try {
 	        this.comisionAModificar = comision;
 	        
-	        // Modificar el título de la ventana
 	        setTitle("Modificar Comisión");
 	        
-	        // Cargar los datos de la comisión
 	        txtCodigo.setText(comision.getCodComision());
 	        txtNombre.setText(comision.getNombre());
 	        cbxArea.setSelectedItem(comision.getArea());
 	        
-	        // Limpiar las selecciones anteriores
 	        for (Persona persona : GestionEvento.getInstance().getMisPersonas()) {
 	            if (persona instanceof Jurado) {
 	                ((Jurado) persona).setSeleccionado(false);
@@ -104,23 +99,19 @@ public class RegComision extends JDialog {
 	        loadJurados();
 	        loadNoSelectTrabajos();
 	        
-	        // Cargar jurados seleccionados
 	        for (Jurado jurado : comision.getJurado()) {
 	            jurado.setSeleccionado(true);
 	        }
 	        
-	        // Cargar trabajos seleccionados
 	        for (TrabajoCientifico trabajo : comision.getTrabajos()) {
 	            trabajo.setSeleccionado(true);
 	        }
 	        
-	        // Actualizar las tablas
 	        loadJurados();
 	        loadSelectJurados();
 	        loadNoSelectTrabajos();
 	        loadSelectTrabajos();
 	        
-	        // Buscar y modificar el botón Registrar
 	        for (Component comp : getContentPane().getComponents()) {
 	            if (comp instanceof JPanel) {
 	                JPanel panel = (JPanel) comp;
@@ -129,7 +120,7 @@ public class RegComision extends JDialog {
 	                        JButton button = (JButton) btn;
 	                        if (button.getText().equals("Registrar")) {
 	                            button.setText("Modificar");
-	                            break;
+	                           break;
 	                        }
 	                    }
 	                }
@@ -143,6 +134,7 @@ public class RegComision extends JDialog {
 	            "Error", 
 	            JOptionPane.ERROR_MESSAGE);
 	    }
+	
 	}
 	
 	/**
@@ -527,39 +519,42 @@ public class RegComision extends JDialog {
 						if(modeloSelectJurado.getRowCount() > 0 && modeloSelecTrabajo.getRowCount() > 0 && !txtNombre.getText().isEmpty() 
 							&& cbxArea.getSelectedIndex() != 0) {
 							
-							 Comision comision;
-					            if(comisionAModificar == null) {
-					                
-					                comision = new Comision(txtCodigo.getText(), txtNombre.getText(), 
-					                                      cbxArea.getSelectedItem().toString());
-					            } else {
-					                comisionAModificar.setNombre(txtNombre.getText());
-					                comisionAModificar.setArea(cbxArea.getSelectedItem().toString());
-					                comisionAModificar.getJurado().clear();
-					                comisionAModificar.getTrabajos().clear();
-					                comision = comisionAModificar;
-					            }
-					            
-					            
-					            for (Persona jurado : GestionEvento.getInstance().getMisPersonas()) {
-					                if(jurado instanceof Jurado) {
-					                    if(((Jurado) jurado).isSeleccionado()) {
-					                        comision.getJurado().add((Jurado) jurado);
-					                        ((Jurado) jurado).setSeleccionado(false);
-					                    }
-					                }
-					            }
-					            
-					            for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
-					                if(trabajo.isSeleccionado()){
-					                    comision.getTrabajos().add(trabajo);
-					                    trabajo.setSeleccionado(false);
-					                }   
-					            }
-					            GestionEvento.getInstance().insertarComision(comision);
-					            JOptionPane.showMessageDialog(null, 
-					                comisionAModificar == null ? "Comisión registrada con éxito" : "Comisión modificada con éxito");
-					            clean();
+							Comision comision;
+				            if(comisionAModificar == null) {
+				                comision = new Comision(txtCodigo.getText(), txtNombre.getText(), 
+				                                    cbxArea.getSelectedItem().toString());
+				            } else {
+				                comisionAModificar.setNombre(txtNombre.getText());
+				                comisionAModificar.setArea(cbxArea.getSelectedItem().toString());
+				                comisionAModificar.getJurado().clear();
+				                comisionAModificar.getTrabajos().clear();
+				                comision = comisionAModificar;
+				            }
+				            
+				            for (Persona jurado : GestionEvento.getInstance().getMisPersonas()) {
+				                if(jurado instanceof Jurado) {
+				                    if(((Jurado) jurado).isSeleccionado()) {
+				                        comision.getJurado().add((Jurado) jurado);
+				                        ((Jurado) jurado).setSeleccionado(false);
+				                    }
+				                }
+				            }
+				            
+				            for (TrabajoCientifico trabajo : GestionEvento.getInstance().getMisTrabajosCientificos()) {
+				                if(trabajo.isSeleccionado()){
+				                    comision.getTrabajos().add(trabajo);
+				                    trabajo.setSeleccionado(false);
+				                }   
+				            }
+
+				            if(comisionAModificar == null) {
+				                GestionEvento.getInstance().insertarComision(comision);
+				                JOptionPane.showMessageDialog(null, "Comisión registrada con éxito");
+				                clean();
+				            } else {
+				                JOptionPane.showMessageDialog(null, "Comisión modificada con éxito");
+				                dispose();
+				            }
 					        } else {
 					            if(txtNombre.getText().isEmpty() && cbxArea.getSelectedIndex() == 0) {
 					                JOptionPane.showMessageDialog(null, "Debe completar todos los datos generales.");
