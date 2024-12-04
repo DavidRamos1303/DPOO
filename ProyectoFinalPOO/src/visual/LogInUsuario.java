@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Font;
 
 public class LogInUsuario extends JFrame {
 
@@ -68,7 +69,8 @@ public class LogInUsuario extends JFrame {
         panel.add(lblImagen);
 		
 		JLabel lblNewLabel = new JLabel("Usuario:");
-		lblNewLabel.setBounds(151, 105, 59, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel.setBounds(148, 103, 59, 14);
 		panel.add(lblNewLabel);
 		
 		textField = new JTextField();
@@ -77,7 +79,8 @@ public class LogInUsuario extends JFrame {
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a:");
-		lblNewLabel_1.setBounds(141, 161, 90, 14);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_1.setBounds(132, 163, 90, 14);
 		panel.add(lblNewLabel_1);
 		
 		textField_1 = new JTextField();
@@ -86,6 +89,7 @@ public class LogInUsuario extends JFrame {
 		textField_1.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Log In");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnNewButton.setBounds(122, 233, 98, 23);
 		panel.add(btnNewButton);
 	}

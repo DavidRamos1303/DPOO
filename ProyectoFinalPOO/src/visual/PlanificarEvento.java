@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JProgressBar;
 import javax.swing.ListSelectionModel;
+import java.awt.Font;
 
 public class PlanificarEvento extends JDialog {
 
@@ -123,6 +124,7 @@ public class PlanificarEvento extends JDialog {
 			panel_1.setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("C\u00F3digo:");
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel.setBounds(23, 33, 63, 14);
 			panel_1.add(lblNewLabel);
 			
@@ -134,6 +136,7 @@ public class PlanificarEvento extends JDialog {
 			txtCodigo.setColumns(10);
 			
 			JLabel lblNewLabel_1 = new JLabel("T\u00EDtulo:");
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_1.setBounds(23, 76, 46, 14);
 			panel_1.add(lblNewLabel_1);
 			
@@ -143,6 +146,7 @@ public class PlanificarEvento extends JDialog {
 			txtTitulo.setColumns(10);
 			
 			JLabel lblNewLabel_2 = new JLabel("Tipo:");
+			lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_2.setBounds(433, 33, 46, 14);
 			panel_1.add(lblNewLabel_2);
 			
@@ -152,6 +156,7 @@ public class PlanificarEvento extends JDialog {
 			panel_1.add(cmbTipo);
 			
 			JLabel lblNewLabel_3 = new JLabel("Fecha:");
+			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_3.setBounds(433, 76, 46, 14);
 			panel_1.add(lblNewLabel_3);
 			
@@ -198,6 +203,7 @@ public class PlanificarEvento extends JDialog {
 			scrollPane.setViewportView(tableComision);
 			
 			btnAddComision = new JButton("Agregar");
+			btnAddComision.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -207,10 +213,11 @@ public class PlanificarEvento extends JDialog {
 					loadComisionesSelect();
 				}
 			});
-			btnAddComision.setBounds(229, 211, 82, 23);
+			btnAddComision.setBounds(229, 211, 87, 23);
 			panel.add(btnAddComision);
 			
 			btnQuitComision = new JButton("Quitar");
+			btnQuitComision.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnQuitComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedComision.setSelected(false);
@@ -289,6 +296,7 @@ public class PlanificarEvento extends JDialog {
 			scrollPane_2.setViewportView(tableRecurso);
 			
 			btnAddRecurso = new JButton("Agregar");
+			btnAddRecurso.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnAddRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedRecurso.setSelected(true);
@@ -297,10 +305,11 @@ public class PlanificarEvento extends JDialog {
 				}
 			});
 			btnAddRecurso.setEnabled(false);
-			btnAddRecurso.setBounds(772, 211, 82, 23);
+			btnAddRecurso.setBounds(772, 211, 87, 23);
 			panel.add(btnAddRecurso);
 			
 			btnQuitRecurso = new JButton("Quitar");
+			btnQuitRecurso.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnQuitRecurso.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedRecurso.setSelected(false);
@@ -351,6 +360,7 @@ public class PlanificarEvento extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Planificar");
+				okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(txtTitulo.getText().toString().equals("") || cmbTipo.getSelectedIndex() == 0) {
@@ -404,6 +414,7 @@ public class PlanificarEvento extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

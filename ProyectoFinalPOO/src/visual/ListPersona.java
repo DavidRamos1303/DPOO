@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
+import java.awt.Font;
 
 public class ListPersona extends JDialog {
 
@@ -164,6 +165,7 @@ public class ListPersona extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
 			btnModificar = new JButton("Modificar");
+			btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnModificar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ModPersona dialog = new ModPersona(selected);
@@ -180,6 +182,7 @@ public class ListPersona extends JDialog {
 			buttonPane.add(btnModificar);
 			
 			btnEliminar = new JButton("Eliminar");
+			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int option = JOptionPane.showConfirmDialog(null,
@@ -206,6 +209,7 @@ public class ListPersona extends JDialog {
 			buttonPane.add(btnEliminar);
 			{
 				cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

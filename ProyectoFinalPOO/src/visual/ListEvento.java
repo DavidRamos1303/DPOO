@@ -30,6 +30,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.ListSelectionModel;
+import java.awt.Font;
 
 public class ListEvento extends JDialog {
 
@@ -120,6 +121,7 @@ public class ListEvento extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnEliminar = new JButton("Cancelar");
+				btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
 				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int option = JOptionPane.showConfirmDialog(null,
@@ -140,6 +142,7 @@ public class ListEvento extends JDialog {
 				});
 				{
 					btnModificar = new JButton("Modificar");
+					btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
 					btnModificar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if(selected != null) {
@@ -164,6 +167,7 @@ public class ListEvento extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
@@ -171,6 +175,7 @@ public class ListEvento extends JDialog {
 				});
 				{
 					btnVerReporte = new JButton("Ver Reporte");
+					btnVerReporte.setFont(new Font("Tahoma", Font.BOLD, 13));
 					btnVerReporte.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if (selected != null) {

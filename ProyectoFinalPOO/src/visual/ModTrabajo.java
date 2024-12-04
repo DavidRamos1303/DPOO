@@ -170,6 +170,7 @@ public class ModTrabajo extends JDialog {
         panelAutor.add(txtTelefonoAutor);
         
         JButton btnNewButton = new JButton("Buscar");
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		obj = GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());

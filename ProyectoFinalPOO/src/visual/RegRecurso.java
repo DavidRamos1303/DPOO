@@ -152,6 +152,7 @@ public class RegRecurso extends JDialog {
         panel_2.setLayout(null);
         
         rdLocal = new JRadioButton("Recurso local");
+        rdLocal.setFont(new Font("Tahoma", Font.BOLD, 13));
         rdLocal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 rdLocal.setSelected(true);
@@ -166,6 +167,7 @@ public class RegRecurso extends JDialog {
         panel_2.add(rdLocal);
         
         rdOtro = new JRadioButton("Otro");
+        rdOtro.setFont(new Font("Tahoma", Font.BOLD, 13));
         rdOtro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 rdLocal.setSelected(false);
@@ -191,6 +193,7 @@ public class RegRecurso extends JDialog {
         panel_campus.add(cmbCampus);
         
         JLabel lblNewLabel_3 = new JLabel("Campus:");
+        lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblNewLabel_3.setBounds(31, 25, 78, 14);
         panel_campus.add(lblNewLabel_3);
         

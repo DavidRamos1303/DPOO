@@ -70,9 +70,11 @@ public class PrincipalGestion extends JFrame {
 		setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Registrar");
+		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Persona");
+		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/persona2 (1).png")));
 		
 		
@@ -86,6 +88,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Trabajo Cient\u00EDfico");
+		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_1.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/trabajo2 (1).png")));
 		mntmNewMenuItem_1.addActionListener(e ->{
 			RegTrabajo dialog = new RegTrabajo();
@@ -95,6 +98,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Comisi\u00F3n");
+		mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_2.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/comision (1).png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,6 +110,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Recurso");
+		mntmNewMenuItem_3.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_3.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/recurso (1).png")));
 		mntmNewMenuItem_3.addActionListener(e -> {
             RegRecurso dialog = new RegRecurso();
@@ -115,9 +120,11 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
 		JMenu mnNewMenu_2 = new JMenu("Listar");
+		mnNewMenu_2.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Personas");
+		mntmNewMenuItem_5.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_5.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/listarPersona (1).png")));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,6 +136,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Recursos");
+		mntmNewMenuItem_6.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_6.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/recurso (1).png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,6 +148,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Trabajos Cient\u00EDficos");
+		mntmNewMenuItem_7.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_7.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/trabajo2 (1).png")));
 		mntmNewMenuItem_7.addActionListener(e -> {
 			ListTrabajosCientifico dialog = new ListTrabajosCientifico();
@@ -150,6 +159,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Eventos");
+		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_8.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/evento (1).png")));
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,6 +177,7 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_8);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Comisiones");
+		mntmNewMenuItem_9.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_9.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/comision (1).png")));
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -178,9 +189,11 @@ public class PrincipalGestion extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_9);
 		
 		JMenu mnNewMenu_1 = new JMenu("Evento");
+		mnNewMenu_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Planificar evento");
+		mntmNewMenuItem_4.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mntmNewMenuItem_4.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/evento (1).png")));
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -70,17 +70,20 @@ public class ReporteEvento extends JDialog {
         // Detalles del evento
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         JLabel lblId = new JLabel("ID: " + evento.getId());
-        lblId.setForeground(Color.WHITE);
+        lblId.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblId.setForeground(Color.BLACK);
         lblId.setBounds(10, 20, 200, 14);
         infoPanel.add(lblId);
 
         JLabel lblFecha = new JLabel("Fecha: " + sdf.format(evento.getFecha()));
-        lblFecha.setForeground(Color.WHITE);
+        lblFecha.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblFecha.setForeground(Color.BLACK);
         lblFecha.setBounds(10, 40, 200, 14);
         infoPanel.add(lblFecha);
 
         JLabel lblTipo = new JLabel("Tipo: " + evento.getTipo());
-        lblTipo.setForeground(Color.WHITE);
+        lblTipo.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblTipo.setForeground(Color.BLACK);
         lblTipo.setBounds(10, 60, 200, 14);
         infoPanel.add(lblTipo);
 
@@ -94,18 +97,21 @@ public class ReporteEvento extends JDialog {
         statsPanel.setLayout(null);
 
         lblTotalComisiones = new JLabel("Total Comisiones: " + evento.getComisiones().size());
-        lblTotalComisiones.setForeground(Color.WHITE);
+        lblTotalComisiones.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblTotalComisiones.setForeground(Color.BLACK);
         lblTotalComisiones.setBounds(10, 20, 200, 14);
         statsPanel.add(lblTotalComisiones);
 
         lblTotalRecursos = new JLabel("Total Recursos: " + evento.getRecursos().size());
-        lblTotalRecursos.setForeground(Color.WHITE);
+        lblTotalRecursos.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblTotalRecursos.setForeground(Color.BLACK);
         lblTotalRecursos.setBounds(10, 40, 200, 14);
         statsPanel.add(lblTotalRecursos);
 
         int totalTrabajos = contarTrabajosTotal();
         lblTotalTrabajos = new JLabel("Total Trabajos: " + totalTrabajos);
-        lblTotalTrabajos.setForeground(Color.WHITE);
+        lblTotalTrabajos.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblTotalTrabajos.setForeground(Color.BLACK);
         lblTotalTrabajos.setBounds(220, 20, 200, 14);
         statsPanel.add(lblTotalTrabajos);
 
@@ -155,6 +161,7 @@ public class ReporteEvento extends JDialog {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton closeButton = new JButton("Cerrar");
+        closeButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         closeButton.addActionListener(e -> dispose());
         buttonPane.add(closeButton);
 

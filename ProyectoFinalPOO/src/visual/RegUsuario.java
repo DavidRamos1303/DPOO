@@ -15,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 public class RegUsuario extends JDialog {
 
@@ -78,6 +79,7 @@ public class RegUsuario extends JDialog {
 	        panel_1.add(lblImagen);
 	   
 			JLabel lblNewLabel = new JLabel("Nombre:");
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel.setBounds(10, 29, 113, 14);
 			panel_1.add(lblNewLabel);
 			
@@ -87,7 +89,8 @@ public class RegUsuario extends JDialog {
 			textField.setColumns(10);
 			
 			JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a:");
-			lblNewLabel_1.setBounds(172, 29, 78, 14);
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblNewLabel_1.setBounds(172, 29, 85, 14);
 			panel_1.add(lblNewLabel_1);
 			
 			textField_1 = new JTextField();
@@ -96,7 +99,8 @@ public class RegUsuario extends JDialog {
 			textField_1.setColumns(10);
 			
 			JLabel lblNewLabel_2 = new JLabel("Confirmar contrase\u00F1a:");
-			lblNewLabel_2.setBounds(172, 85, 134, 14);
+			lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblNewLabel_2.setBounds(172, 85, 150, 14);
 			panel_1.add(lblNewLabel_2);
 			
 			textField_2 = new JTextField();
@@ -105,6 +109,7 @@ public class RegUsuario extends JDialog {
 			textField_2.setColumns(10);
 			
 			JLabel lblNewLabel_3 = new JLabel("Apellido:");
+			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_3.setBounds(10, 85, 113, 14);
 			panel_1.add(lblNewLabel_3);
 			
@@ -114,7 +119,8 @@ public class RegUsuario extends JDialog {
 			textField_3.setColumns(10);
 			
 			JLabel lblNewLabel_4 = new JLabel("Nombre de Usuario:");
-			lblNewLabel_4.setBounds(10, 141, 113, 14);
+			lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblNewLabel_4.setBounds(10, 141, 130, 14);
 			panel_1.add(lblNewLabel_4);
 			
 			textField_4 = new JTextField();
@@ -123,6 +129,7 @@ public class RegUsuario extends JDialog {
 			textField_4.setColumns(10);
 			
 			JLabel lblNewLabel_5 = new JLabel("Correo electr\u00F3nico:");
+			lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_5.setBounds(10, 197, 127, 14);
 			panel_1.add(lblNewLabel_5);
 			
@@ -138,12 +145,14 @@ public class RegUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

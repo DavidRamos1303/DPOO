@@ -38,6 +38,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
+import java.awt.Font;
 
 public class RegComision extends JDialog {
 
@@ -189,18 +190,21 @@ public class RegComision extends JDialog {
 			panel_1.setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("C\u00F3digo:");
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel.setForeground(Color.BLACK);
-			lblNewLabel.setBounds(10, 31, 42, 14);
+			lblNewLabel.setBounds(10, 31, 50, 15);
 			panel_1.add(lblNewLabel);
 			
 			JLabel lblNewLabel_1 = new JLabel("Nombre:");
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_1.setForeground(Color.BLACK);
-			lblNewLabel_1.setBounds(10, 80, 48, 14);
+			lblNewLabel_1.setBounds(10, 80, 55, 14);
 			panel_1.add(lblNewLabel_1);
 			
 			JLabel lblNewLabel_2 = new JLabel("\u00C1rea:");
+			lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_2.setForeground(Color.BLACK);
-			lblNewLabel_2.setBounds(240, 31, 32, 14);
+			lblNewLabel_2.setBounds(240, 31, 40, 14);
 			panel_1.add(lblNewLabel_2);
 			
 			txtCodigo = new JTextField();
@@ -288,6 +292,7 @@ public class RegComision extends JDialog {
 			modeloSelectJurado.setColumnIdentifiers(identificadores3);
 			
 			btnAddJurado = new JButton("Agregar");
+			btnAddJurado.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnAddJurado.setEnabled(false);
 			btnAddJurado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -332,6 +337,7 @@ public class RegComision extends JDialog {
 			panel_2.add(btnAddJurado);
 			
 			btnQuitJurado = new JButton("Quitar");
+			btnQuitJurado.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnQuitJurado.setEnabled(false);
 			btnQuitJurado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -405,6 +411,7 @@ public class RegComision extends JDialog {
 			modeloNoSelectTrabajo.setColumnIdentifiers(identificadoresTrabajos); 
 			
 			btnAddTrabajo = new JButton("Agregar");
+			btnAddTrabajo.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnAddTrabajo.setEnabled(false);
 			btnAddTrabajo.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -475,6 +482,7 @@ public class RegComision extends JDialog {
 			modeloSelecTrabajo.setColumnIdentifiers(identificadoresTrabajos); 
 			
 			btnQuitTrabajo = new JButton("Quitar");
+			btnQuitTrabajo.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnQuitTrabajo.setEnabled(false);
 			btnQuitTrabajo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -513,6 +521,7 @@ public class RegComision extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(modeloSelectJurado.getRowCount() > 0 && modeloSelecTrabajo.getRowCount() > 0 && !txtNombre.getText().isEmpty() 
@@ -570,6 +579,7 @@ public class RegComision extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

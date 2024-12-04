@@ -9,6 +9,7 @@ import javax.swing.border.*;
 import logico.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class ModPersona extends JDialog {
     private final JPanel contentPanel = new JPanel();
@@ -73,23 +74,28 @@ public class ModPersona extends JDialog {
 
         // Campos con los datos de la persona
         JLabel lblNewLabel = new JLabel("Cédula:");
-        lblNewLabel.setBounds(10, 31, 46, 14);
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblNewLabel.setBounds(10, 31, 50, 14);
         panel_1.add(lblNewLabel);
 
         txtCedula = new JTextField(persona.getCedula());
+        txtCedula.setFont(new Font("Tahoma", Font.PLAIN, 13));
         txtCedula.setEditable(false);
         txtCedula.setBounds(76, 28, 172, 20);
         panel_1.add(txtCedula);
 
         JLabel lblNewLabel_1 = new JLabel("Nombre:");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblNewLabel_1.setBounds(10, 76, 63, 14);
         panel_1.add(lblNewLabel_1);
 
         txtNombre = new JTextField(persona.getNombre());
+        txtNombre.setFont(new Font("Tahoma", Font.PLAIN, 13));
         txtNombre.setBounds(77, 73, 150, 20);
         panel_1.add(txtNombre);
 
         JLabel lblNewLabel_2 = new JLabel("Apellido:");
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblNewLabel_2.setBounds(10, 113, 63, 14);
         panel_1.add(lblNewLabel_2);
 
@@ -98,7 +104,8 @@ public class ModPersona extends JDialog {
         panel_1.add(txtApellido);
 
         JLabel lblNewLabel_3 = new JLabel("Teléfono:");
-        lblNewLabel_3.setBounds(284, 76, 70, 14);
+        lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
+        lblNewLabel_3.setBounds(283, 76, 70, 14);
         panel_1.add(lblNewLabel_3);
 
         txtTelefono = new JTextField(persona.getTelefono());
@@ -115,6 +122,7 @@ public class ModPersona extends JDialog {
         panel_2.setLayout(null);
 
         rdPart = new JRadioButton("Participante");
+        rdPart.setFont(new Font("Tahoma", Font.BOLD, 13));
         rdPart.setEnabled(false);
         rdPart.setSelected(persona instanceof Participante);
         rdPart.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
@@ -122,6 +130,7 @@ public class ModPersona extends JDialog {
         panel_2.add(rdPart);
 
         rdJurd = new JRadioButton("Jurado");
+        rdJurd.setFont(new Font("Tahoma", Font.BOLD, 13));
         rdJurd.setEnabled(false);
         rdJurd.setSelected(persona instanceof Jurado);
         rdJurd.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
@@ -137,10 +146,12 @@ public class ModPersona extends JDialog {
         panel_3.setLayout(null);
 
         JLabel lblNewLabel_4 = new JLabel("Area:");
+        lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblNewLabel_4.setBounds(10, 24, 46, 14);
         panel_3.add(lblNewLabel_4);
 
         cmbArea = new JComboBox();
+        cmbArea.setFont(new Font("Tahoma", Font.PLAIN, 13));
         cmbArea.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", 
             "Tecnología en informática", "Ciencias de la salud", "Ciencias Sociales", 
             "Investigación y Desarrollo"}));
@@ -161,6 +172,7 @@ public class ModPersona extends JDialog {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton okButton = new JButton("Modificar");
+        okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || 
@@ -184,6 +196,7 @@ public class ModPersona extends JDialog {
         getRootPane().setDefaultButton(okButton);
 
         JButton cancelButton = new JButton("Cancelar");
+        cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         cancelButton.addActionListener(e -> dispose());
         cancelButton.setActionCommand("Cancel");
         buttonPane.add(cancelButton);

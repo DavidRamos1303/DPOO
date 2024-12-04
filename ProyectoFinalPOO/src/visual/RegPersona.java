@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
 
 public class RegPersona extends JDialog {
 
@@ -84,7 +85,8 @@ public class RegPersona extends JDialog {
 				panel_1.setLayout(null);
 				
 				JLabel lblNewLabel = new JLabel("C\u00E9dula:");
-				lblNewLabel.setBounds(10, 31, 46, 14);
+				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblNewLabel.setBounds(10, 31, 50, 14);
 				panel_1.add(lblNewLabel);
 				
 				txtCedula = new JTextField();
@@ -93,6 +95,7 @@ public class RegPersona extends JDialog {
 				txtCedula.setColumns(10);
 				
 				JLabel lblNewLabel_1 = new JLabel("Nombre:");
+				lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 				lblNewLabel_1.setBounds(10, 76, 63, 14);
 				panel_1.add(lblNewLabel_1);
 				
@@ -102,6 +105,7 @@ public class RegPersona extends JDialog {
 				txtNombre.setColumns(10);
 				
 				JLabel lblNewLabel_2 = new JLabel("Apellido:");
+				lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 				lblNewLabel_2.setBounds(10, 113, 63, 14);
 				panel_1.add(lblNewLabel_2);
 				
@@ -111,6 +115,7 @@ public class RegPersona extends JDialog {
 				txtApellido.setColumns(10);
 				
 				JLabel lblNewLabel_3 = new JLabel("Tel\u00E9fono:");
+				lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 				lblNewLabel_3.setBounds(284, 76, 70, 14);
 				panel_1.add(lblNewLabel_3);
 				
@@ -128,6 +133,7 @@ public class RegPersona extends JDialog {
 			panel_1.setLayout(null);
 			
 			rdPart = new JRadioButton("Participante");
+			rdPart.setFont(new Font("Tahoma", Font.BOLD, 13));
 			rdPart.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					rdPart.setSelected(true);
@@ -141,6 +147,7 @@ public class RegPersona extends JDialog {
 			panel_1.add(rdPart);
 			
 			rdJurd = new JRadioButton("Jurado");
+			rdJurd.setFont(new Font("Tahoma", Font.BOLD, 13));
 			rdJurd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					rdJurd.setSelected(true);
@@ -160,6 +167,7 @@ public class RegPersona extends JDialog {
 			panel_2.setLayout(null);
 			
 			JLabel lblNewLabel_4 = new JLabel("Area:");
+			lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNewLabel_4.setBounds(10, 24, 46, 14);
 			panel_2.add(lblNewLabel_4);
 			
@@ -176,6 +184,7 @@ public class RegPersona extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(txtCedula.getText().equals("") || txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtTelefono.getText().equals("")) {
@@ -209,6 +218,7 @@ public class RegPersona extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

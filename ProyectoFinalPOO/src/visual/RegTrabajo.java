@@ -158,6 +158,7 @@ public class RegTrabajo extends JDialog {
         panelAutor.add(txtTelefonoAutor);
         
         JButton btnNewButton = new JButton("Buscar");
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		participante = GestionEvento.getInstance().buscarPersonasCedula(txtCedulaAutor.getText().toString());
