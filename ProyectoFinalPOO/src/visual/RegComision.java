@@ -532,7 +532,6 @@ public class RegComision extends JDialog {
 					                
 					                comision = new Comision(txtCodigo.getText(), txtNombre.getText(), 
 					                                      cbxArea.getSelectedItem().toString());
-					                GestionEvento.getInstance().insertarComision(comision);
 					            } else {
 					                comisionAModificar.setNombre(txtNombre.getText());
 					                comisionAModificar.setArea(cbxArea.getSelectedItem().toString());
@@ -557,7 +556,7 @@ public class RegComision extends JDialog {
 					                    trabajo.setSeleccionado(false);
 					                }   
 					            }
-					            
+					            GestionEvento.getInstance().insertarComision(comision);
 					            JOptionPane.showMessageDialog(null, 
 					                comisionAModificar == null ? "Comisión registrada con éxito" : "Comisión modificada con éxito");
 					            clean();

@@ -208,7 +208,13 @@ public class PlanificarEvento extends JDialog {
 			btnAddComision.setEnabled(false);
 			btnAddComision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedComision.setSelected(true);
+					if(existeJurados(selectedComision)) {
+						JOptionPane.showMessageDialog(null, 
+								"Esta comisión tiene jurados en común con otra ya seleccionada.",
+								"Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						selectedComision.setSelected(true);
+					}
 					loadComisiones();
 					loadComisionesSelect();
 					btnAddComision.setEnabled(false);
@@ -514,6 +520,21 @@ public class PlanificarEvento extends JDialog {
 				modeloComision.addRow(rowComision);
 			}
 		}
+	}
+	
+	private Boolean existeJurados(Comision obj) {
+		for (Comision comision : GestionEvento.getInstance().getMisComisiones()) {
+			if(comision.getSelected()) {
+				for (Jurado jurado : comision.getJurado()) {
+					for (Jurado jurado2 : obj.getJurado()) {
+						if(jurado2.getCedula().toString().equals(jurado.getCedula().toString())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	private void clean() {
