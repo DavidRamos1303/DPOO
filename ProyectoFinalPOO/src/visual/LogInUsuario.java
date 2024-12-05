@@ -54,7 +54,7 @@ public class LogInUsuario extends JFrame {
 		                gestionIn.close();
 				}catch(FileNotFoundException e){
 					try {
-	                    gestionOut = new FileOutputStream("empresa.dat");
+	                    gestionOut = new FileOutputStream("gestion.dat");
 	                    gestionWrite = new ObjectOutputStream(gestionOut);
 	                    User aux = new User("David", "Ramos", "Admin", "Admin", "Administrador");
 	                    GestionEvento.getInstance().getMisUsuarios().add(aux);
