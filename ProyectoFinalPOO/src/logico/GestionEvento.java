@@ -163,10 +163,22 @@ public class GestionEvento implements Serializable {
 		misRecursos.remove(obj);
 	}
 	
+	public void eliminarUser(User obj) {
+		misUsuarios.remove(obj);
+	}
+	
 	public Recurso buscarRecursoID(String cod) {
 		for (Recurso recurso : misRecursos) {
 			if(recurso.getId().equals(cod)) {
 				return recurso;
+			}
+		}return null;
+	}
+	
+	public User buscarUsuarioUsername(String username) {
+		for (User usuario : misUsuarios) {
+			if(usuario.getUserName().equals(username)) {
+				return usuario;
 			}
 		}return null;
 	}
@@ -215,6 +227,15 @@ public class GestionEvento implements Serializable {
 
 	public static void setGestion(GestionEvento temp) {
 		gestion = temp;
+	}
+	
+	public boolean existeUserName(String userName) {
+	    for (User usuario : misUsuarios) {
+	        if(usuario.getUserName().equals(userName)) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 }
 
