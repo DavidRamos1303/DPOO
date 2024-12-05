@@ -142,17 +142,6 @@ public class ListUsuario extends JDialog {
 					                User usuarioSeleccionado = GestionEvento.getInstance().buscarUsuarioUsername(username);
 					                GestionEvento.getInstance().eliminarUser(usuarioSeleccionado);
 					                
-					                
-					                try {
-					                    FileOutputStream gestionOut = new FileOutputStream("archivo.dat");
-					                    ObjectOutputStream gestionWrite = new ObjectOutputStream(gestionOut);
-					                    gestionWrite.writeObject(GestionEvento.getInstance());
-					                    gestionWrite.close();
-					                    gestionOut.close();
-					                } catch (IOException ex) {
-					                    ex.printStackTrace();
-					                }
-					                
 					                JOptionPane.showMessageDialog(null, 
 					                    "Eliminación completada.",
 					                    "Aviso", 
@@ -180,7 +169,7 @@ public class ListUsuario extends JDialog {
 		modelo.setRowCount(0);
 	    row = new Object[3];
 	    for (User usuario : GestionEvento.getInstance().getMisUsuarios()) {
-	        row[0] = usuario.getNombre();
+	        row[0] = usuario.getNombre()+usuario.getApellido();
 	        row[1] = usuario.getUserName();
 	        row[2] = usuario.getTipo();
 	        modelo.addRow(row);

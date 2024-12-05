@@ -195,16 +195,6 @@ public class RegUsuario extends JDialog {
 				        User nuevoUsuario = new User(nombre, apellido, userName, password, tipo);
 				        GestionEvento.getInstance().getMisUsuarios().add(nuevoUsuario);
 				        
-				        try {
-				            FileOutputStream gestionOut = new FileOutputStream("archivo.dat");
-				            ObjectOutputStream gestionWrite = new ObjectOutputStream(gestionOut);
-				            gestionWrite.writeObject(GestionEvento.getInstance());
-				            gestionWrite.close();
-				            gestionOut.close();
-				        } catch (IOException ex) {
-				            ex.printStackTrace();
-				        }
-				        
 				        JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente", 
 				            "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
 				        clean();
