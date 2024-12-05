@@ -12,12 +12,22 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import logico.GestionEvento;
+import logico.User;
+
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.awt.event.ActionEvent;
 
 public class RegUsuario extends JDialog {
 
@@ -27,6 +37,7 @@ public class RegUsuario extends JDialog {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JComboBox comboBox;
 	
 
 	/**
@@ -135,7 +146,7 @@ public class RegUsuario extends JDialog {
 			lblNewLabel_5.setBounds(172, 141, 46, 14);
 			panel_1.add(lblNewLabel_5);
 			
-			JComboBox comboBox = new JComboBox();
+			comboBox = new JComboBox();
 			comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administrador", "Comercial"}));
 			comboBox.setBounds(172, 166, 113, 20);
 			panel_1.add(comboBox);
@@ -147,6 +158,58 @@ public class RegUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String userName = textField_4.getText();
+				        String password = textField_1.getText();
+				        String confirmPass = textField_2.getText();
+				        String nombre = textField.getText();
+				        String apellido = textField_3.getText();
+				        String tipo = comboBox.getSelectedItem().toString();
+				        
+				        if(userName.isEmpty() || password.isEmpty() || confirmPass.isEmpty() || 
+				           nombre.isEmpty() || apellido.isEmpty() || tipo.equals("<Seleccione>")) {
+				            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", 
+				                "Error", JOptionPane.ERROR_MESSAGE);
+				            return;
+				        }
+				
+				        
+				        if(GestionEvento.getInstance().existeUserName(userName)) {
+				            JOptionPane.showMessageDialog(null, 
+				                "El nombre de usuario ya está en uso. Por favor, elija otro.", 
+				                "Error", JOptionPane.ERROR_MESSAGE);
+				            textField_4.setText("");
+				            return;
+				        }
+				        
+				        if(!password.equals(confirmPass)) {
+				            JOptionPane.showMessageDialog(null, 
+				                "Las contraseñas no coinciden", 
+				                "Error", JOptionPane.ERROR_MESSAGE);
+				            textField_1.setText("");
+				            textField_2.setText("");
+				            return;
+				        }
+				        
+				        User nuevoUsuario = new User(nombre, apellido, userName, password, tipo);
+				        GestionEvento.getInstance().getMisUsuarios().add(nuevoUsuario);
+				        
+				        try {
+				            FileOutputStream gestionOut = new FileOutputStream("archivo.dat");
+				            ObjectOutputStream gestionWrite = new ObjectOutputStream(gestionOut);
+				            gestionWrite.writeObject(GestionEvento.getInstance());
+				            gestionWrite.close();
+				            gestionOut.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+				        
+				        JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente", 
+				            "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+				        clean();
+					}
+				});
 				okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -159,5 +222,14 @@ public class RegUsuario extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+	}
+	private void clean() {
+	    textField.setText("");
+	    textField_1.setText("");
+	    textField_2.setText("");
+	    textField_3.setText("");
+	    textField_4.setText("");
+	    comboBox.setSelectedIndex(0);
 	}
 }

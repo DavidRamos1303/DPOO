@@ -67,7 +67,7 @@ public class PrincipalGestion extends JFrame {
 				FileOutputStream gestion;
 				ObjectOutputStream gestionWrite;
 				try {
-					gestion = new FileOutputStream("archivo.dat");
+					gestion = new FileOutputStream("	archivo.dat");
 					gestionWrite = new ObjectOutputStream(gestion);
 					gestionWrite.writeObject(GestionEvento.getInstance());
 				}catch(FileNotFoundException el) {
@@ -165,7 +165,7 @@ public class PrincipalGestion extends JFrame {
 		mntmNewMenuItem_6.setIcon(new ImageIcon(PrincipalGestion.class.getResource("/visual/recurso (1).png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListRecursos listarRecursos = new ListRecursos();
+				ListRecurso listarRecursos = new ListRecurso();
 				listarRecursos.setModal(true);
 				listarRecursos.setVisible(true);
 			}
@@ -247,6 +247,17 @@ public class PrincipalGestion extends JFrame {
 		});
 		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mnNewMenu_3.add(mntmNewMenuItem_10);
+		
+		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Listar Usuarios");
+		mntmNewMenuItem_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListUsuario dialog = new ListUsuario();
+				dialog.setModal(true);
+				dialog.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_11.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		mnNewMenu_3.add(mntmNewMenuItem_11);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("FormattedTextField.inactiveForeground"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

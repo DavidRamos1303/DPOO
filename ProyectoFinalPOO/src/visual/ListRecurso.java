@@ -28,7 +28,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.Font;
 
-public class ListRecursos extends JDialog {
+public class ListRecurso extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -42,7 +42,7 @@ public class ListRecursos extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ListRecursos dialog = new ListRecursos();
+			ListRecurso dialog = new ListRecurso();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -53,7 +53,7 @@ public class ListRecursos extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListRecursos() {
+	public ListRecurso() {
 		setTitle("Lista de recursos");
 		setBounds(100, 100, 575, 466);
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
