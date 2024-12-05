@@ -67,7 +67,7 @@ public class PrincipalGestion extends JFrame {
 				FileOutputStream gestion;
 				ObjectOutputStream gestionWrite;
 				try {
-					gestion = new FileOutputStream("gestion.dat");
+					gestion = new FileOutputStream("archivoGestion.dat");
 					gestionWrite = new ObjectOutputStream(gestion);
 					gestionWrite.writeObject(GestionEvento.getInstance());
 				}catch(FileNotFoundException el) {
