@@ -25,7 +25,6 @@ public class RegUsuario extends JDialog {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField_5;
 	
 
 	/**
@@ -127,16 +126,6 @@ public class RegUsuario extends JDialog {
 			textField_4.setBounds(10, 166, 113, 20);
 			panel_1.add(textField_4);
 			textField_4.setColumns(10);
-			
-			JLabel lblNewLabel_5 = new JLabel("Correo electr\u00F3nico:");
-			lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
-			lblNewLabel_5.setBounds(10, 197, 127, 14);
-			panel_1.add(lblNewLabel_5);
-			
-			textField_5 = new JTextField();
-			textField_5.setBounds(10, 222, 150, 20);
-			panel_1.add(textField_5);
-			textField_5.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();

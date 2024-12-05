@@ -9,6 +9,8 @@ public class GestionEvento {
 	private ArrayList<Comision> misComisiones;
 	private ArrayList<Evento> misEventos;
 	private ArrayList<Recurso> misRecursos;
+	private ArrayList<User> misUsuarios;
+	private User currentUser;
 	
 	public static GestionEvento gestion = null;
 	
@@ -20,6 +22,7 @@ public class GestionEvento {
 	
 	public GestionEvento() {
 		super();
+		misUsuarios = new ArrayList<>();
 		misRecursos = new ArrayList<>();
 		misPersonas = new ArrayList<>();
 		misTrabajosCientificos = new ArrayList<>();
@@ -64,7 +67,19 @@ public class GestionEvento {
 	public void setMisRecursos(ArrayList<Recurso> misRecursos) {
 		this.misRecursos = misRecursos;
 	}
-	
+	public ArrayList<User> getMisUsuarios() {
+		return misUsuarios;
+	}
+	public void setMisUsuarios(ArrayList<User> misUsuarios) {
+		this.misUsuarios = misUsuarios;
+	}
+	public User getCurrentUser() {
+		return currentUser;
+	}
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
+
 	public void insertarPersonas(Persona obj) {
 		misPersonas.add(obj);
 		codPersona++;
