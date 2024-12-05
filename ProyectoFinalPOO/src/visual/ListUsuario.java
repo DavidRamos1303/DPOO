@@ -63,6 +63,7 @@ public class ListUsuario extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		setLocationRelativeTo(null);
 		{
 			JPanel panel = new JPanel();
 			panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
@@ -107,15 +108,6 @@ public class ListUsuario extends JDialog {
 						dispose();
 					}
 				});
-				{
-					JButton btnNewButton = new JButton("Aceptar");
-					btnNewButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							dispose();
-						}
-					});
-					buttonPane.add(btnNewButton);
-				}
 				{
 					btnEliminar = new JButton("Eliminar");
 					btnEliminar.setEnabled(false);
@@ -169,7 +161,7 @@ public class ListUsuario extends JDialog {
 		modelo.setRowCount(0);
 	    row = new Object[3];
 	    for (User usuario : GestionEvento.getInstance().getMisUsuarios()) {
-	        row[0] = usuario.getNombre()+usuario.getApellido();
+	        row[0] = usuario.getNombre()+ " " +usuario.getApellido();
 	        row[1] = usuario.getUserName();
 	        row[2] = usuario.getTipo();
 	        modelo.addRow(row);

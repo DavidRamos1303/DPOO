@@ -207,6 +207,11 @@ public class RegUsuario extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
