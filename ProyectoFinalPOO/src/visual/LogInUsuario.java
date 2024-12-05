@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import logico.GestionEvento;
@@ -134,7 +135,7 @@ public class LogInUsuario extends JFrame {
 		lblNewLabel_1.setBounds(132, 163, 90, 14);
 		panel.add(lblNewLabel_1);
 		
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		txtPassword.setBounds(111, 186, 120, 20);
 		panel.add(txtPassword);
 		txtPassword.setColumns(10);
