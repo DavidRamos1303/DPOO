@@ -46,16 +46,16 @@ public class LogInUsuario extends JFrame {
 				ObjectInputStream gestionRead;
 				ObjectOutputStream gestionWrite;
 				try {
-					 gestionIn = new FileInputStream("archivoGestion.dat");
-		                gestionRead = new ObjectInputStream(gestionIn);
-		                GestionEvento temp = (GestionEvento) gestionRead.readObject();
-		                GestionEvento.setGestion(temp);
-		                gestionRead.close();
-		                gestionIn.close();
+					gestionIn = new FileInputStream("/archivoGestion.dat");
+					gestionRead = new ObjectInputStream(gestionIn);
+					GestionEvento temp = (GestionEvento) gestionRead.readObject();
+					GestionEvento.setGestion(temp);
+					gestionRead.close();
+					gestionIn.close();
 				}catch(FileNotFoundException e){
 					try {
-	                    gestionOut = new FileOutputStream("archivoGestion.dat");
-	                    gestionWrite = new ObjectOutputStream(gestionOut);
+						gestionOut = new FileOutputStream("/archivoGestion.dat");
+						gestionWrite = new ObjectOutputStream(gestionOut);
 	                    User aux = new User("David", "Ramos", "Admin", "Admin", "Administrador");
 	                    GestionEvento.getInstance().getMisUsuarios().add(aux);
 	                    gestionWrite.writeObject(GestionEvento.getInstance());
