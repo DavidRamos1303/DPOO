@@ -455,6 +455,12 @@ public class ModEvento extends JDialog {
 				cancelButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						for (Comision comision : GestionEvento.getInstance().getMisComisiones()) {
+							comision.setSelected(false);
+						}
+						for (Recurso recurso : GestionEvento.getInstance().getMisRecursos()) {
+							recurso.setSelected(false);
+						}
 						dispose();
 					}
 				});
