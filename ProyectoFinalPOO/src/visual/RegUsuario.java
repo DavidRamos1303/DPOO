@@ -16,6 +16,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class RegUsuario extends JDialog {
 
@@ -53,6 +55,7 @@ public class RegUsuario extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		setLocationRelativeTo(null);
 		{
 			JPanel panel = new JPanel();
 			panel.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
@@ -126,6 +129,16 @@ public class RegUsuario extends JDialog {
 			textField_4.setBounds(10, 166, 113, 20);
 			panel_1.add(textField_4);
 			textField_4.setColumns(10);
+			
+			JLabel lblNewLabel_5 = new JLabel("Tipo:");
+			lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblNewLabel_5.setBounds(172, 141, 46, 14);
+			panel_1.add(lblNewLabel_5);
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administrador", "Comercial"}));
+			comboBox.setBounds(172, 166, 113, 20);
+			panel_1.add(comboBox);
 		}
 		{
 			JPanel buttonPane = new JPanel();

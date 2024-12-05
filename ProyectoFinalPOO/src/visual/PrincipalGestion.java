@@ -23,6 +23,12 @@ import java.awt.Toolkit;
 import logico.Evento;
 import logico.GestionEvento;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
@@ -32,6 +38,7 @@ public class PrincipalGestion extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension dim;
+	private JMenu mnNewMenu_3;
 
 	/**
 	 * Launch the application.
@@ -54,10 +61,28 @@ public class PrincipalGestion extends JFrame {
 	 */
 	public PrincipalGestion() {
 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				FileOutputStream gestion;
+				ObjectOutputStream gestionWrite;
+				try {
+					gestion = new FileOutputStream("gestion.dat");
+					gestionWrite = new ObjectOutputStream(gestion);
+					gestionWrite.writeObject(GestionEvento.getInstance());
+				}catch(FileNotFoundException el) {
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
 		
-		setBackground(new Color(255, 255, 0));
+		setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 		setTitle("Gesti\u00F3n de Eventos PUCMM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dim = getToolkit().getScreenSize();
@@ -203,6 +228,25 @@ public class PrincipalGestion extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_4);
+		
+		mnNewMenu_3 = new JMenu("Administraci\u00F3n");
+		mnNewMenu_3.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		menuBar.add(mnNewMenu_3);
+		
+		if(!(GestionEvento.getInstance().getCurrentUser().getTipo().equals("Administrador"))) {
+			mnNewMenu_3.setEnabled(false);
+		}
+
+		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Registrar Usuario");
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegUsuario dialog = new RegUsuario();
+				dialog.setModal(true);
+				dialog.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		mnNewMenu_3.add(mntmNewMenuItem_10);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("FormattedTextField.inactiveForeground"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

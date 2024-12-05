@@ -10,7 +10,8 @@ public class GestionEvento {
 	private ArrayList<Evento> misEventos;
 	private ArrayList<Recurso> misRecursos;
 	private ArrayList<User> misUsuarios;
-	private User currentUser;
+	
+	private static User currentUser;
 	
 	public static GestionEvento gestion = null;
 	
@@ -195,6 +196,20 @@ public class GestionEvento {
 	            break;
 	        }
 	    }
+	}
+
+	public boolean confirmUser(String userName, String pass) {
+		for (User usuario : misUsuarios) {
+			if(usuario.getUserName().equals(userName) && usuario.getPassword().equals(pass)) {
+				currentUser = usuario;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static void setGestion(GestionEvento temp) {
+		gestion = temp;
 	}
 }
 
